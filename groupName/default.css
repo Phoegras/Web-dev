@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
-
+* {
+    box-sizing: border-box;
+}
 :root{
     --primary: #003C43;
     --secondary: #135D66;
@@ -7,75 +9,139 @@
     --quaternary:#E3FEF7;
 }
 body {
-    background: #f1f1f1;
+    background: #ffffff;
     margin: 0;
     font-family: "Poppins";
 }
-
-h2{
-    color: var(--secondary);
+.navbar a{
+    color: var(--primary);
 }
 .navbar{
-    background-color: var(--primary);
-    padding: 20px 20px;
+    color: var(--primary);
+    padding: 5px 20px;
     width: auto;
-    display: block;
-    font-size: 1.5em;
-    color: #fff;
+    font-size: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+
 }
+.info{
+    display: flex;
+    align-items: stretch;
+    background-color: var(--quaternary);
+}
+.info::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+}
+
+.vertical-align-content {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+  }
+
+
+h1{
+    color: var(--secondary);
+}
+.info h1{
+    padding: 10px;
+}
+
+p{
+    margin: 0 2%;
+}
+
 
 a{
     text-decoration: none;
-    color: #fff;
 }
 
-.info {
+div.info {
     display:block;
     position:relative;
     margin: auto auto;
-    padding: 10px 20px;
-    background: var(--tertiary);
-    display:flex;
+    /* padding: 10px 20px; */
+    /* background: var(--tertiary);  */
+    
 }
 
 .grName {       
-    color: white;
-}
-
-.info div {
-    align-items: center;
-    margin: 0 auto;
-    margin-left: 300px;
-    width: 75%;
-    left: 250px
+    color: var(--primary);
 }
 
 ul li {
     list-style-type: none;
+    display: inline;
+    margin: 0 5px;
 }
 
 img {
-    position:absolute;
-    top: 83px;
-    right: 70px;
-    padding: 4px 4px;
+    padding: 0 0;
     border-radius: 4px;
-    width: 25%;
+    width: 100%;
+    height:auto;
     background: #f1f1f1;
 }
 
 .photo {
-    position:absolute;
-    top: 20px;
-    left: 70px;
     padding: 4px 4px;
     border-radius: 4px;
-    width: 150px;
-    height: 200px;
-    background: #f1f1f1;
+    max-width: 400px;
+    float:right;
 }
-
-@media only screen and (max-width: 700px) {
+.about_us{
+    text-align: center;
+    background-color: var(--tertiary);
+    padding: 10px;
+    width: 100%;
+}
+/* For mobile phones: */
+[class*="col-"] {
+    width: 100%;
+}
+  
+  @media only screen and (min-width: 600px) {
+    /* For tablets: */
+    .col-s-1 {width: 8.33%;}
+    .col-s-2 {width: 16.66%;}
+    .col-s-3 {width: 25%;}
+    .col-s-4 {width: 33.33%;}
+    .col-s-5 {width: 41.66%;}
+    .col-s-6 {width: 50%;}
+    .col-s-7 {width: 58.33%;}
+    .col-s-8 {width: 66.66%;}
+    .col-s-9 {width: 75%;}
+    .col-s-10 {width: 83.33%;}
+    .col-s-11 {width: 91.66%;}
+    .col-s-12 {width: 100%;}
+  }
+  @media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+  }
+/* @media only screen and (max-width: 700px) {
     .navbar {
         font-size: 1.2em;
         padding: 10px 15px;
@@ -152,4 +218,4 @@ img {
         height: 130px;
         background: #f1f1f1;
     }
-}
+} */

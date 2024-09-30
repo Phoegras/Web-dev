@@ -1,27 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>groupName</title>
+    <title>Welcome to BATCODE</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="default.css">
 </head>
+
 <body>
-    <div class="navbar">Welcome to group</div>
-    <div class="info">
-        <h2>
-            Group name:
-            <b class="grName">
-                 ABCDEF
-            </b>
-        </h2>
-        <div>
-            <ul><h2>Members:</h2>
-                <a href="members/22120315/22120315.html" class="info"> Nguyen Van Tai: 22120315</a>
-                <a href="members/22120337/22120337.html" class="info"> Luong Thi Dieu Thao: 22120337</a>
+    <header>
+        <div class="navbar">
+            <a href="./default.html">Hello!</a>
+            <ul>
+                <li><a href="/groupName/default.html#home">Home</a></li>
+                <li><a href="/groupName/default.html#abt">About us</a></li>
             </ul>
         </div>
+    </header>
+    <div id="home">
+        <div class="info">
+            <div class="col-4 col-s-4 vertical-align-content intro">
+                <h1>
+                    We are
+                    <b class="grName">
+                        BATCODE
+                    </b>
+                </h1>
+                <p>A dynamic team of passionate web developers committed to crafting engaging, user-centric digital
+                    experiences. With expertise in front-end and back-end development, we specialize in building sleek,
+                    responsive websites and innovative web applications that are tailored to meet the unique needs of
+                    our clients.</p>
+            </div>
+
+            <div class="col-8 col-s-8">
+                <img src="images/group_photo.jpg" alt="Group photo" usemap="#mem_map">
+                <map name="mem_map">
+                    <area shape="rect" coords="100,0,340,618" alt="mem1" href="members/22120315/22120315.html">
+                    <area shape="rect" coords="480,18,740,618" alt="mem2" href="members/22120337/22120337.html">
+                </map>
+            </div>
+
+        </div>
+
+        <div class="about_us" id="abt">
+            <h1>About us</h1>
+            <p>Our mission is to turn ideas into functional, beautifully designed solutions using the latest web
+                technologies. Whether you’re a business looking to establish your online presence or seeking to enhance
+                your digital platform, we are here to bring your vision to life with precision and creativity. Explore
+                our portfolio and see how we can help elevate your brand in the digital world.</p>
+        </div>
     </div>
-    <img src="images/group_photo.png" alt="Group photo">
 </body>
+
 </html>
