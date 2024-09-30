@@ -11,6 +11,7 @@ body {
     margin: 0;
     font-family: "Poppins";
 }
+
 h2{
     color: var(--secondary);
 }
@@ -22,56 +23,133 @@ h2{
     font-size: 1.5em;
     color: #fff;
 }
+
 a{
     text-decoration: none;
     color: #fff;
 }
 
-/* 
-@media only screen and (max-width: 700px) {
-    .info {
-      width: 49.99999%;
-      margin: 6px 0;
-    }
-  }
-  
-@media only screen and (max-width: 500px) {
-    .info {
-        width: 100%;
-    }
-}
-
-.clearfix:after {
-    content: "";
-    display: table;
-    clear: both;
-} */
-
-.info{
+.info {
     display:block;
     position:relative;
     margin: auto auto;
     padding: 10px 20px;
     background: var(--tertiary);
     display:flex;
-    /* height: 700px; */
+}
+
+.grName {       
+    color: white;
 }
 
 .info div {
     align-items: center;
     margin: 0 auto;
+    margin-left: 300px;
     width: 75%;
+    left: 250px
 }
-ul li{
+
+ul li {
     list-style-type: none;
 }
 
 img {
     position:absolute;
-    top:0;
-    right:0;
-    padding: 10px 20px;
+    top: 83px;
+    right: 70px;
+    padding: 4px 4px;
     border-radius: 4px;
     width: 25%;
     background: #f1f1f1;
+}
+
+.photo {
+    position:absolute;
+    top: 20px;
+    left: 70px;
+    padding: 4px 4px;
+    border-radius: 4px;
+    width: 150px;
+    height: 200px;
+    background: #f1f1f1;
+}
+
+@media only screen and (max-width: 700px) {
+    .navbar {
+        font-size: 1.2em;
+        padding: 10px 15px;
+    }
+
+    .info {
+        padding: 5px 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info div {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    img {
+        width: 40%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .photo {
+        position:absolute;
+        margin: 0 auto;
+        padding: 4px 4px;
+        border-radius: 1px;
+        width: 90px;
+        height: 120px;
+        background: #f1f1f1;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .navbar {
+        font-size: 1em;
+        padding: 10px;
+    }
+
+    .info {
+        padding: 5px;
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .info div {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 150px;
+    }
+
+    a {
+        font-size: 0.9em;
+    }
+
+    img {
+        position:absolute;
+        margin: 0 auto;
+        left: 70px;
+        top: 130px;
+        padding: 4px 4px;
+        border-radius: 1px;
+        width: 120px;
+        height: 150px;
+        background: #f1f1f1;
+    }  
+
+    .photo {
+        position:absolute;
+        margin: 0 auto;
+        padding: 4px 4px;
+        border-radius: 1px;
+        width: 100px;
+        height: 130px;
+        background: #f1f1f1;
+    }
 }
