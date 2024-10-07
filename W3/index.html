@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dealers</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="default.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"
@@ -12,7 +12,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body class="container mx-auto bg-slate-200">
+<body class="container mx-auto bg-slate-200 overflow-x-hidden">
     <div>
         <!-- header -->
         <header class=" container mb-9 grid grid-cols-2">
@@ -20,7 +20,7 @@
             <div class="md:col-span-1 col-span-2">
                 <div id="logo" class="cursor-pointer">Dealers</div>
                 <div>
-                    <ul class="font-bold text-base flex divide-x divide-dashed divide-black">
+                    <ul class="font-bold text-base flex divide-x divide-dashed divide-black ml-2">
                         <li class="pr-4"><a href="#">Home</a></li>
                         <li class="px-4"><a href="#">About</a></li>
                         <li class="px-4"><a href="#">All Deals</a></li>
@@ -31,14 +31,14 @@
             </div>
             <!-- mailbox -->
              <div class="flex-col relative pt-6 md:col-span-1 col-span-2">
-                <div class="">
+                <div class="relative">
                     <img src="/img/mail-letter.png" alt="mailbox" class="w-[200%]">
-                    <img src="/img/stemp.png" alt="stemp" class="absolute -top-4 -right-12 overflow-hidden">
+                    <img src="/img/stemp.png" alt="stemp" class="absolute -top-14 -right-14">
                 </div> 
                 <div class="absolute top-10 left-2 w-full p-4">
-                    <p class="font-bold text-lg mb-4">Sign up to get deals directly to your mailbox</p>
+                    <label for="email-address" class="font-bold text-lg mb-4">Sign up to get deals directly to your mailbox</label>
                     <div class="columns-2 flex">
-                        <input type="text" value="Enter your E-mail Address"
+                        <input type="text" value="Enter your E-mail Address" id="email-address"
                             class="inline-block grid-cols-8 mt-1 mr-4 px-3 py-2 bg-white border border-slate-300 text-sm text-slate-300 shadow-sm placeholder-slate-400 w-2/3"></input>
                         <button class="relative inline-block text-[#525e6a] font-bold py-2 px-4 rounded overflow-hidden">
                             <span class="absolute inset-0 h-1/2 bg-[#bbc9d4]"></span>
@@ -58,10 +58,10 @@
 
             <div class="flex flex-col md:flex-row mb-8 col-span-12">
                 <!-- Featured Deal Image - description -->
-                <div class="flex flex-col col-span-12 md:col-span-8 justify-center m-8 pr-6">
-                    <h1 class="font-bold text-4xl mb-8">This is one very amazing deal</h1>
-                    <div class="bg-white relative w-full h-60 border border-slate-300 my-4">
-                        <img class="absolute top-1 left-1 w-full h-full bg-[#ef5741]">
+                <div class="flex flex-col col-span-12 md:col-span-8 m-8 pr-6">
+                    <h1 class="font-bold text-4xl mb-4">This is one very amazing deal</h1>
+                    <div class="border border-slate-300 my-4 p-2 h-fit w-fit">
+                        <img src="/img/Image.png" alt="red image">
                     </div>
 
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut dignissimos illum vitae dolor cum
@@ -70,7 +70,7 @@
                 </div>
 
                 <!-- Featured Deal Info -->
-                <div class="flex flex-col items-center text-center col-span-12 md:col-span-4 m-4">
+                <div class="flex flex-col items-center text-center col-span-12 md:col-span-4 mx-8 justify-center">
                     <div class="divide-y divide-dashed border border-slate-300 px-3 pb-6">
                         <h2 class="text-neutral-400 font-semibold mt-8 pb-2">This deal will end in:</h2>
 
@@ -91,7 +91,8 @@
                                 <h2 class="font-semibold">$20</h2>
                             </div>
                         </div>
-    
+
+                        <!-- tweeter & fb button -->
                         <div class="flex space-x-6 justify-center py-4">
                             <div class="flex">
                                 <button
@@ -143,23 +144,23 @@
                 <div class="flex flex-col md:flex-row divide-y md:divide-x divide-dashed justify-center items-center">
 
                     <!-- deal 1 -->
-                    <div class="px-8 py-6 md:w-1/3">
+                    <div class="px-6 py-6 md:w-1/3">
                         <h2 class="font-bold mb-2">Lorem, ipsum dolor Deal</h2>
-                        <div class="border border-solid border-slate-300 px-1 py-1 mb-2">
-                            <div class="bg-white relative w-full h-40 mt-2">
-                                <img class="absolute w-full h-full bg-[#ef5741]">
+                        <div class="border border-solid border-slate-300 px-2 py-1 mb-2">
+                            <div class="mt-2">
+                                <img src="/img/Image.png" alt="red image">
                             </div>
 
-                            <div class="columns-3 flex gap-2 text-center divide-x divide-dashed p-2 justify-center">
-                                <div class="flex flex-col pl-1">
+                            <div class="columns-3 flex gap-2 text-center divide-x divide-dashed p-2 justify-around">
+                                <div class="flex flex-col pl-1 w-1/3">
                                     <h3 class="text-neutral-400 font-semibold">Deal Value</h3>
                                     <p class="font-semibold">$47</p>
                                 </div>
-                                <div class="flex flex-col pl-1">
+                                <div class="flex flex-col pl-1 w-1/3">
                                     <h3 class="text-neutral-400 font-semibold">Discount</h3>
                                     <p class="font-semibold">43%</p>
                                 </div>
-                                <div class="flex flex-col pl-1">
+                                <div class="flex flex-col pl-1 w-1/3">
                                     <h3 class="text-neutral-400 font-semibold">You save</h3>
                                     <p class="font-semibold">$20</p>
                                 </div>
@@ -167,12 +168,12 @@
                         </div>
 
                         <div class="flex justify-between">
-                            <p class="text-xs text-neutral-400">71 days 23 hrs 38 min 36 sec</p>
+                            <p class="text-base md:text-xs text-neutral-400">71 days 23 hrs 38 min 36 sec</p>
                             <button
                                 class="relative inline-block text-[#5d7730] font-bold px-2 rounded overflow-hidden">
                                 <span class="absolute inset-0 h-1/2 bg-[#c8e087]"></span>
                                 <span class="absolute inset-0 top-1/2 h-1/2 bg-[#a7cf60]"></span>
-                                <span class="relative z-10 text-xs">SEE DEAL</span>
+                                <span class="relative z-10 text-base md:text-xs">SEE DEAL</span>
                             </button>
                         </div>
 
@@ -180,23 +181,23 @@
                     </div>
 
                     <!-- deal 2 -->
-                    <div class="px-8 py-6 md:w-1/3">
+                    <div class="px-6 py-6 md:w-1/3">
                         <h2 class="font-bold mb-2">Lorem, ipsum dolor Deal</h2>
-                        <div class="border border-solid border-slate-300 px-1 py-1 mb-2">
-                            <div class="bg-white relative w-full h-40 mt-2">
-                                <img class="absolute w-full h-full bg-[#ef5741]">
+                        <div class="border border-solid border-slate-300 px-2 py-1 mb-2">
+                            <div class="mt-2">
+                                <img src="/img/Image.png" alt="red image">
                             </div>
 
-                            <div class="columns-3 flex gap-2 text-center divide-x divide-dashed p-2 justify-center">
-                                <div class="flex flex-col pl-1">
+                            <div class="columns-3 flex gap-2 text-center divide-x divide-dashed p-2 justify-around">
+                                <div class="flex flex-col pl-1 w-1/3">
                                     <h3 class="text-neutral-400 font-semibold">Deal Value</h3>
                                     <p class="font-semibold">$47</p>
                                 </div>
-                                <div class="flex flex-col pl-1">
+                                <div class="flex flex-col pl-1 w-1/3">
                                     <h3 class="text-neutral-400 font-semibold">Discount</h3>
                                     <p class="font-semibold">43%</p>
                                 </div>
-                                <div class="flex flex-col pl-1">
+                                <div class="flex flex-col pl-1 w-1/3">
                                     <h3 class="text-neutral-400 font-semibold">You save</h3>
                                     <p class="font-semibold">$20</p>
                                 </div>
@@ -204,12 +205,12 @@
                         </div>
 
                         <div class="flex justify-between">
-                            <p class="text-xs text-neutral-400">71 days 23 hrs 38 min 36 sec</p>
+                            <p class="text-base md:text-xs text-neutral-400">71 days 23 hrs 38 min 36 sec</p>
                             <button
                                 class="relative inline-block text-[#5d7730] font-bold px-2 rounded overflow-hidden">
                                 <span class="absolute inset-0 h-1/2 bg-[#c8e087]"></span>
                                 <span class="absolute inset-0 top-1/2 h-1/2 bg-[#a7cf60]"></span>
-                                <span class="relative z-10 text-xs">SEE DEAL</span>
+                                <span class="relative z-10 text-base md:text-xs">SEE DEAL</span>
                             </button>
                         </div>
 
@@ -218,23 +219,23 @@
 
 
                     <!-- deal 3 -->
-                    <div class="px-8 py-6 md:w-1/3">
+                    <div class="px-6 py-6 md:w-1/3">
                         <h2 class="font-bold mb-2">Lorem, ipsum dolor Deal</h2>
-                        <div class="border border-solid border-slate-300 px-1 py-1 mb-2">
-                            <div class="bg-white relative w-full h-40 mt-2">
-                                <img class="absolute w-full h-full bg-[#ef5741]">
+                        <div class="border border-solid border-slate-300 px-2 py-1 mb-2">
+                            <div class="mt-2">
+                                <img src="/img/Image.png" alt="red image">
                             </div>
 
-                            <div class="columns-3 flex gap-2 text-center divide-x divide-dashed p-2 justify-center">
-                                <div class="flex flex-col pl-1">
+                            <div class="columns-3 flex gap-2 text-center divide-x divide-dashed p-2 justify-around">
+                                <div class="flex flex-col pl-1 w-1/3">
                                     <h3 class="text-neutral-400 font-semibold">Deal Value</h3>
                                     <p class="font-semibold">$47</p>
                                 </div>
-                                <div class="flex flex-col pl-1">
+                                <div class="flex flex-col pl-1 w-1/3">
                                     <h3 class="text-neutral-400 font-semibold">Discount</h3>
                                     <p class="font-semibold">43%</p>
                                 </div>
-                                <div class="flex flex-col pl-1">
+                                <div class="flex flex-col pl-1 w-1/3">
                                     <h3 class="text-neutral-400 font-semibold">You save</h3>
                                     <p class="font-semibold">$20</p>
                                 </div>
@@ -242,12 +243,12 @@
                         </div>
 
                         <div class="flex justify-between">
-                            <p class="text-xs text-neutral-400">71 days 23 hrs 38 min 36 sec</p>
+                            <p class="text-base md:text-xs text-neutral-400">71 days 23 hrs 38 min 36 sec</p>
                             <button
                                 class="relative inline-block text-[#5d7730] font-bold px-2 rounded overflow-hidden">
                                 <span class="absolute inset-0 h-1/2 bg-[#c8e087]"></span>
                                 <span class="absolute inset-0 top-1/2 h-1/2 bg-[#a7cf60]"></span>
-                                <span class="relative z-10 text-xs">SEE DEAL</span>
+                                <span class="relative z-10 text-base md:text-xs">SEE DEAL</span>
                             </button>
                         </div>
 
