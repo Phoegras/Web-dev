@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="default.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"
+        integrity="sha512-MqL4+Io386IOPMKKyplKII0pVW5e+kb+PI/I3N87G3fHIfrgNNsRpzIXEi+0MQC0sR9xZNqZqCYVcC61fL5+Vg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="container mx-auto bg-slate-200">
+    <div>
+        <!-- header -->
+        <header class=" container mb-9 grid grid-cols-2">
+            <!-- logo & navigation bar -->
+            <div class="md:col-span-1 col-span-2">
+                <div id="logo" class="cursor-pointer">Dealers</div>
+                <div>
+                    <ul class="font-bold text-base flex divide-x divide-dashed divide-black">
+                        <li class="pr-4"><a href="#">Home</a></li>
+                        <li class="px-4"><a href="#">About</a></li>
+                        <li class="px-4"><a href="#">All Deals</a></li>
+                        <li class="px-4"><a href="#">Submit Your Deal</a></li>
+                        <li class="px-4"><a href="#"><i class="ri-mail-fill"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- mailbox -->
+             <div class="flex-col relative pt-6 md:col-span-1 col-span-2">
+                <div class="">
+                    <img src="/img/mail-letter.png" alt="mailbox" class="w-[200%]">
+                    <img src="/img/stemp.png" alt="stemp" class="absolute -top-4 -right-12 overflow-hidden">
+                </div> 
+                <div class="absolute top-10 left-2 w-full p-4">
+                    <p class="font-bold text-lg mb-4">Sign up to get deals directly to your mailbox</p>
+                    <div class="columns-2 flex">
+                        <input type="text" value="Enter your E-mail Address"
+                            class="inline-block grid-cols-8 mt-1 mr-4 px-3 py-2 bg-white border border-slate-300 text-sm text-slate-300 shadow-sm placeholder-slate-400 w-2/3"></input>
+                        <button class="relative inline-block text-[#525e6a] font-bold py-2 px-4 rounded overflow-hidden">
+                            <span class="absolute inset-0 h-1/2 bg-[#bbc9d4]"></span>
+                            <span class="absolute inset-0 top-1/2 h-1/2 bg-[#96abbc]"></span>
+                            <span class="relative z-10">Subcribe Me</span>
+                        </button>
+                    </div>
+                </div>
+                
+            
+             </div>
+            
+        </header>
+
+        <!-- content -->
+        <main class="container bg-white divide-y divide-dashed grid grid-cols-12">
+
+            <div class="flex flex-col md:flex-row mb-8 col-span-12">
+                <!-- Featured Deal Image - description -->
+                <div class="flex flex-col col-span-12 md:col-span-8 justify-center m-8 pr-6">
+                    <h1 class="font-bold text-4xl mb-8">This is one very amazing deal</h1>
+                    <div class="bg-white relative w-full h-60 border border-slate-300 my-4">
+                        <img class="absolute top-1 left-1 w-full h-full bg-[#ef5741]">
+                    </div>
+
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut dignissimos illum vitae dolor cum
+                        sequi voluptates fuga consequuntur magni fugiat sint beatae sit eos reprehenderit eveniet,
+                        maxime corrupti inventore dolores?</p>
+                </div>
+
+                <!-- Featured Deal Info -->
+                <div class="flex flex-col items-center text-center col-span-12 md:col-span-4 m-4">
+                    <div class="divide-y divide-dashed border border-slate-300 px-3 pb-6">
+                        <h2 class="text-neutral-400 font-semibold mt-8 pb-2">This deal will end in:</h2>
+
+                        <p class="font-semibold py-2">6 days 1 hrs 52 min 51 secs</p>
+    
+                        <div class="py-2">
+                            <h3 class="text-neutral-400 font-semibold">Discount</h3>
+                            <h2 class="font-bold text-6xl">43%</h2>
+                        </div>
+    
+                        <div class="columns-2 py-2">
+                            <div>
+                                <h3 class="text-neutral-400 font-semibold">Deal value</h3>
+                                <h2 class="font-semibold">$47</h2>
+                            </div>
+                            <div>
+                                <h3 class="text-neutral-400 font-semibold">You save</h3>
+                                <h2 class="font-semibold">$20</h2>
+                            </div>
+                        </div>
+    
+                        <div class="flex space-x-6 justify-center py-4">
+                            <div class="flex">
+                                <button
+                                    class="text-[#4692DD] border border-[#66acf1] bg-gradient-to-t from-[#8ec5fc] to-white rounded px-2 font-semibold">
+                                    <i class="ri-twitter-fill"></i>Tweet</button>
+                                <div class="border px-2 ml-2">9</div>
+                            </div>
+                            <div class="flex">
+                                <button class="text-[#3b5998] border border-slate-200 bg-[#eceef5] rounded px-2 font-semibold"><i
+                                        class="ri-facebook-box-fill"></i>Like</button>
+                                <div class="border px-2 ml-2">5</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                    <button class="relative inline-block text-[#5d7730] font-bold py-2 px-4 rounded-lg overflow-hidden mt-4">
+                        <span class="absolute inset-0 h-1/2 bg-[#c8e087]"></span>
+                        <span class="absolute inset-0 top-1/2 h-1/2 bg-[#a7cf60]"></span>
+                        <span class="relative z-10 text-lg">By this deal-27$</span>
+                    </button>
+
+                </div>
+            </div>
+            <!-- brand -->
+            <div class="flex items-center md:justify-around col-span-12 p-8 gap-6">
+                <div class="inline-block">
+                    <img src="/img/Dealers.png" alt="dealer-logo">
+                </div>
+                <div class="inline-block">
+                    <img src="/img/THEMES-KINGDOM.png" alt="themes-kingdom-logo">
+                </div>
+                <div class="inline-block">
+                    <img src="/img/DovesMedic.png" alt="doves-medic-logo">
+                </div>
+                <div class="inline-block">
+                    <img src="/img/THEMES-KINGDOM.png" alt="themes-kingdom-logo">
+                </div>
+                <div class="inline-block">
+                    <img src="/img/Sm.png" alt="sm-logo">
+                </div>
+            </div>
+
+            <div class="divide-x divide-y divide-dashed flex flex-col col-span-12">
+
+                <!-- deal list -->
+
+                <div class="flex flex-col md:flex-row divide-y md:divide-x divide-dashed justify-center items-center">
+
+                    <!-- deal 1 -->
+                    <div class="px-8 py-6 md:w-1/3">
+                        <h2 class="font-bold mb-2">Lorem, ipsum dolor Deal</h2>
+                        <div class="border border-solid border-slate-300 px-1 py-1 mb-2">
+                            <div class="bg-white relative w-full h-40 mt-2">
+                                <img class="absolute w-full h-full bg-[#ef5741]">
+                            </div>
+
+                            <div class="columns-3 flex gap-2 text-center divide-x divide-dashed p-2 justify-center">
+                                <div class="flex flex-col pl-1">
+                                    <h3 class="text-neutral-400 font-semibold">Deal Value</h3>
+                                    <p class="font-semibold">$47</p>
+                                </div>
+                                <div class="flex flex-col pl-1">
+                                    <h3 class="text-neutral-400 font-semibold">Discount</h3>
+                                    <p class="font-semibold">43%</p>
+                                </div>
+                                <div class="flex flex-col pl-1">
+                                    <h3 class="text-neutral-400 font-semibold">You save</h3>
+                                    <p class="font-semibold">$20</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <p class="text-xs text-neutral-400">71 days 23 hrs 38 min 36 sec</p>
+                            <button
+                                class="relative inline-block text-[#5d7730] font-bold px-2 rounded overflow-hidden">
+                                <span class="absolute inset-0 h-1/2 bg-[#c8e087]"></span>
+                                <span class="absolute inset-0 top-1/2 h-1/2 bg-[#a7cf60]"></span>
+                                <span class="relative z-10 text-xs">SEE DEAL</span>
+                            </button>
+                        </div>
+
+
+                    </div>
+
+                    <!-- deal 2 -->
+                    <div class="px-8 py-6 md:w-1/3">
+                        <h2 class="font-bold mb-2">Lorem, ipsum dolor Deal</h2>
+                        <div class="border border-solid border-slate-300 px-1 py-1 mb-2">
+                            <div class="bg-white relative w-full h-40 mt-2">
+                                <img class="absolute w-full h-full bg-[#ef5741]">
+                            </div>
+
+                            <div class="columns-3 flex gap-2 text-center divide-x divide-dashed p-2 justify-center">
+                                <div class="flex flex-col pl-1">
+                                    <h3 class="text-neutral-400 font-semibold">Deal Value</h3>
+                                    <p class="font-semibold">$47</p>
+                                </div>
+                                <div class="flex flex-col pl-1">
+                                    <h3 class="text-neutral-400 font-semibold">Discount</h3>
+                                    <p class="font-semibold">43%</p>
+                                </div>
+                                <div class="flex flex-col pl-1">
+                                    <h3 class="text-neutral-400 font-semibold">You save</h3>
+                                    <p class="font-semibold">$20</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <p class="text-xs text-neutral-400">71 days 23 hrs 38 min 36 sec</p>
+                            <button
+                                class="relative inline-block text-[#5d7730] font-bold px-2 rounded overflow-hidden">
+                                <span class="absolute inset-0 h-1/2 bg-[#c8e087]"></span>
+                                <span class="absolute inset-0 top-1/2 h-1/2 bg-[#a7cf60]"></span>
+                                <span class="relative z-10 text-xs">SEE DEAL</span>
+                            </button>
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- deal 3 -->
+                    <div class="px-8 py-6 md:w-1/3">
+                        <h2 class="font-bold mb-2">Lorem, ipsum dolor Deal</h2>
+                        <div class="border border-solid border-slate-300 px-1 py-1 mb-2">
+                            <div class="bg-white relative w-full h-40 mt-2">
+                                <img class="absolute w-full h-full bg-[#ef5741]">
+                            </div>
+
+                            <div class="columns-3 flex gap-2 text-center divide-x divide-dashed p-2 justify-center">
+                                <div class="flex flex-col pl-1">
+                                    <h3 class="text-neutral-400 font-semibold">Deal Value</h3>
+                                    <p class="font-semibold">$47</p>
+                                </div>
+                                <div class="flex flex-col pl-1">
+                                    <h3 class="text-neutral-400 font-semibold">Discount</h3>
+                                    <p class="font-semibold">43%</p>
+                                </div>
+                                <div class="flex flex-col pl-1">
+                                    <h3 class="text-neutral-400 font-semibold">You save</h3>
+                                    <p class="font-semibold">$20</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <p class="text-xs text-neutral-400">71 days 23 hrs 38 min 36 sec</p>
+                            <button
+                                class="relative inline-block text-[#5d7730] font-bold px-2 rounded overflow-hidden">
+                                <span class="absolute inset-0 h-1/2 bg-[#c8e087]"></span>
+                                <span class="absolute inset-0 top-1/2 h-1/2 bg-[#a7cf60]"></span>
+                                <span class="relative z-10 text-xs">SEE DEAL</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- info -->
+                <div class=" flex flex-col md:flex-row divide-y md:divide-x divide-dashed justify-center">
+
+                    <div class="md:w-1/3 px-8 py-6">
+                        <h2 class="font-bold mb-4">About Our Deals</h2>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque expedita praesentium
+                            explicabo
+                            ipsam exercitationem recusandae magni quae consequuntur voluptas itaque, odio iusto quis
+                            culpa
+                            eos nobis quod non enim. Itaque!</p>
+                    </div>
+
+                    <div class="md:w-1/3 px-8 py-6 divide-y divide-dashed">
+                        <div>
+                            <h2 class="font-bold mb-4">Twitter Buzz</h2>
+                            <p class="mb-4">7 Photoshop tips for designing clean and modern websites <a href="#" class="text-green-600">su.pr/1ruOpp</a></p>
+                            <div class="bg-[#e9e9e9] px-7 py-1 mb-4 inline-block rounded w-fit">1Day Ago</div>
+                        </div>
+
+                        <div>
+                            <p class="my-4">7 Photoshop tips for designing clean and modern websites <a href="#" class="text-green-600">su.pr/1ruOpp</a></p>
+                            <div class="bg-[#e9e9e9] px-7 py-1 mb-4 inline-block rounded w-fit">1Day Ago</div>
+                        </div>
+                    </div>
+
+                    <div class="md:w-1/3 px-8 py-6">
+                        <h2 class="font-bold mb-4">Other pages</h2>
+                        <ul class="divide-y divide-dashed">
+                            <li class="mb-2 py-2 text-green-600"><a href="#">Home</a></li>
+                            <li class="mb-2 py-2 text-green-600"><a href="#">About our deals</a></li>
+                            <li class="mb-2 py-2 text-green-600"><a href="#">All deals</a></li>
+                            <li class="mb-2 py-2 text-green-600"><a href="#">Contact</a></li>
+                            <li class="mb-2 py-2 text-green-600"></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+
+
+        <!-- footer  copyright-->
+        <footer id="footer">
+
+            <div class="flex flex-col justify-center text-center my-8"><p>Copyright Information Goes Here 2012. All Rights Reserved.<br>
+                Designed by <b>Themes Kingdom</b></p></div>
+
+        </footer>
+    </div>
+
+</body>
+
+</html>
