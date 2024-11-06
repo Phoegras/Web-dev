@@ -1,0 +1,7 @@
+[build]
+publish = "public"
+
+[[redirects]]
+from = "/"
+to = "/index-shop.html"
+status = 200
