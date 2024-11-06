@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const connectDB = require('./config/database');
-const hbs = require('hbs'); 
+const hbs = require('hbs');
 
 
 
@@ -34,11 +34,11 @@ hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 // Register hbs helper
 hbs.registerHelper('times', function(n, block) {
-  let accum = '';
-  for (let i = 0; i < n; i++) {
-    accum += block.fn(i);
-  }
-  return accum;
+    let accum = '';
+    for (let i = 0; i < n; i++) {
+        accum += block.fn(i);
+    }
+    return accum;
 });
 
 hbs.registerHelper('floor', function (num) {
@@ -60,24 +60,24 @@ app.use('/products', productsRouter);
 
 //Listen to server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

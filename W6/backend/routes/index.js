@@ -10,26 +10,26 @@ router.get('/', indexController.getIndex);
 router.get('/grid-two', productController.getProducts);
 
 router.get('/cart', function(req, res, next) {
-  res.render('cart');
+    res.render('cart');
 });
 
 router.get('/checkout', function(req, res, next) {
-  res.render('checkout');
+    res.render('checkout');
 });
 
 router.get('/account', function(req, res, next) {
-  res.render('account');
+    res.render('account');
 });
 
 router.get('/about', function(req, res, next) {
-  res.render('about');
+    res.render('about');
 });
 
 router.get('/contact', (req, res) => {
-  res.render('contact', {
-    title: 'Contact Us',
-    noFooter: true
-  });
+    res.render('contact', {
+        title: 'Contact Us',
+        noFooter: true
+    });
 });
 
 module.exports = router;
