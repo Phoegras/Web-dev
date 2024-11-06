@@ -1,17 +1,11 @@
-// const express = require('express');
-// const { getProducts } = require('../controllers/productController');
-// const router = express.Router();
-
-// router.get('/products', getProducts);
-
-// module.exports = router;
-
-// backend/routes/products.js
-var express = require('express');
-var router = express.Router();
-const productController = require('../controllers/productController');
+const express = require('express');
+const router = express.Router();
+const {getProducts, getProductById} = require('../controllers/productController');
 
 // Define route for getting all products
-router.get('/', productController.getProducts);
+router.get('/', getProducts);
+
+// Route to get a single product by ID
+router.get('/:id', getProductById);
 
 module.exports = router;
