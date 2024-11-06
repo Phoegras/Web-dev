@@ -32,7 +32,7 @@ app.set('view engine', 'hbs');
 // Register partials directory
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
-// Register the "times" helper
+// Register hbs helper
 hbs.registerHelper('times', function(n, block) {
     let accum = '';
     for (let i = 0; i < n; i++) {
@@ -41,10 +41,14 @@ hbs.registerHelper('times', function(n, block) {
     return accum;
 });
 
+hbs.registerHelper('floor', function (num) {
+  return Math.floor(num);
+});
+
 //Middleware
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
