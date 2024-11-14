@@ -6,14 +6,14 @@
         "start": "node ./bin/www",
         "dev": "nodemon app.js",
         "beautiful": "lint-staged",
-        "prepare": "husky install"
+        "prepare": "husky"
     },
     "lint-staged": {
         "*.{js,json,hbs}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
     },
     "husky": {
         "hook": {
-        "pre-commit": "lint-staged"
+            "pre-commit": "lint-staged"
         }
     },
     "dependencies": {
