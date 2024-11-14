@@ -6,7 +6,7 @@
         "start": "node ./bin/www",
         "dev": "nodemon app.js",
         "beautiful": "lint-staged",
-        "prepare": "husky"
+        "prepare": "husky install"
     },
     "lint-staged": {
         "*.{js,json,hbs}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
