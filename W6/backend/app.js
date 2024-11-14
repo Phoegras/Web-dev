@@ -6,8 +6,6 @@ var logger = require('morgan');
 const connectDB = require('./config/database');
 const hbs = require('hbs');
 
-
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
@@ -17,7 +15,6 @@ require('dotenv').config();
 
 var app = express();
 const PORT = process.env.PORT || 3000;
-
 
 // Connect to MongoDB
 connectDB();
@@ -33,7 +30,7 @@ app.set('view engine', 'hbs');
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 // Register hbs helper
-hbs.registerHelper('times', function(n, block) {
+hbs.registerHelper('times', function (n, block) {
     let accum = '';
     for (let i = 0; i < n; i++) {
         accum += block.fn(i);
@@ -42,7 +39,7 @@ hbs.registerHelper('times', function(n, block) {
 });
 
 hbs.registerHelper('floor', function (num) {
-  return Math.floor(num);
+    return Math.floor(num);
 });
 
 //Middleware
@@ -57,20 +54,18 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 
-
 //Listen to server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
 
-
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
