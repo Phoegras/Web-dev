@@ -42,12 +42,12 @@ hbs.registerHelper('floor', function (num) {
     return Math.floor(num);
 });
 
-//Middleware
-        app.use(logger('dev'));
-        app.use(express.json());
-        app.use(express.urlencoded({ extended: true }));
-        app.use(cookieParser());
-        app.use(express.static(path.join(__dirname, 'public')));
+        //Middleware
+                app.use(logger('dev'));
+                app.use(express.json());
+                app.use(express.urlencoded({ extended: true }));
+                app.use(cookieParser());
+                app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
 app.use('/', indexRouter);

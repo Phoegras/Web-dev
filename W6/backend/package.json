@@ -11,11 +11,6 @@
   "lint-staged": {
     "*.{js,json,hbs}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
   },
-  "husky": {
-    "hook": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
