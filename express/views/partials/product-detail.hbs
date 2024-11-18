@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="grid md:grid-cols-12 grid-cols-1 gap-30 items-center">
+        <div class="lg:col-span-5 md:col-span-6">
+            <div class="tiny-single-item">
+                {{#each product.images}}
+                    <div class="tiny-slide">
+                        <img src="{{this}}" class="rounded-md shadow dark:shadow-gray-800" alt="{{../product.name}}">
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="lg:col-span-7 md:col-span-6">
+            <div class="lg:ms-6">
+                <h5 class="text-2xl font-semibold">{{product.name}}</h5>
+                <div class="mt-2">
+                    <span class="text-slate-400 font-semibold me-1">${{product.price}} <del class="text-red-600">${{product.originalPrice}}</del></span>
+                    <ul class="list-none inline-block text-orange-400">
+                        {{#times product.rating.score}}
+                            <li class="inline"><i class="mdi mdi-star text-lg"></i></li>
+                        {{/times}}
+                        <li class="inline text-slate-400 font-semibold">{{product.rating.score}} ({{product.rating.reviews}})</li>
+                    </ul>
+                </div>
+
+                <div class="mt-4">
+                    <h5 class="text-lg font-semibold">Overview :</h5>
+                    <p class="text-slate-400 mt-2">{{product.overview}}</p>
+                    <ul class="list-none text-slate-400 mt-4">
+                        {{#each product.features}}
+                            <li class="mb-1 flex"><i class="uil uil-check-circle text-indigo-600 text-xl me-2"></i> {{this}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+
+                <div class="grid lg:grid-cols-2 grid-cols-1 gap-30 mt-4">
+                    <div class="flex items-center">
+                        <h5 class="text-lg font-semibold me-2">Size:</h5>
+                        {{#each product.sizes}}
+                            <a href="#" class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-md bg-indigo-600/5 hover:bg-indigo-600 border-indigo-600/10 hover:border-indigo-600 text-indigo-600 hover:text-white">{{this}}</a>
+                        {{/each}}
+                    </div>
+
+                    <div class="flex items-center">
+                        <h5 class="text-lg font-semibold me-2">Quantity:</h5>
+                        <div class="qty-icons ms-3">
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-md bg-indigo-600/5 hover:bg-indigo-600 border-indigo-600/10 border hover:border-indigo-600 text-indigo-600 hover:text-white minus">-</button>
+                            <input min="1" name="quantity" value="1" type="number" class="h-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-md bg-indigo-600/5 hover:bg-indigo-600 border border-indigo-600/10 hover:border-indigo-600 text-indigo-600 hover:text-white pointer-events-none w-16 ps-4 quantity">
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-md bg-indigo-600/5 hover:bg-indigo-600 border border-indigo-600/10 hover:border-indigo-600 text-indigo-600 hover:text-white plus">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a href="#" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md me-2 mt-2">Shop Now</a>
+                    <a href="#" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center rounded-md bg-indigo-600/5 hover:bg-indigo-600 border-indigo-600/10 hover:border-indigo-600 text-indigo-600 hover:text-white mt-2">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid md:grid-cols-12 grid-cols-1 mt-10 gap-30">
+        <div class="lg:col-span-3 md:col-span-5">
+            <div class="sticky top-20">
+                <ul class="flex-column p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                    <li role="presentation">
+                        <button class="px-4 py-2 text-start text-base font-semibold rounded-md w-full hover:text-indigo-600 duration-500" id="description-tab" data-tabs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
+                    </li>
+                    <li role="presentation">
+                        <button class="px-4 py-2 text-start text-base font-semibold rounded-md w-full mt-3 duration-500" id="addinfo-tab" data-tabs-target="#addinfo" type="button" role="tab" aria-controls="addinfo" aria-selected="false">Additional Information</button>
+                    </li>
+                    <li role="presentation">
+                        <button class="px-4 py-2 text-start text-base font-semibold rounded-md w-full mt-3 duration-500" id="review-tab" data-tabs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">Review</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="lg:col-span-9 md:col-span-7">
+            <div id="myTabContent" class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md">
+                <div id="description" role="tabpanel" aria-labelledby="profile-tab">
+                    <p class="text-slate-400">{{product.description}}</p>
+                </div>
+                <div id="addinfo" class="hidden" role="tabpanel" aria-labelledby="addinfo-tab">
+                    <table class="w-full text-start">
+                        <tbody>
+                            <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                <td class="font-semibold py-4">Color</td>
+                                <td class="text-slate-400 py-4">{{#each product.colors}}{{this}}, {{/each}}</td>
+                            </tr>
+                            <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                <td class="font-semibold py-4">Material</td>
+                                <td class="text-slate-400 py-4">{{product.material}}</td>
+                            </tr>
+                            <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                <td class="font-semibold py-4">Size</td>
+                                <td class="text-slate-400 py-4">{{#each product.sizes}}{{this}}, {{/each}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
