@@ -1,5 +1,5 @@
 <!-- Start Navbar -->
-<nav id="topnav" class="defaultscroll is-sticky bg-white dark:bg-slate-900">
+<nav id="topnav" class="defaultscroll is-sticky z-index-1000 bg-white dark:bg-slate-900">
     <div class="container relative">
         <!-- Logo container-->
         <a class="logo" href="/">
@@ -120,25 +120,29 @@
                 <div class="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden" onclick="event.stopPropagation();">
                     <ul class="py-2 text-start" aria-labelledby="dropdownDefault">
                         <li>
-                            <a href="/" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-sign-in-alt align-middle me-1"></i> Sign in </a>
+                            <a href="/auth/sign-in" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-sign-in-alt align-middle me-1"></i> Sign in </a>
                         </li>
                         <li>
-                            <a href="/users/register" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-user-plus align-middle me-1"></i> Sign up </a>
+                            <a href="/auth/register" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-user-plus align-middle me-1"></i> Sign up </a>
                         </li>
                         <li>
-                            <a href="checkout" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-arrow-circle-down align-middle me-1"></i> Download</a>
+                            <a href="/checkout" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-arrow-circle-down align-middle me-1"></i> Download</a>
                         </li>
                     </ul>
 
                     <ul class="py-2 text-start" aria-labelledby="dropdownDefault">
                         <li>
-                            <a href="/users/register" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-user align-middle me-1"></i> My account </a>
+                            <a href="/account" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-user align-middle me-1"></i> My account </a>
                         </li>
                         <li>
-                            <a href="/" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-shopping-cart align-middle me-1"></i> Shop cart </a>
+                            <a href="/cart" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-shopping-cart align-middle me-1"></i> Shop cart </a>
                         </li>
                         <li>
-                            <a href="checkout" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-sign-out-alt align-middle me-1"></i> Sign out </a>
+                            <a href="/cart" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-clipboard-notes align-middle me-1"></i> Order History</a>
+                        </li>
+                        <li class="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                        <li>
+                            <a href="/" class="block py-1.5 px-4 hover:text-indigo-600"><i class="uil uil-sign-out-alt align-middle me-1"></i> Sign out </a>
                         </li>
                     </ul>
                 </div>

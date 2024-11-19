@@ -1,5 +1,5 @@
 const Product = require('../models/Product');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 // Get all products
 const getProducts = async (req, res) => {
@@ -153,4 +153,4 @@ const seedDatabase = async () => {
     }
   };
   
-  module.exports = { getProducts, getProductById , seedDatabase };
+module.exports = { getProducts, getProductById, seedDatabase };

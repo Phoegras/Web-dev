@@ -3,8 +3,9 @@ const Product = require('../models/Product');
 
 const getIndex = async (req, res) => {
   try {
-    const products = await Product.find({});
-    res.render('index', { layout: 'layout', title: 'Home', products });
+    const featuredProducts = await Product.find({ label: 'Featured' }).limit(8);
+    const saleProducts = await Product.find({ label: 'Sale' }).limit(8);
+    res.render('index', { layout: 'layout', title: 'Home', featuredProducts, saleProducts });
   } catch (error) {
     res.status(500).send('Error fetching products');
   }

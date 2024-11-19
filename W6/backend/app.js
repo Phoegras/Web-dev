@@ -6,8 +6,9 @@ var logger = require('morgan');
 const connectDB = require('./config/database');
 const hbs = require('hbs');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 const productsRouter = require('./routes/products');
 const { seedDatabase } = require('./controllers/productController');
 
@@ -42,16 +43,17 @@ hbs.registerHelper('floor', function (num) {
     return Math.floor(num);
 });
 
-        //Middleware
-                app.use(logger('dev'));
-                app.use(express.json());
-                app.use(express.urlencoded({ extended: true }));
-                app.use(cookieParser());
-                app.use(express.static(path.join(__dirname, 'public')));
+//Middleware
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 app.use('/products', productsRouter);
 
 //Listen to server
