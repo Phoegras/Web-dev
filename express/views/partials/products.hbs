@@ -1,0 +1,57 @@
+
+{{#if products.length}}
+{{#each products}}
+<div class="group">
+  <div class="relative overflow-hidden shadow dark:shadow-gray-800 group-hover:shadow-lg group-hover:dark:shadow-gray-800 rounded-md duration-500">
+    <img src="{{this.images.[0]}}" alt="{{this.name}}">
+
+    <div class="absolute -bottom-20 group-hover:bottom-3 start-3 end-3 duration-500">
+      <a href="cart" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-slate-900 border-slate-900 text-white w-full rounded-md">Add to Cart</a>
+    </div>
+
+    <ul class="list-none absolute top-[10px] end-4 opacity-0 group-hover:opacity-100 duration-500">
+      <li>
+        <a href="javascript:void(0)" class="size-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white"><i class="mdi mdi-heart"></i></a>
+      </li>
+      <li class="mt-1">
+        <a href="/products/{{this._id}}" class="size-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white"><i class="mdi mdi-eye-outline"></i></a>
+      </li>
+      <li class="mt-1">
+        <a href="javascript:void(0)" class="size-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white"><i class="mdi mdi-bookmark-outline"></i></a>
+      </li>
+    </ul>
+
+    {{#if this.label}}
+  <ul class="list-none absolute top-[10px] start-4">
+    <li>
+      <a href="javascript:void(0)" 
+         class="text-white text-[10px] font-bold px-2.5 py-0.5 rounded h-5
+                {{#ifEquals this.label 'New'}}bg-orange-600
+                {{else ifEquals this.label 'Sale'}}bg-blue-600
+                {{else ifEquals this.label 'Featured'}}bg-green-600
+                {{else ifEquals this.label 'Popular'}}bg-cyan-500
+                {{else}}bg-gray-600{{/ifEquals}}">
+        {{this.label}}
+      </a>
+    </li>
+  </ul>
+{{/if}}
+
+  </div>
+
+  <div class="mt-4">
+    <a href="/products/{{this._id}}" class="hover:text-indigo-600 text-lg font-semibold">{{this.name}}</a>
+    <div class="flex justify-between items-center mt-1">
+      <p class="text-green-600">${{this.price}} <del class="text-red-600">${{this.originalPrice}}</del></p>
+      <ul class="font-medium text-amber-400 list-none">
+        {{#times (floor this.rating.score)}}
+        <li class="inline"><i class="mdi mdi-star"></i></li>
+        {{/times}}
+      </ul>
+    </div>
+  </div>
+</div>
+{{/each}}
+{{else}}
+  <p>No products available.</p>
+{{/if}}

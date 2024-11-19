@@ -1,0 +1,143 @@
+    <!-- Start Hero -->
+    <section class="relative table w-full py-20 lg:py-24 bg-gray-50 dark:bg-slate-800">
+        <div class="container relative">
+            <div class="grid grid-cols-1 mt-14">
+                <h3 class="text-3xl leading-normal font-semibold">Shop Grid</h3>
+            </div>
+            <!--end grid-->
+
+            <div class="relative mt-3">
+                <ul class="tracking-[0.5px] mb-0 inline-block">
+                    <li class="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out hover:text-indigo-600"><a href="/">Techwind</a></li>
+                    <li class="inline-block text-base text-slate-950 dark:text-white mx-0.5 ltr:rotate-0 rtl:rotate-180"><i class="uil uil-angle-right-b"></i></li>
+                    <li class="inline-block uppercase text-[13px] font-bold text-indigo-600" aria-current="page">Products</li>
+                </ul>
+            </div>
+        </div>
+        <!--end container-->
+    </section>
+    <!--end section-->
+    <!-- End Hero -->
+
+    <!-- Start -->
+    <section class="relative md:py-24 py-16">
+        <div class="container">
+            <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
+                <div class="lg:col-span-4 md:col-span-6">
+                    <div class="shadow dark:shadow-gray-800 p-6 rounded-md bg-white dark:bg-slate-900 sticky top-20">
+                        <form method="GET" action="/products">
+                            <div class="grid grid-cols-1 gap-3">
+                                <div>
+                                    <label for="searchname" class="hidden font-semibold"></label>
+                                    <div class="relative">
+                                        <i data-feather="search" class="size-4 absolute top-3 start-3"></i>
+
+                                        <input name="search" id="searchname" type="text" value="{{search}}" class="form-input w-full py-2 px-3 h-10 ps-9 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                                            placeholder="Search">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="font-semibold">Categories</label>
+                                    <div class="block mt-2">
+                                        {{#each categories}}
+                                        <div>
+                                        <label class="inline-flex items-center">
+                                            <input
+                                            type="radio"
+                                            class="form-radio border-gray-200 dark:border-gray-800 text-indigo-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 me-2"
+                                            name="category"
+                                            value="{{this}}"
+                                            {{#ifEquals ../category this}}checked{{/ifEquals}}
+                                            />
+                                            <span class="text-slate-400">{{this}}</span>
+                                        </label>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <input type="submit" class="py-2 px-5 inline-block tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full" value="Apply Filter">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--end col-->
+
+                <div class="lg:col-span-8 md:col-span-6">
+                    <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-[30px]">
+                        <div class="lg:col-span-9 md:col-span-8">
+                            <h3 class="text-xl leading-normal font-semibold">Showing 1-9 of {{totalProducts}} results</h3>
+                        </div>
+
+                        <div class="lg:col-span-3 md:col-span-4 md:text-end">
+                            <label class="font-semibold hidden"></label>
+                            <select
+                                class="form-select form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                                onchange="window.location.href = '?sort=' + this.value;"
+                            >
+                                <option value="latest" {{#if (eq sortOption 'latest')}}selected{{/if}}>Sort by latest</option>
+                                <option value="popularity" {{#if (eq sortOption 'popularity')}}selected{{/if}}>Sort by popularity</option>
+                                <option value="rating" {{#if (eq sortOption 'rating')}}selected{{/if}}>Sort by rating</option>
+                                <option value="priceLow" {{#if (eq sortOption 'priceLow')}}selected{{/if}}>Sort by price: low to high</option>
+                                <option value="priceHigh" {{#if (eq sortOption 'priceHigh')}}selected{{/if}}>Sort by price: high to low</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <!--end grid-->
+
+                    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
+                        {{> products}}
+                    </div>
+                    <!--end grid-->
+
+                    <div class="grid md:grid-cols-12 grid-cols-1 mt-8">
+                        <div class="md:col-span-12 text-center">
+                            <nav aria-label="Page navigation example">
+                            <ul class="inline-flex items-center -space-x-px">
+                                {{#if pagination.currentPage}}
+                                <!-- Previous Button -->
+                                <li>
+                                <a href="?page={{subtract pagination.currentPage 1}}&limit={{pagination.limit}}" 
+                                    class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-s-lg hover:text-white border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
+                                    {{#if (lt pagination.currentPage 2)}}disabled{{/if}}>
+                                    <i class="uil uil-angle-left text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
+                                </a>
+                                </li>
+
+                                <!-- Page Numbers -->
+                                {{#each (range 1 pagination.totalPages)}}
+                                <li>
+                                <a href="?page={{this}}&limit={{../pagination.limit}}" 
+                                    class="size-[40px] inline-flex justify-center items-center 
+                                    {{#ifEquals ../pagination.currentPage this}}text-white bg-indigo-600 border border-indigo-600{{else}}text-slate-400 hover:text-white bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600{{/ifEquals}}">
+                                    {{this}}
+                                </a>
+                                </li>
+                                {{/each}}
+
+                                <!-- Next Button -->
+                                <li>
+                                <a href="?page={{add pagination.currentPage 1}}&limit={{pagination.limit}}" 
+                                    class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-e-lg hover:text-white border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
+                                    {{#if (gte pagination.currentPage pagination.totalPages)}}disabled{{/if}}>
+                                    <i class="uil uil-angle-right text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
+                                </a>
+                                </li>
+                                {{/if}}
+                            </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!--end grid-->
+                </div>
+            </div>
+        </div>
+        <!--end container-->
+    </section>
+    <!--end section-->
+    <!-- End -->
