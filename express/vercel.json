@@ -12,10 +12,5 @@
             "dest": "/app.js",
             "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
         }
-    ],
-    "functions": {
-        "app.js": {
-            "regions": ["sin1", "hkg1"]
-        }
-    }
+    ]
 }
