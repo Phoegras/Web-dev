@@ -2,7 +2,7 @@
     <section class="relative mt-20">
         <div class="container-fluid relative">
             <div class="relative py-48 table w-full shadow-md overflow-hidden">
-                <div class="absolute inset-0 bg-[url('../../assets/images/shop/bg')] bg-no-repeat md:bg-left bg-center bg-cover"></div>
+                <div class="absolute inset-0 bg-[url('/images/shop/bg.jpg')] bg-no-repeat md:bg-left bg-center bg-cover"></div>
                 <div class="absolute inset-0 bg-slate-950/30"></div>
                 <div class="container relative">
                     <div class="grid grid-cols-1">
@@ -59,7 +59,7 @@
         <div class="container relative mt-16">
             <div class="grid md:grid-cols-12 grid-cols-1 items-center">
                 <div class="lg:col-span-8 md:col-span-6 md:text-start text-center">
-                    <h3 class="text-2xl leading-normal font-semibold">Most Viewed Products</h3>
+                    <h3 class="text-2xl leading-normal font-semibold">Featured Products</h3>
                 </div>
 
                 <div class="lg:col-span-4 md:col-span-6 md:text-end hidden md:block">
@@ -69,12 +69,36 @@
             <!--end grid-->
 
             <div class="products grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
-                {{> products products=products}}
+                {{> products products = featuredProducts}}
             </div>
             
             <div class="grid md:grid-cols-12 grid-cols-1 md:hidden mt-8">
                 <div class="md:col-span-12 text-center">
                     <a href="products" class="relative inline-block font-semibold tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 text-slate-400 hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">View More Items <i class="uil uil-arrow-right align-middle"></i></a>
+                </div>
+            </div>
+            <!--end grid-->
+        </div>
+
+        <div class="container relative mt-16">
+            <div class="grid md:grid-cols-12 grid-cols-1 items-center">
+                <div class="lg:col-span-8 md:col-span-6 md:text-start text-center">
+                    <h3 class="text-2xl leading-normal font-semibold">Sale Products</h3>
+                </div>
+
+                <div class="lg:col-span-4 md:col-span-6 md:text-end hidden md:block">
+                    <a href="grid-two" class="relative inline-block font-semibold tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 text-slate-400 hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">View More Items <i class="uil uil-arrow-right align-middle"></i></a>
+                </div>
+            </div>
+            <!--end grid-->
+
+            <div class="products grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
+                {{> products products = saleProducts}}
+            </div>
+            
+            <div class="grid md:grid-cols-12 grid-cols-1 md:hidden mt-8">
+                <div class="md:col-span-12 text-center">
+                    <a href="grid-two" class="relative inline-block font-semibold tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 text-slate-400 hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">View More Items <i class="uil uil-arrow-right align-middle"></i></a>
                 </div>
             </div>
             <!--end grid-->
@@ -136,7 +160,7 @@
 
         
     <!-- Start -->
-    <section class="py-28 w-full table relative bg-[url('/images/shop/cta')] bg-center bg-no-repeat bg-cover jarallax" data-jarallax data-speed="0.5">
+    <section class="py-28 w-full table relative bg-[url('/images/shop/cta.jpg')] bg-center bg-no-repeat bg-cover jarallax" data-jarallax data-speed="0.5">
         <div class="absolute inset-0 bg-slate-900/30"></div>
         <div class="container relative">
             <div class="grid grid-cols-1 text-center">
@@ -154,5 +178,3 @@
     </section>
     <!--end section-->
     <!-- End -->
-
-
