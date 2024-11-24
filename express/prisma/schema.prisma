@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type ProductsRating {
+  /// Multiple data types found: Float: 87.5%, Int: 12.5% out of 24 sampled entries
+  score Json
+}
+
+model products {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int            @map("__v")
+  category      String?
+  colors        String[]
+  createdAt     DateTime       @default(now())
+  description   String
+  features      String[]
+  images        String[]
+  label         String
+  material      String?
+  name          String
+  originalPrice Int
+  overview      String?
+  /// Multiple data types found: Float: 87.5%, Int: 12.5% out of 24 sampled entries
+  price         Float
+  rating        ProductsRating
+  sizes         String[]
+  sold          Int?
+  stock         Int
+}
+
+model users {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  v        Int     @map("__v")
+  email    String  @unique(map: "email_1")
+  name     String
+  password String
+  phone    String?
+}

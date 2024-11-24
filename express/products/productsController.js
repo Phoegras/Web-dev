@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const mongoose = require('mongoose')
+const productsBusiness = require('./productsBusiness');
 
 // Get all products
 const getProducts = async (req, res) => {
@@ -12,26 +13,41 @@ const getProducts = async (req, res) => {
 
     const search = req.query.search || '';
     const category = req.query.category || '';
-    const query = {
-      $or: [
-        { name: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
+    let query = {
+      OR: [
+        {
+          name: {
+            contains: search,
+            mode: 'insensitive', // Case-insensitive search
+          },
+        },
+        {
+          description: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
       ],
-    }
-    if(category) {
-      query.category = category;
+    };
+    
+    if (category) {
+      query = {
+        AND: [
+          query,
+          { category: category }, // Filter by category if specified
+        ],
+      };
     }
 
-    const products = await Product.find(query)
-      .sort(sortCriteria)
-      .skip(page * limit - limit)
-      .limit(limit)
-      .lean();
-
-    const totalProducts = await Product.countDocuments(query);
+    const products = await productsBusiness.getProducts(query, page, limit, sortCriteria);
+    const totalProducts = await productsBusiness.getTotalProducts(query);
     const totalPages = Math.ceil(totalProducts / limit);
+    let categories = await productsBusiness.getDistinctCategories();
+    categories = categories.map((category) => category.category).filter(category => category !== null);
+    
+    console.log('Products:', products);
+    console.log('Categories:', categories);
 
-    const categories = await Product.distinct("category");
     res.render('grid-two', { 
       layout: 'layout', 
       products, 
@@ -47,6 +63,7 @@ const getProducts = async (req, res) => {
       }, });
 
   } catch (error) {
+    console.log('Error fetching products:', error);
     res.status(500).send('Error fetching products');
   }
 };
@@ -61,17 +78,13 @@ const getProductById = async (req, res) => {
   }
 
   try {
-      const product = await Product.findById(id).lean();
-      if (!product) {
-          return res.status(404).send('Product not found');
-      }
+    const product = await productsBusiness.getProductById(id);
+    if (!product) {
+      return res.status(404).send('Product not found');
+    }
 
-      // Fetch relevant products based on category or similar criteria
-    const relevantProducts = await Product.find({
-      category: product.category,
-      _id: { $ne: product._id }, // Exclude the current product
-    }).limit(4)
-    .lean();
+    // Fetch relevant products
+    const relevantProducts = await productsBusiness.getRelevantProducts(product.category, product.id);
     console.log(relevantProducts);
     res.render('item-detail', { product, relevantProducts });
   } catch (error) {
@@ -80,36 +93,27 @@ const getProductById = async (req, res) => {
   }
 };
 
-const getPopularProducts = async (req, res) => {
-  try {
-    const popularProducts = await Product.find({ label: 'Popular' });
-    return popularProducts;
-  } catch (error) {
-    res.status(500).send('Error fetching popular products');
-  }
-};
-
 const getSortCriteria = (sortOption) => {
 
     let sortCriteria;
     switch (sortOption) {
       case 'latest':
-        sortCriteria = { createdAt: -1 }; // Sort by creation date (newest first)
+        sortCriteria = [{ createdAt: 'desc' }]; // Sort by creation date (newest first)
         break;
       case 'popularity':
-        sortCriteria = { sold: -1};
+        sortCriteria = [{ sold: 'desc'}];
         break;
       case 'rating':
-        sortCriteria = { rating: -1 }; // Sort by rating (highest first)
+        sortCriteria = [{ rating: 'desc' }]; // Sort by rating (highest first)
         break;
       case 'priceLow':
-        sortCriteria = { price: 1 }; // Sort by price (low to high)
+        sortCriteria = [{ price: 'asc' }]; // Sort by price (low to high)
         break;
       case 'priceHigh':
-        sortCriteria = { price: -1 }; // Sort by price (high to low)
+        sortCriteria = [{ price: 'desc' }]; // Sort by price (high to low)
         break;
       default:
-        sortCriteria = { createdAt: -1 }; // Default to 'latest'
+        sortCriteria = [{ createdAt: 'desc' }]; // Default to 'latest'
         break;
     }
 
@@ -265,4 +269,4 @@ const seedDatabase = async () => {
       console.log('Database seeded with sample data');
   };
   
-  module.exports = { getProducts, getProductById, getPopularProducts, seedDatabase };
+  module.exports = { getProducts, getProductById, seedDatabase };

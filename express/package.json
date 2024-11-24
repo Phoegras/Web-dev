@@ -8,6 +8,7 @@
         "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write *.{js,json,hbs}"
     },
     "dependencies": {
+        "@prisma/client": "^5.22.0",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "~1.4.4",
         "debug": "~2.6.9",
@@ -21,6 +22,7 @@
     "devDependencies": {
         "morgan": "^1.10.0",
         "nodemon": "^3.1.7",
-        "prettier": "^3.3.3"
+        "prettier": "^3.3.3",
+        "prisma": "^5.22.0"
     }
 }
