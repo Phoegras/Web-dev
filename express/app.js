@@ -6,11 +6,11 @@ var logger = require('morgan');
 const connectDB = require('./config/database');
 const exphbs = require('express-handlebars');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-const authRouter = require('./routes/auth');
-const productsRouter = require('./routes/products');
-const { seedDatabase } = require('./controllers/productController');
+var indexRouter = require('./index/index');
+var usersRouter = require('./users/usersRoute');
+const authRouter = require('./authentication/authRoute');
+const productsRouter = require('./products/productsRoute');
+const { seedDatabase } = require('./products/productsController');
 
 require('dotenv').config();
 

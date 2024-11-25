@@ -1,14 +1,12 @@
 // controllers/homeController.js
 const Product = require('../models/Product');
+const productsBusiness = require('../products/productsBusiness');
 
 const getIndex = async (req, res) => {
     try {
-        const featuredProducts = await Product.find({ label: 'Featured' })
-            .lean()
-            .limit(8);
-        const saleProducts = await Product.find({ label: 'Sale' })
-            .lean()
-            .limit(8);
+        const featuredProducts = await productsBusiness.getProductsWithCriteria({ label: 'Featured' }, 8);
+        const saleProducts = await productsBusiness.getProductsWithCriteria({ label: 'Sale' }, 8);
+
         res.render('index', {
             layout: 'layout',
             title: 'Home',
