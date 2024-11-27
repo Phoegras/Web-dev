@@ -44,7 +44,7 @@
     <div class="flex justify-between items-center mt-1">
       <p class="text-green-600">${{this.price}} <del class="text-red-600">${{this.originalPrice}}</del></p>
       <ul class="font-medium text-amber-400 list-none">
-        {{#times (floor this.rating.score)}}
+        {{#times (floor this.rating)}}
         <li class="inline"><i class="mdi mdi-star"></i></li>
         {{/times}}
       </ul>
