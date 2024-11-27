@@ -68,8 +68,10 @@ const getProducts = async (req, res) => {
   }
 };
 
+
 // Validate the ID format 
 const isValidObjectId = (id) => /^[a-fA-F0-9]{24}$/.test(id);
+
 // Get a single product by ID
 const getProductById = async (req, res) => {
   const { id } = req.params;

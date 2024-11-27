@@ -44,6 +44,7 @@ const signIn = async (req, res) => {
 };
 
 const showRePasswordForm = (req, res) => {
+
     res.render('auth-re-password',{
         title: 'Reset Your Password',
         noHeader: true,

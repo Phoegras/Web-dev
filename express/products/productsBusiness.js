@@ -68,7 +68,6 @@ async function getProductById(id) {
     });
     return relevantProducts;
   }
-  
 
 // Seed the database with sample data for testing
 const seedDatabase = async () => {
