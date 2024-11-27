@@ -1,5 +1,3 @@
-const Product = require('../models/Product');
-const mongoose = require('mongoose')
 const productsBusiness = require('./productsBusiness');
 
 // Get all products

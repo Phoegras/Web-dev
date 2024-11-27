@@ -201,84 +201,86 @@
                     class='dropdown-menu absolute end-0 m-0 mt-4 z-10 w-44 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden'
                     onclick='event.stopPropagation();'
                 >
-                    <ul
+                    {{#if isAuthenticated}}
+                        <ul
+                            class='py-2 text-start'
+                            aria-labelledby='dropdownDefault'
+                        >
+                            <li>
+                                <a
+                                    href='/account'
+                                    class='block py-1.5 px-4 hover:text-indigo-600'
+                                ><i class='uil uil-user align-middle me-1'></i>
+                                    My account
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href='/cart'
+                                    class='block py-1.5 px-4 hover:text-indigo-600'
+                                ><i
+                                        class='uil uil-shopping-cart align-middle me-1'
+                                    ></i>
+                                    Shop cart
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href='/cart'
+                                    class='block py-1.5 px-4 hover:text-indigo-600'
+                                ><i
+                                        class='uil uil-clipboard-notes align-middle me-1'
+                                    ></i>
+                                    Order History</a>
+                            </li>
+                            <li
+                                class='border-t border-gray-100 dark:border-gray-800 my-2'
+                            ></li>
+                            <li>
+                                <a
+                                    href='/auth/logout?returnUrl={{req.originalUrl}}'
+                                    class='block py-1.5 px-4 hover:text-indigo-600'
+                                ><i
+                                        class='uil uil-sign-out-alt align-middle me-1'
+                                    ></i>
+                                    Sign out
+                                </a>
+                            </li>
+                        </ul>
+                    {{else}}
+                        <ul
                         class='py-2 text-start'
                         aria-labelledby='dropdownDefault'
-                    >
-                        <li>
-                            <a
-                                href='/auth/sign-in'
-                                class='block py-1.5 px-4 hover:text-indigo-600'
-                            ><i
-                                    class='uil uil-sign-in-alt align-middle me-1'
-                                ></i>
-                                Sign in
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href='/auth/register'
-                                class='block py-1.5 px-4 hover:text-indigo-600'
-                            ><i class='uil uil-user-plus align-middle me-1'></i>
-                                Sign up
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href='/checkout'
-                                class='block py-1.5 px-4 hover:text-indigo-600'
-                            ><i
-                                    class='uil uil-arrow-circle-down align-middle me-1'
-                                ></i>
-                                Download</a>
-                        </li>
-                    </ul>
-
-                    <ul
-                        class='py-2 text-start'
-                        aria-labelledby='dropdownDefault'
-                    >
-                        <li>
-                            <a
-                                href='/account'
-                                class='block py-1.5 px-4 hover:text-indigo-600'
-                            ><i class='uil uil-user align-middle me-1'></i>
-                                My account
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href='/cart'
-                                class='block py-1.5 px-4 hover:text-indigo-600'
-                            ><i
-                                    class='uil uil-shopping-cart align-middle me-1'
-                                ></i>
-                                Shop cart
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href='/cart'
-                                class='block py-1.5 px-4 hover:text-indigo-600'
-                            ><i
-                                    class='uil uil-clipboard-notes align-middle me-1'
-                                ></i>
-                                Order History</a>
-                        </li>
-                        <li
-                            class='border-t border-gray-100 dark:border-gray-800 my-2'
-                        ></li>
-                        <li>
-                            <a
-                                href='/'
-                                class='block py-1.5 px-4 hover:text-indigo-600'
-                            ><i
-                                    class='uil uil-sign-out-alt align-middle me-1'
-                                ></i>
-                                Sign out
-                            </a>
-                        </li>
-                    </ul>
+                        >
+                            <li>
+                                <a
+                                    href='/auth/sign-in'
+                                    class='block py-1.5 px-4 hover:text-indigo-600'
+                                ><i
+                                        class='uil uil-sign-in-alt align-middle me-1'
+                                    ></i>
+                                    Sign in
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href='/auth/register'
+                                    class='block py-1.5 px-4 hover:text-indigo-600'
+                                ><i class='uil uil-user-plus align-middle me-1'></i>
+                                    Sign up
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href='/checkout'
+                                    class='block py-1.5 px-4 hover:text-indigo-600'
+                                ><i
+                                        class='uil uil-arrow-circle-down align-middle me-1'
+                                    ></i>
+                                    Download</a>
+                            </li>
+                        </ul>
+                    {{/if}}
                 </div>
             </li>
         </ul>
