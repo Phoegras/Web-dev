@@ -3,7 +3,11 @@ const passport = require('passport');
 
 // Show register form
 const showRegisterForm = (req, res) => {
-    res.render('auth-register');
+    res.render('auth-register', {
+        title: 'Register',
+        noHeader: true,
+        noFooter: true,
+    });
 };
 
 // Register
@@ -19,12 +23,20 @@ const register = async (req, res) => {
 
 // Show register success notification
 const showRegisterSuccess = (req, res) => {
-    res.render('auth-register-success');
+    res.render('auth-register-success',{
+        title: 'Register',
+        noHeader: true,
+        noFooter: true,
+    });
 };
 
 // Show sign in form
 const showSignInForm = (req, res) => {
-    res.render('auth-sign-in');
+    res.render('auth-sign-in', {
+        title: 'Sign In',
+        noHeader: true,
+        noFooter: true,
+    });
 };
 
 // Sign in
@@ -38,7 +50,12 @@ const signIn = async (req, res, next) => {
 
 // Show re-password form
 const showRePasswordForm = (req, res) => {
-    res.render('auth-re-password');
+
+    res.render('auth-re-password',{
+        title: 'Reset Your Password',
+        noHeader: true,
+        noFooter: true,
+    });
 };
 
 // Sign out
