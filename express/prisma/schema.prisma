@@ -14,7 +14,7 @@ type ProductsRating {
 
 model products {
   id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  v             Int            @map("__v")
+  v             Int?            @map("__v")
   category      String?
   colors        String[]
   createdAt     DateTime       @default(now())
@@ -28,10 +28,10 @@ model products {
   overview      String?
   /// Multiple data types found: Float: 87.5%, Int: 12.5% out of 24 sampled entries
   price         Float
-  rating        ProductsRating
+  rating        Float?
   sizes         String[]
   sold          Int?
-  stock         Int
+  stock         Int @default(0)
 }
 
 model users {

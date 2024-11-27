@@ -3,24 +3,21 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const connectDB = require('./config/database');
 const exphbs = require('express-handlebars');
 
 var indexRouter = require('./index/index');
 var usersRouter = require('./users/usersRoute');
 const authRouter = require('./authentication/authRoute');
 const productsRouter = require('./products/productsRoute');
-const { seedDatabase } = require('./products/productsController');
+const { seedDatabase, deleteProducts } = require('./products/productsBusiness');
 
 require('dotenv').config();
 
 var app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connect to MongoDB
-connectDB();
-
 // Seed the database with sample data (for testing purposes)
+// deleteProducts();
 // seedDatabase();
 
 // view engine setup

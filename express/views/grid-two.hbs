@@ -102,8 +102,12 @@
                                 <!-- Previous Button -->
                                 <li>
                                 <a href="?page={{subtract pagination.currentPage 1}}&limit={{pagination.limit}}" 
-                                    class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-s-lg hover:text-white border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
-                                    {{#if (lt pagination.currentPage 2)}}disabled{{/if}}>
+                                    class="size-[40px] inline-flex justify-center items-center 
+                                    {{#if (lt pagination.currentPage 2)}}
+                                    pointer-events-none opacity-50 cursor-not-allowed text-slate-300 bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600
+                                    {{else}}
+                                    text-slate-400 bg-white dark:bg-slate-900 hover:text-white border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600
+                                    {{/if}}">
                                     <i class="uil uil-angle-left text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
                                 </a>
                                 </li>
@@ -122,8 +126,12 @@
                                 <!-- Next Button -->
                                 <li>
                                 <a href="?page={{add pagination.currentPage 1}}&limit={{pagination.limit}}" 
-                                    class="size-[40px] inline-flex justify-center items-center text-slate-400 bg-white dark:bg-slate-900 rounded-e-lg hover:text-white border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600"
-                                    {{#if (gte pagination.currentPage pagination.totalPages)}}disabled{{/if}}>
+                                    class="size-[40px] inline-flex justify-center items-center 
+                                    {{#if (gte pagination.currentPage pagination.totalPages)}}
+                                    pointer-events-none opacity-50 cursor-not-allowed text-slate-300 bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600
+                                    {{else}}
+                                    text-slate-400 bg-white dark:bg-slate-900 hover:text-white border border-gray-100 dark:border-gray-700 hover:border-indigo-600 dark:hover:border-indigo-600 hover:bg-indigo-600 dark:hover:bg-indigo-600
+                                    {{/if}}">
                                     <i class="uil uil-angle-right text-[20px] rtl:rotate-180 rtl:-mt-1"></i>
                                 </a>
                                 </li>

@@ -16,10 +16,10 @@
                 <div class="mt-2">
                     <span class="text-slate-400 font-semibold me-1">${{product.price}} <del class="text-red-600">${{product.originalPrice}}</del></span>
                     <ul class="list-none inline-block text-orange-400">
-                        {{#times product.rating.score}}
+                        {{#times product.rating}}
                             <li class="inline"><i class="mdi mdi-star text-lg"></i></li>
                         {{/times}}
-                        <li class="inline text-slate-400 font-semibold">{{product.rating.score}} ({{product.rating.reviews}})</li>
+                        <li class="inline text-slate-400 font-semibold">{{product.rating}}</li>
                     </ul>
                 </div>
 
