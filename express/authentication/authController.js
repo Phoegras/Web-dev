@@ -1,4 +1,5 @@
-const User = require('../models/User');
+const authBusiness = require('./authBusiness');
+const passport = require('passport');
 
 // Show register form
 const showRegisterForm = (req, res) => {
@@ -9,8 +10,7 @@ const showRegisterForm = (req, res) => {
 const register = async (req, res) => {
     try {
         const { phone, name, email, password } = req.body;
-        const user = new User({ phone, name, email, password });
-        await user.save();
+        await authBusiness.createUser({ phone, name, email, password });
         res.redirect('/auth/register-success');
     } catch (error) {
         res.status(400).send('Registration failed: ' + error.message);
@@ -27,12 +27,28 @@ const showSignInForm = (req, res) => {
     res.render('auth-sign-in');
 };
 
-const signIn = async (req, res) => {
-    res.redirect('/');
+// Sign in
+const signIn = async (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: req.session.returnTo || '/',
+        failureRedirect: '/auth/sign-in',
+        failureFlash: true,
+    })(req, res, next);
 };
 
+// Show re-password form
 const showRePasswordForm = (req, res) => {
     res.render('auth-re-password');
+};
+
+// Sign out
+const logout = (req, res) => {
+    const returnUrl = req.query.returnUrl || '/';
+
+    req.logout((err) => {
+        if (err) return next(err);
+        res.redirect(returnUrl);
+    });
 };
 
 module.exports = {
@@ -42,4 +58,5 @@ module.exports = {
     showSignInForm,
     signIn,
     showRePasswordForm,
+    logout,
 };

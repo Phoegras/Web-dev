@@ -5,6 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const connectDB = require('./config/database');
 const exphbs = require('express-handlebars');
+const session = require('express-session');
+const passport = require('passport');
+const passportConfig = require('./config/passport');
+passportConfig(passport);
+const flash = require('connect-flash');
 
 var indexRouter = require('./index/index');
 var usersRouter = require('./users/usersRoute');
@@ -41,6 +46,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+    session({
+        secret: 'your_secret_key',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: null,
+        },
+    }),
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.isAuthenticated();
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    next();
+});
 
 //Routes
 app.use('/', indexRouter);
