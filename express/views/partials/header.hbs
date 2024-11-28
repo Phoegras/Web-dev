@@ -208,7 +208,7 @@
                         >
                             <li>
                                 <a
-                                    href='/account'
+                                    href='/users/account'
                                     class='block py-1.5 px-4 hover:text-indigo-600'
                                 ><i class='uil uil-user align-middle me-1'></i>
                                     My account
@@ -293,23 +293,29 @@
 
                 <li><a href='/about' class='sub-menu-item'>About Us</a></li>
 
-                <li class='has-submenu parent-menu-item'>
-                    <a href='javascript:void(0)'>Shop</a><span
-                        class='menu-arrow'
-                    ></span>
-                    <ul class='submenu'>
-                        <li><a
-                                href='/products'
-                                class='sub-menu-item'
-                            >Products</a></li>
-                        <li><a href='/cart' class='sub-menu-item'>Shop Cart</a></li>
-                        <li><a
-                                href='/checkout'
-                                class='sub-menu-item'
-                            >Checkout</a></li>
-                        <li><a href='/account' class='sub-menu-item'>My Account</a></li>
-                    </ul>
-                </li>
+                {{#if isAuthenticated}}
+                    <li class='has-submenu parent-menu-item'>
+                        <a href='javascript:void(0)'>Shop</a><span
+                            class='menu-arrow'
+                        ></span>
+                        <ul class='submenu'>
+                            <li><a
+                                    href='/products'
+                                    class='sub-menu-item'
+                                >Products</a></li>
+                            <li><a href='/cart' class='sub-menu-item'>Shop Cart</a></li>
+                            <li><a
+                                    href='/checkout'
+                                    class='sub-menu-item'
+                                >Checkout</a></li>
+                            <li><a href='/users/account' class='sub-menu-item'>My Account</a></li>
+                        </ul>
+                    </li>
+                {{else}}
+                    <li class='has-submenu parent-menu-item'>
+                        <a href='/products'>Shop</a>
+                    </li>
+                {{/if}}
 
                 <li><a href='/contact' class='sub-menu-item'>Contact</a></li>
             </ul>

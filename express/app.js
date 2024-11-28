@@ -15,7 +15,7 @@ var usersRouter = require('./users/usersRoute');
 const authRouter = require('./authentication/authRoute');
 const productsRouter = require('./products/productsRoute');
 
-const { seedDatabase, deleteProducts } = require('./products/productsBusiness');
+const { seedDatabase, deleteProducts } = require('./business/productsBusiness');
 
 require('dotenv').config();
 

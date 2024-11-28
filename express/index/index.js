@@ -13,10 +13,6 @@ router.get('/checkout', function (req, res, next) {
     res.render('checkout');
 });
 
-router.get('/account', function (req, res, next) {
-    res.render('account');
-});
-
 router.get('/about', function (req, res, next) {
     res.render('about');
 });

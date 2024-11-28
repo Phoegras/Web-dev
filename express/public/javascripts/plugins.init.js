@@ -7,7 +7,6 @@
    File Description: Common JS file of the template(plugins.init.js)
 */
 
-
 /*********************************/
 /*         INDEX                 */
 /*================================
@@ -35,12 +34,12 @@
  *     19. Custom Dropdown       * (For Dropdown)
  *     20. Connect wallet        * (Only For MetaMask)
  ================================*/
-         
+
 //=========================================//
 /*            01) Tiny slider              */
 //=========================================//
 
-if(document.getElementsByClassName('tiny-single-item').length > 0) {
+if (document.getElementsByClassName('tiny-single-item').length > 0) {
     var slider = tns({
         container: '.tiny-single-item',
         items: 1,
@@ -51,13 +50,13 @@ if(document.getElementsByClassName('tiny-single-item').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
+        navPosition: 'bottom',
         speed: 400,
         gutter: 16,
     });
-};
+}
 
-if(document.getElementsByClassName('tiny-one-item').length > 0) {
+if (document.getElementsByClassName('tiny-one-item').length > 0) {
     var slider = tns({
         container: '.tiny-one-item',
         items: 1,
@@ -68,15 +67,18 @@ if(document.getElementsByClassName('tiny-one-item').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
-        controlsText: ['<i class="mdi mdi-chevron-left "></i>', '<i class="mdi mdi-chevron-right"></i>'],
+        navPosition: 'bottom',
+        controlsText: [
+            '<i class="mdi mdi-chevron-left "></i>',
+            '<i class="mdi mdi-chevron-right"></i>',
+        ],
         nav: false,
         speed: 400,
         gutter: 0,
     });
-};
+}
 
-if(document.getElementsByClassName('tiny-two-item').length > 0) {
+if (document.getElementsByClassName('tiny-two-item').length > 0) {
     var slider = tns({
         container: '.tiny-two-item',
         controls: true,
@@ -86,20 +88,23 @@ if(document.getElementsByClassName('tiny-two-item').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
-        controlsText: ['<i class="mdi mdi-chevron-left "></i>', '<i class="mdi mdi-chevron-right"></i>'],
+        navPosition: 'bottom',
+        controlsText: [
+            '<i class="mdi mdi-chevron-left "></i>',
+            '<i class="mdi mdi-chevron-right"></i>',
+        ],
         nav: false,
         speed: 400,
         gutter: 0,
         responsive: {
             768: {
-                items: 2
+                items: 2,
             },
         },
     });
-};
+}
 
-if(document.getElementsByClassName('tiny-three-item').length > 0) {
+if (document.getElementsByClassName('tiny-three-item').length > 0) {
     var slider = tns({
         container: '.tiny-three-item',
         controls: false,
@@ -109,26 +114,26 @@ if(document.getElementsByClassName('tiny-three-item').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
+        navPosition: 'bottom',
         speed: 400,
         gutter: 12,
         responsive: {
             992: {
-                items: 3
+                items: 3,
             },
 
             767: {
-                items: 2
+                items: 2,
             },
 
             320: {
-                items: 1
+                items: 1,
             },
         },
     });
-};
+}
 
-if(document.getElementsByClassName('tiny-three-item-icon').length > 0) {
+if (document.getElementsByClassName('tiny-three-item-icon').length > 0) {
     var slider = tns({
         container: '.tiny-three-item-icon',
         controls: true,
@@ -138,28 +143,31 @@ if(document.getElementsByClassName('tiny-three-item-icon').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
-        controlsText: ['<i class="mdi mdi-chevron-left "></i>', '<i class="mdi mdi-chevron-right"></i>'],
+        navPosition: 'bottom',
+        controlsText: [
+            '<i class="mdi mdi-chevron-left "></i>',
+            '<i class="mdi mdi-chevron-right"></i>',
+        ],
         nav: false,
         speed: 400,
         gutter: 0,
         responsive: {
             992: {
-                items: 3
+                items: 3,
             },
 
             767: {
-                items: 2
+                items: 2,
             },
 
             320: {
-                items: 1
+                items: 1,
             },
         },
     });
-};
+}
 
-if(document.getElementsByClassName('tiny-six-item').length > 0) {
+if (document.getElementsByClassName('tiny-six-item').length > 0) {
     var slider = tns({
         container: '.tiny-six-item',
         controls: true,
@@ -169,32 +177,35 @@ if(document.getElementsByClassName('tiny-six-item').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
-        controlsText: ['<i class="mdi mdi-chevron-left "></i>', '<i class="mdi mdi-chevron-right"></i>'],
+        navPosition: 'bottom',
+        controlsText: [
+            '<i class="mdi mdi-chevron-left "></i>',
+            '<i class="mdi mdi-chevron-right"></i>',
+        ],
         nav: false,
         speed: 400,
         gutter: 0,
         responsive: {
             1025: {
-                items: 6
+                items: 6,
             },
 
             992: {
-                items: 4
+                items: 4,
             },
 
             767: {
-                items: 3
+                items: 3,
             },
 
             320: {
-                items: 1
+                items: 1,
             },
         },
     });
-};
+}
 
-if(document.getElementsByClassName('tiny-ten-item').length > 0) {
+if (document.getElementsByClassName('tiny-ten-item').length > 0) {
     var slider = tns({
         container: '.tiny-ten-item',
         controls: true,
@@ -204,32 +215,35 @@ if(document.getElementsByClassName('tiny-ten-item').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
-        controlsText: ['<i class="mdi mdi-chevron-left "></i>', '<i class="mdi mdi-chevron-right"></i>'],
+        navPosition: 'bottom',
+        controlsText: [
+            '<i class="mdi mdi-chevron-left "></i>',
+            '<i class="mdi mdi-chevron-right"></i>',
+        ],
         nav: false,
         speed: 400,
         gutter: 0,
         responsive: {
             1025: {
-                items: 10
+                items: 10,
             },
 
             992: {
-                items: 7
+                items: 7,
             },
 
             767: {
-                items: 5
+                items: 5,
             },
 
             320: {
-                items: 2
+                items: 2,
             },
         },
     });
-};
+}
 
-if(document.getElementsByClassName('tiny-twelve-item').length > 0) {
+if (document.getElementsByClassName('tiny-twelve-item').length > 0) {
     var slider = tns({
         container: '.tiny-twelve-item',
         controls: true,
@@ -239,32 +253,35 @@ if(document.getElementsByClassName('tiny-twelve-item').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
-        controlsText: ['<i class="mdi mdi-chevron-left "></i>', '<i class="mdi mdi-chevron-right"></i>'],
+        navPosition: 'bottom',
+        controlsText: [
+            '<i class="mdi mdi-chevron-left "></i>',
+            '<i class="mdi mdi-chevron-right"></i>',
+        ],
         nav: false,
         speed: 400,
         gutter: 0,
         responsive: {
             1025: {
-                items: 12
+                items: 12,
             },
 
             992: {
-                items: 8
+                items: 8,
             },
 
             767: {
-                items: 6
+                items: 6,
             },
 
             320: {
-                items: 2
+                items: 2,
             },
         },
     });
-};
+}
 
-if(document.getElementsByClassName('tiny-five-item').length > 0) {
+if (document.getElementsByClassName('tiny-five-item').length > 0) {
     var slider = tns({
         container: '.tiny-five-item',
         controls: true,
@@ -274,32 +291,35 @@ if(document.getElementsByClassName('tiny-five-item').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
-        controlsText: ['<i class="mdi mdi-chevron-left "></i>', '<i class="mdi mdi-chevron-right"></i>'],
+        navPosition: 'bottom',
+        controlsText: [
+            '<i class="mdi mdi-chevron-left "></i>',
+            '<i class="mdi mdi-chevron-right"></i>',
+        ],
         nav: false,
         speed: 400,
         gutter: 0,
         responsive: {
             1025: {
-                items: 5
+                items: 5,
             },
 
             992: {
-                items: 4
+                items: 4,
             },
 
             767: {
-                items: 3
+                items: 3,
             },
 
             425: {
-                items: 1
+                items: 1,
             },
         },
     });
-};
+}
 
-if(document.getElementsByClassName('tiny-home-slide-four').length > 0) {
+if (document.getElementsByClassName('tiny-home-slide-four').length > 0) {
     var slider = tns({
         container: '.tiny-home-slide-four',
         controls: true,
@@ -309,30 +329,33 @@ if(document.getElementsByClassName('tiny-home-slide-four').length > 0) {
         autoplay: true,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000,
-        navPosition: "bottom",
-        controlsText: ['<i class="mdi mdi-chevron-left "></i>', '<i class="mdi mdi-chevron-right"></i>'],
+        navPosition: 'bottom',
+        controlsText: [
+            '<i class="mdi mdi-chevron-left "></i>',
+            '<i class="mdi mdi-chevron-right"></i>',
+        ],
         nav: false,
         speed: 400,
         gutter: 0,
         responsive: {
             1025: {
-                items: 4
+                items: 4,
             },
 
             992: {
-                items: 3
+                items: 3,
             },
 
             767: {
-                items: 2
+                items: 2,
             },
 
             320: {
-                items: 1
+                items: 1,
             },
         },
     });
-};
+}
 
 //=========================================//
 /*            02) Swiper slider            */
@@ -353,7 +376,14 @@ try {
             el: '.swiper-pagination',
             clickable: true,
             renderBullet: function (index, className) {
-                return '<span class="' + className + '">' + 0 + (index + 1) + '</span>';
+                return (
+                    '<span class="' +
+                    className +
+                    '">' +
+                    0 +
+                    (index + 1) +
+                    '</span>'
+                );
             },
         },
 
@@ -369,54 +399,54 @@ try {
                     var slideProgress = swiper.slides[i].progress;
                     var innerOffset = swiper.width * interleaveOffset;
                     var innerTranslate = slideProgress * innerOffset;
-                    swiper.slides[i].querySelector(".slide-inner").style.transform =
-                        "translate3d(" + innerTranslate + "px, 0, 0)";
+                    swiper.slides[i].querySelector(
+                        '.slide-inner',
+                    ).style.transform =
+                        'translate3d(' + innerTranslate + 'px, 0, 0)';
                 }
             },
 
             touchStart: function () {
                 var swiper = this;
                 for (var i = 0; i < swiper.slides.length; i++) {
-                    swiper.slides[i].style.transition = "";
+                    swiper.slides[i].style.transition = '';
                 }
             },
 
             setTransition: function (speed) {
                 var swiper = this;
                 for (var i = 0; i < swiper.slides.length; i++) {
-                    swiper.slides[i].style.transition = speed + "ms";
-                    swiper.slides[i].querySelector(".slide-inner").style.transition =
-                        speed + "ms";
+                    swiper.slides[i].style.transition = speed + 'ms';
+                    swiper.slides[i].querySelector(
+                        '.slide-inner',
+                    ).style.transition = speed + 'ms';
                 }
-            }
-        }
+            },
+        },
     };
 
     // DATA BACKGROUND IMAGE
-    var swiper = new Swiper(".swiper-container", swiperOptions);
+    var swiper = new Swiper('.swiper-container', swiperOptions);
 
-    let data = document.querySelectorAll(".slide-bg-image")
+    let data = document.querySelectorAll('.slide-bg-image');
     data.forEach((e) => {
-        e.style.backgroundImage =
-        `url(${e.getAttribute('data-background')})`;
-    })
-} catch (err) {
-
-}
+        e.style.backgroundImage = `url(${e.getAttribute('data-background')})`;
+    });
+} catch (err) {}
 
 //=========================================//
 /*            06) Countdown                */
 //=========================================//
 try {
-    var setEndDate1 = "December 29, 2023 6:0:0";
-    var setEndDate2 = "January 13, 2024 5:3:1";
-    var setEndDate3 = "January 22, 2024 1:0:1";
-    var setEndDate4 = "February 14, 2024 1:2:1";
-    var setEndDate5 = "March 01, 2024 1:6:6";
-    var setEndDate6 = "March 15, 2024 2:5:5";
-    var setEndDate7 = "April 08, 2024 5:1:4";
-    var setEndDate8 = "April 20, 2024 1:6:3";
-    var setEndDate9 = "May 30, 2024 1:5:2";
+    var setEndDate1 = 'December 29, 2023 6:0:0';
+    var setEndDate2 = 'January 13, 2024 5:3:1';
+    var setEndDate3 = 'January 22, 2024 1:0:1';
+    var setEndDate4 = 'February 14, 2024 1:2:1';
+    var setEndDate5 = 'March 01, 2024 1:6:6';
+    var setEndDate6 = 'March 15, 2024 2:5:5';
+    var setEndDate7 = 'April 08, 2024 5:1:4';
+    var setEndDate8 = 'April 20, 2024 1:6:3';
+    var setEndDate9 = 'May 30, 2024 1:5:2';
 
     function startCountDownDate(dateVal) {
         var countDownDate = new Date(dateVal).getTime();
@@ -426,29 +456,33 @@ try {
     function countDownTimer(start, targetDOM) {
         // Get todays date and time
         var now = new Date().getTime();
-        
+
         // Find the distance between now and the count down date
         var distance = start - now;
-        
+
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
+
         // add 0 at the beginning if days, hours, minutes, seconds values are less than 10
-        days = (days < 10) ? "0" + days : days;
-        hours = (hours < 10) ? "0" + hours : hours;
-        minutes = (minutes < 10) ? "0" + minutes : minutes;
-        seconds = (seconds < 10) ? "0" + seconds : seconds;
+        days = days < 10 ? '0' + days : days;
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
 
         // Output the result in an element with auction-item-x"
-        document.querySelector("#" + targetDOM).textContent = days + " : " + hours + " : " + minutes + " : " + seconds;
-        
-        // If the count down is over, write some text 
+        document.querySelector('#' + targetDOM).textContent =
+            days + ' : ' + hours + ' : ' + minutes + ' : ' + seconds;
+
+        // If the count down is over, write some text
         if (distance < 0) {
             // clearInterval();
-            document.querySelector("#" + targetDOM).textContent = "00 : 00 : 00 : 00";
+            document.querySelector('#' + targetDOM).textContent =
+                '00 : 00 : 00 : 00';
         }
     }
 
@@ -462,94 +496,112 @@ try {
     var cdd8 = startCountDownDate(setEndDate8);
     var cdd9 = startCountDownDate(setEndDate9);
 
-    if(document.getElementById("auction-item-1"))
-    setInterval(function(){ countDownTimer(cdd1, "auction-item-1"); }, 1000);
-    if(document.getElementById("auction-item-2"))
-    setInterval(function(){ countDownTimer(cdd2, "auction-item-2"); }, 1000);
-    if(document.getElementById("auction-item-3"))
-    setInterval(function(){ countDownTimer(cdd3, "auction-item-3"); }, 1000);
-    if(document.getElementById("auction-item-4"))
-    setInterval(function(){ countDownTimer(cdd4, "auction-item-4"); }, 1000);
-    if(document.getElementById("auction-item-5"))
-    setInterval(function(){ countDownTimer(cdd5, "auction-item-5"); }, 1000);
-    if(document.getElementById("auction-item-6"))
-    setInterval(function(){ countDownTimer(cdd6, "auction-item-6"); }, 1000);
-    if(document.getElementById("auction-item-7"))
-    setInterval(function(){ countDownTimer(cdd7, "auction-item-7"); }, 1000);
-    if(document.getElementById("auction-item-8"))
-    setInterval(function(){ countDownTimer(cdd8, "auction-item-8"); }, 1000);
-    if(document.getElementById("auction-item-9"))
-    setInterval(function(){ countDownTimer(cdd9, "auction-item-9"); }, 1000);
-
-} catch (error) {
-    
-}
+    if (document.getElementById('auction-item-1'))
+        setInterval(function () {
+            countDownTimer(cdd1, 'auction-item-1');
+        }, 1000);
+    if (document.getElementById('auction-item-2'))
+        setInterval(function () {
+            countDownTimer(cdd2, 'auction-item-2');
+        }, 1000);
+    if (document.getElementById('auction-item-3'))
+        setInterval(function () {
+            countDownTimer(cdd3, 'auction-item-3');
+        }, 1000);
+    if (document.getElementById('auction-item-4'))
+        setInterval(function () {
+            countDownTimer(cdd4, 'auction-item-4');
+        }, 1000);
+    if (document.getElementById('auction-item-5'))
+        setInterval(function () {
+            countDownTimer(cdd5, 'auction-item-5');
+        }, 1000);
+    if (document.getElementById('auction-item-6'))
+        setInterval(function () {
+            countDownTimer(cdd6, 'auction-item-6');
+        }, 1000);
+    if (document.getElementById('auction-item-7'))
+        setInterval(function () {
+            countDownTimer(cdd7, 'auction-item-7');
+        }, 1000);
+    if (document.getElementById('auction-item-8'))
+        setInterval(function () {
+            countDownTimer(cdd8, 'auction-item-8');
+        }, 1000);
+    if (document.getElementById('auction-item-9'))
+        setInterval(function () {
+            countDownTimer(cdd9, 'auction-item-9');
+        }, 1000);
+} catch (error) {}
 
 try {
-    if(document.getElementById("days")){
+    if (document.getElementById('days')) {
         // The data/time we want to countdown to
-        var eventCountDown = new Date("December 25, 2024 16:37:52").getTime();
+        var eventCountDown = new Date('December 25, 2024 16:37:52').getTime();
 
         // Run myfunc every second
         var myfunc = setInterval(function () {
-
             var now = new Date().getTime();
             var timeleft = eventCountDown - now;
 
             // Calculating the days, hours, minutes and seconds left
             var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+            var hours = Math.floor(
+                (timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+            );
+            var minutes = Math.floor(
+                (timeleft % (1000 * 60 * 60)) / (1000 * 60),
+            );
             var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
 
             // Result is output to the specific element
-            document.getElementById("days").innerHTML = days + "<p class='count-head'>Days</p> "
-            document.getElementById("hours").innerHTML = hours + "<p class='count-head'>Hours</p> "
-            document.getElementById("mins").innerHTML = minutes + "<p class='count-head'>Mins</p> "
-            document.getElementById("secs").innerHTML = seconds + "<p class='count-head'>Secs</p> "
+            document.getElementById('days').innerHTML =
+                days + "<p class='count-head'>Days</p> ";
+            document.getElementById('hours').innerHTML =
+                hours + "<p class='count-head'>Hours</p> ";
+            document.getElementById('mins').innerHTML =
+                minutes + "<p class='count-head'>Mins</p> ";
+            document.getElementById('secs').innerHTML =
+                seconds + "<p class='count-head'>Secs</p> ";
 
             // Display the message when countdown is over
             if (timeleft < 0) {
                 clearInterval(myfunc);
-                document.getElementById("days").innerHTML = ""
-                document.getElementById("hours").innerHTML = ""
-                document.getElementById("mins").innerHTML = ""
-                document.getElementById("secs").innerHTML = ""
-                document.getElementById("end").innerHTML = "00:00:00:00";
+                document.getElementById('days').innerHTML = '';
+                document.getElementById('hours').innerHTML = '';
+                document.getElementById('mins').innerHTML = '';
+                document.getElementById('secs').innerHTML = '';
+                document.getElementById('end').innerHTML = '00:00:00:00';
             }
         }, 1000);
     }
-} catch (err) {
-
-}
-
+} catch (err) {}
 
 //=========================================//
 /*/*            04) Maintenance js         */
 //=========================================//
 
 try {
-    if(document.getElementById("maintenance")){
+    if (document.getElementById('maintenance')) {
         var seconds = 3599;
         function secondPassed() {
             var minutes = Math.round((seconds - 30) / 60);
             var remainingSeconds = seconds % 60;
             if (remainingSeconds < 10) {
-                remainingSeconds = "0" + remainingSeconds;
+                remainingSeconds = '0' + remainingSeconds;
             }
-            document.getElementById('maintenance').innerHTML = minutes + ":" + remainingSeconds;
+            document.getElementById('maintenance').innerHTML =
+                minutes + ':' + remainingSeconds;
             if (seconds == 0) {
                 clearInterval(countdownTimer);
-                document.getElementById('maintenance').innerHTML = "Buzz Buzz";
+                document.getElementById('maintenance').innerHTML = 'Buzz Buzz';
             } else {
                 seconds--;
             }
         }
         var countdownTimer = setInterval('secondPassed()', 1000);
     }
-} catch (err) {
-
-}
+} catch (err) {}
 
 //=========================================//
 /*/*            05) Data Counter           */
@@ -559,7 +611,7 @@ try {
     const counter = document.querySelectorAll('.counter-value');
     const speed = 2500; // The lower the slower
 
-    counter.forEach(counter_value => {
+    counter.forEach((counter_value) => {
         const updateCount = () => {
             const target = +counter_value.getAttribute('data-target');
             const count = +counter_value.innerText;
@@ -584,22 +636,16 @@ try {
 
         updateCount();
     });
-} catch (err) {
-
-}
-
+} catch (err) {}
 
 //=========================================//
 /*/*            06) Datepicker js*/
 //=========================================//
 
 try {
-    const start = datepicker('.start', { id: 1 })
-    const end = datepicker('.end', { id: 1 })
-} catch (err) {
-
-}
-
+    const start = datepicker('.start', { id: 1 });
+    const end = datepicker('.end', { id: 1 });
+} catch (err) {}
 
 //=========================================//
 /*/*            07) Gallery filter js      */
@@ -610,7 +656,7 @@ try {
 
     class Demo {
         constructor(element) {
-            if(element){
+            if (element) {
                 this.element = element;
                 this.shuffle = new Shuffle(element, {
                     itemSelector: '.picture-item',
@@ -680,36 +726,25 @@ try {
     document.addEventListener('DOMContentLoaded', () => {
         window.demo = new Demo(document.getElementById('grid'));
     });
-} catch (err) {
-
-}
-
+} catch (err) {}
 
 //=========================================//
 /*/*            08) Tobii lightbox         */
 //=========================================//
 
 try {
-    const tobii = new Tobii()
-} catch (err) {
-
-}
-
+    const tobii = new Tobii();
+} catch (err) {}
 
 //=========================================//
 /*/*            09) CK Editor              */
 //=========================================//
 
 try {
-    ClassicEditor
-    .create(document.querySelector('#editor'))
-    .catch(error => {
+    ClassicEditor.create(document.querySelector('#editor')).catch((error) => {
         console.error(error);
     });
-} catch(err) {
-
-}
-
+} catch (err) {}
 
 //=========================================//
 /*/*            10) Fade Animation         */
@@ -718,12 +753,9 @@ try {
 try {
     AOS.init({
         easing: 'ease-in-out-sine',
-        duration: 1000
+        duration: 1000,
     });
-} catch (err) {
-
-}
-
+} catch (err) {}
 
 //=========================================//
 /*/* 11) Typed Text animation (animation) */
@@ -751,7 +783,9 @@ try {
         this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
         var that = this;
         var delta = 200 - Math.random() * 100;
-        if (this.isDeleting) { delta /= 2; }
+        if (this.isDeleting) {
+            delta /= 2;
+        }
         if (!this.isDeleting && this.txt === fullTxt) {
             delta = this.period;
             this.isDeleting = true;
@@ -767,10 +801,8 @@ try {
 
     function typewrite() {
         if (toRotate === 'undefined') {
-            changeText()
-        }
-        else
-            var elements = document.getElementsByClassName('typewrite');
+            changeText();
+        } else var elements = document.getElementsByClassName('typewrite');
         for (var i = 0; i < elements.length; i++) {
             var toRotate = elements[i].getAttribute('data-type');
             var period = elements[i].getAttribute('data-period');
@@ -779,79 +811,77 @@ try {
             }
         }
         // INJECT CSS
-        var css = document.createElement("style");
-        css.type = "text/css";
-        css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid transparent}";
+        var css = document.createElement('style');
+        css.type = 'text/css';
+        css.innerHTML =
+            '.typewrite > .wrap { border-right: 0.08em solid transparent}';
         document.body.appendChild(css);
-    };
+    }
     window.onload(typewrite());
-} catch(err) {
-
-}
-
+} catch (err) {}
 
 //=========================================//
 /*/*    12) Validation Shop Checkouts      */
 //=========================================//
 
 (function () {
-    'use strict'
+    'use strict';
 
-    if(document.getElementsByClassName('needs-validation').length > 0) {
+    if (document.getElementsByClassName('needs-validation').length > 0) {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
+        var forms = document.querySelectorAll('.needs-validation');
 
         // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
-                }
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener(
+                'submit',
+                function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
 
-                form.classList.add('was-validated')
-            }, false)
-        })
+                    form.classList.add('was-validated');
+                },
+                false,
+            );
+        });
     }
-})()
-
+})();
 
 //=========================================//
 /*/*      13) Switcher Pricing Plans       */
 //=========================================//
 try {
-    var e = document.getElementById("filt-monthly"),
-        d = document.getElementById("filt-yearly"),
-        t = document.getElementById("switcher"),
-        m = document.getElementById("monthly"),
-        y = document.getElementById("yearly");
+    var e = document.getElementById('filt-monthly'),
+        d = document.getElementById('filt-yearly'),
+        t = document.getElementById('switcher'),
+        m = document.getElementById('monthly'),
+        y = document.getElementById('yearly');
 
-    e.addEventListener("click", function(){
+    e.addEventListener('click', function () {
         t.checked = false;
-        e.classList.add("toggler--is-active");
-        d.classList.remove("toggler--is-active");
-        m.classList.remove("hide");
-        y.classList.add("hide");
+        e.classList.add('toggler--is-active');
+        d.classList.remove('toggler--is-active');
+        m.classList.remove('hide');
+        y.classList.add('hide');
     });
 
-    d.addEventListener("click", function(){
+    d.addEventListener('click', function () {
         t.checked = true;
-        d.classList.add("toggler--is-active");
-        e.classList.remove("toggler--is-active");
-        m.classList.add("hide");
-        y.classList.remove("hide");
+        d.classList.add('toggler--is-active');
+        e.classList.remove('toggler--is-active');
+        m.classList.add('hide');
+        y.classList.remove('hide');
     });
 
-    t.addEventListener("click", function(){
-        d.classList.toggle("toggler--is-active");
-        e.classList.toggle("toggler--is-active");
-        m.classList.toggle("hide");
-        y.classList.toggle("hide");
-    })
-} catch(err) {
-
-}
+    t.addEventListener('click', function () {
+        d.classList.toggle('toggler--is-active');
+        e.classList.toggle('toggler--is-active');
+        m.classList.toggle('hide');
+        y.classList.toggle('hide');
+    });
+} catch (err) {}
 
 //=========================================//
 /*/*      14) Cookies Policy               */
@@ -859,157 +889,162 @@ try {
 
 try {
     /* common fuctions */
-    function el(selector) { return document.querySelector(selector) }
-    function els(selector) { return document.querySelectorAll(selector) }
-    function on(selector, event, action) { els(selector).forEach(e => e.addEventListener(event, action)) }
-    function cookie(name) { 
-        let c = document.cookie.split('; ').find(cookie => cookie && cookie.startsWith(name+'='))
-        return c ? c.split('=')[1] : false; 
+    function el(selector) {
+        return document.querySelector(selector);
+    }
+    function els(selector) {
+        return document.querySelectorAll(selector);
+    }
+    function on(selector, event, action) {
+        els(selector).forEach((e) => e.addEventListener(event, action));
+    }
+    function cookie(name) {
+        let c = document.cookie
+            .split('; ')
+            .find((cookie) => cookie && cookie.startsWith(name + '='));
+        return c ? c.split('=')[1] : false;
     }
 
     /* popup button hanler */
     on('.cookie-popup button', 'click', () => {
         el('.cookie-popup').classList.add('cookie-popup-accepted');
-        document.cookie = `cookie-accepted=true`
+        document.cookie = `cookie-accepted=true`;
     });
 
     /* popup init hanler */
-    if (cookie('cookie-accepted') !== "true") {
+    if (cookie('cookie-accepted') !== 'true') {
         el('.cookie-popup').classList.add('cookie-popup-not-accepted');
     }
-} catch (error) {
-    
-}
+} catch (error) {}
 
 //=========================================//
 /*/*            15) Back Button            */
 //=========================================//
-document.getElementsByClassName("back-button")[0]?.addEventListener("click", (e)=>{
-    if (document.referrer !== "") {
-        e.preventDefault();
-        window.location.href = document.referrer;
-      }
-})
+document
+    .getElementsByClassName('back-button')[0]
+    ?.addEventListener('click', (e) => {
+        if (document.referrer !== '') {
+            e.preventDefault();
+            window.location.href = document.referrer;
+        }
+    });
 
-  
 //=========================================//
 /*            16) Particles                */
 //=========================================//
 
 try {
-    particlesJS("particles-snow", {
-        "particles": {
-            "number": {
-                "value": 250,
-                "density": {
-                    "enable": false,
-                    "value_area": 1800
-                }
-            },
-            "color": {
-                "value": "#ffffff"
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
+    particlesJS('particles-snow', {
+        particles: {
+            number: {
+                value: 250,
+                density: {
+                    enable: false,
+                    value_area: 1800,
                 },
-                "polygon": {
-                    "nb_sides": 36
+            },
+            color: {
+                value: '#ffffff',
+            },
+            shape: {
+                type: 'circle',
+                stroke: {
+                    width: 0,
+                    color: '#000000',
                 },
-                "image": {
-                    "src": "",
-                    "width": 1000,
-                    "height": 1000
-                }
+                polygon: {
+                    nb_sides: 36,
+                },
+                image: {
+                    src: '',
+                    width: 1000,
+                    height: 1000,
+                },
             },
-            "opacity": {
-                "value": 0.5,
-                "random": false,
-                "anim": {
-                    "enable": false,
-                    "speed": 0.5,
-                    "opacity_min": 1,
-                    "sync": false
-                }
+            opacity: {
+                value: 0.5,
+                random: false,
+                anim: {
+                    enable: false,
+                    speed: 0.5,
+                    opacity_min: 1,
+                    sync: false,
+                },
             },
-            "size": {
-                "value": 3.2,
-                "random": true,
-                "anim": {
-                    "enable": false,
-                    "speed": 20,
-                    "size_min": 0.1,
-                    "sync": false
-                }
+            size: {
+                value: 3.2,
+                random: true,
+                anim: {
+                    enable: false,
+                    speed: 20,
+                    size_min: 0.1,
+                    sync: false,
+                },
             },
-            "line_linked": {
-                "enable": false,
-                "distance": 100,
-                "color": "#ffffff",
-                "opacity": 0.4,
-                "width": 2
+            line_linked: {
+                enable: false,
+                distance: 100,
+                color: '#ffffff',
+                opacity: 0.4,
+                width: 2,
             },
-            "move": {
-                "enable": true,
-                "speed": 5,
-                "direction": "bottom",
-                "random": false,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false,
-                "attract": {
-                    "enable": false,
-                    "rotateX": 1500,
-                    "rotateY": 2000
-                }
-            }
+            move: {
+                enable: true,
+                speed: 5,
+                direction: 'bottom',
+                random: false,
+                straight: false,
+                out_mode: 'out',
+                bounce: false,
+                attract: {
+                    enable: false,
+                    rotateX: 1500,
+                    rotateY: 2000,
+                },
+            },
         },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": false,
-                    "mode": "repulse"
+        interactivity: {
+            detect_on: 'canvas',
+            events: {
+                onhover: {
+                    enable: false,
+                    mode: 'repulse',
                 },
-                "onclick": {
-                    "enable": false,
-                    "mode": "push"
+                onclick: {
+                    enable: false,
+                    mode: 'push',
                 },
-                "resize": true
+                resize: true,
             },
-            "modes": {
-                "grab": {
-                    "distance": 200,
-                    "line_linked": {
-                        "opacity": 1
-                    }
+            modes: {
+                grab: {
+                    distance: 200,
+                    line_linked: {
+                        opacity: 1,
+                    },
                 },
-                "bubble": {
-                    "distance": 400,
-                    "size": 80,
-                    "duration": 4,
-                    "opacity": 8,
-                    "speed": 15
+                bubble: {
+                    distance: 400,
+                    size: 80,
+                    duration: 4,
+                    opacity: 8,
+                    speed: 15,
                 },
-                "repulse": {
-                    "distance": 71,
-                    "duration": 0.6
+                repulse: {
+                    distance: 71,
+                    duration: 0.6,
                 },
-                "push": {
-                    "particles_nb": 6
+                push: {
+                    particles_nb: 6,
                 },
-                "remove": {
-                    "particles_nb": 2
-                }
-            }
+                remove: {
+                    particles_nb: 2,
+                },
+            },
         },
-        "retina_detect": true
+        retina_detect: true,
     });
-} catch (error) {
-    
-}
+} catch (error) {}
 
 //=========================================//
 /*            11) Choice js                */
@@ -1017,25 +1052,21 @@ try {
 try {
     var singleLocation = new Choices('#choices-location');
     var singleCategorie = document.getElementById('choices-type');
-    if(singleCategorie){
+    if (singleCategorie) {
         var singleCategories = new Choices('#choices-type');
     }
-} catch (error) {
-    
-}
+} catch (error) {}
 try {
     var choicescatagory = new Choices('#choices-catagory');
     var choicesmin = document.getElementById('choices-min-price');
     var choicesmax = document.getElementById('choices-max-price');
-    if(choicesmin){
+    if (choicesmin) {
         var choicesmins = new Choices('#choices-min-price');
     }
-    if(choicesmax){
+    if (choicesmax) {
         var choicesmaxs = new Choices('#choices-max-price');
     }
-} catch (error) {
-    
-}
+} catch (error) {}
 
 //=========================================//
 /*            17) Components               */
@@ -1046,109 +1077,118 @@ try {
     const Default = {
         defaultTabId: null,
         activeClasses: 'text-white bg-indigo-600',
-        inactiveClasses: 'hover:text-indigo-600 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800',
-        onShow: () => { }
-    }
-    
+        inactiveClasses:
+            'hover:text-indigo-600 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800',
+        onShow: () => {},
+    };
+
     class Tabs {
         constructor(items = [], options = {}) {
-            this._items = items
-            this._activeTab = options ? this.getTab(options.defaultTabId) : null
-            this._options = { ...Default, ...options }
-            this._init()
+            this._items = items;
+            this._activeTab = options
+                ? this.getTab(options.defaultTabId)
+                : null;
+            this._options = { ...Default, ...options };
+            this._init();
         }
-    
+
         _init() {
             if (this._items.length) {
                 // set the first tab as active if not set by explicitly
                 if (!this._activeTab) {
-                    this._setActiveTab(this._items[0])
+                    this._setActiveTab(this._items[0]);
                 }
-    
+
                 // force show the first default tab
-                this.show(this._activeTab.id, true)
-    
+                this.show(this._activeTab.id, true);
+
                 // show tab content based on click
-                this._items.map(tab => {
+                this._items.map((tab) => {
                     tab.triggerEl.addEventListener('click', () => {
-                        this.show(tab.id)
-                    })
-                })
+                        this.show(tab.id);
+                    });
+                });
             }
         }
-    
+
         getActiveTab() {
-            return this._activeTab
+            return this._activeTab;
         }
-    
+
         _setActiveTab(tab) {
-            this._activeTab = tab
+            this._activeTab = tab;
         }
-    
+
         getTab(id) {
-            return this._items.filter(t => t.id === id)[0]
+            return this._items.filter((t) => t.id === id)[0];
         }
-    
+
         show(id, forceShow = false) {
-            const tab = this.getTab(id)
-    
+            const tab = this.getTab(id);
+
             // don't do anything if already active
             if (tab === this._activeTab && !forceShow) {
-                return
+                return;
             }
-    
+
             // hide other tabs
-            this._items.map(t => {
+            this._items.map((t) => {
                 if (t !== tab) {
-                    t.triggerEl.classList.remove(...this._options.activeClasses.split(" "));
-                    t.triggerEl.classList.add(...this._options.inactiveClasses.split(" "));
-                    t.targetEl.classList.add('hidden')
-                    t.triggerEl.setAttribute('aria-selected', false)
+                    t.triggerEl.classList.remove(
+                        ...this._options.activeClasses.split(' '),
+                    );
+                    t.triggerEl.classList.add(
+                        ...this._options.inactiveClasses.split(' '),
+                    );
+                    t.targetEl.classList.add('hidden');
+                    t.triggerEl.setAttribute('aria-selected', false);
                 }
-            })
-    
+            });
+
             // show active tab
-            tab.triggerEl.classList.add(...this._options.activeClasses.split(" "));
-            tab.triggerEl.classList.remove(...this._options.inactiveClasses.split(" "));
-            tab.triggerEl.setAttribute('aria-selected', true)
-            tab.targetEl.classList.remove('hidden')
-    
-            this._setActiveTab(tab)
-    
+            tab.triggerEl.classList.add(
+                ...this._options.activeClasses.split(' '),
+            );
+            tab.triggerEl.classList.remove(
+                ...this._options.inactiveClasses.split(' '),
+            );
+            tab.triggerEl.setAttribute('aria-selected', true);
+            tab.targetEl.classList.remove('hidden');
+
+            this._setActiveTab(tab);
+
             // callback function
-            this._options.onShow(this, tab)
+            this._options.onShow(this, tab);
         }
-    
     }
-    
+
     window.Tabs = Tabs;
-    
+
     document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('[data-tabs-toggle]').forEach(triggerEl => {
-    
-            const tabElements = []
-            let defaultTabId = null
-            triggerEl.querySelectorAll('[role="tab"]').forEach(el => {
-                const isActive = el.getAttribute('aria-selected') === 'true'
+        document.querySelectorAll('[data-tabs-toggle]').forEach((triggerEl) => {
+            const tabElements = [];
+            let defaultTabId = null;
+            triggerEl.querySelectorAll('[role="tab"]').forEach((el) => {
+                const isActive = el.getAttribute('aria-selected') === 'true';
                 const tab = {
                     id: el.getAttribute('data-tabs-target'),
                     triggerEl: el,
-                    targetEl: document.querySelector(el.getAttribute('data-tabs-target'))
-                }
-                tabElements.push(tab)
-    
+                    targetEl: document.querySelector(
+                        el.getAttribute('data-tabs-target'),
+                    ),
+                };
+                tabElements.push(tab);
+
                 if (isActive) {
-                    defaultTabId = tab.id
+                    defaultTabId = tab.id;
                 }
-            })
+            });
             new Tabs(tabElements, {
-                defaultTabId: defaultTabId
-            })
-        })
-    })
-} catch (error) {
-    
-}
+                defaultTabId: defaultTabId,
+            });
+        });
+    });
+} catch (error) {}
 
 //******** 2) Carousel********//
 try {
@@ -1157,247 +1197,305 @@ try {
         indicators: {
             items: [],
             activeClasses: 'bg-white dark:bg-gray-800',
-            inactiveClasses: 'bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800'
+            inactiveClasses:
+                'bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800',
         },
         interval: 6000,
-        onNext: () => { },
-        onPrev: () => { },
-        onChange: () => { }
-    }
-    
+        onNext: () => {},
+        onPrev: () => {},
+        onChange: () => {},
+    };
+
     class Carousel {
         constructor(items = [], options = {}) {
-            this._items = items
-            this._options = { ...Default, ...options, indicators : { ...Default.indicators, ...options.indicators } }
-            this._activeItem = this.getItem(this._options.defaultPosition)
-            this._indicators = this._options.indicators.items
-            this._interval = null
-            this._init()
-            this.cycle()
-    
+            this._items = items;
+            this._options = {
+                ...Default,
+                ...options,
+                indicators: { ...Default.indicators, ...options.indicators },
+            };
+            this._activeItem = this.getItem(this._options.defaultPosition);
+            this._indicators = this._options.indicators.items;
+            this._interval = null;
+            this._init();
+            this.cycle();
         }
-    
+
         /**
          * Initialise carousel and items based on active one
          */
         _init() {
-            this._items.map(item => {
-                item.el.classList.add('absolute', 'inset-0', 'transition-all', 'transform')
-            })
-    
+            this._items.map((item) => {
+                item.el.classList.add(
+                    'absolute',
+                    'inset-0',
+                    'transition-all',
+                    'transform',
+                );
+            });
+
             // if no active item is set then first position is default
             if (this._getActiveItem()) {
-                this.slideTo(this._getActiveItem().position)
+                this.slideTo(this._getActiveItem().position);
             } else {
-                this.slideTo(0)
+                this.slideTo(0);
             }
-    
+
             this._indicators.map((indicator, position) => {
                 indicator.el.addEventListener('click', () => {
-                    this.slideTo(position)
-                })
-            })
+                    this.slideTo(position);
+                });
+            });
         }
-    
+
         getItem(position) {
-            return this._items[position]
+            return this._items[position];
         }
-    
+
         /**
          * Slide to the element based on id
-         * @param {*} position 
+         * @param {*} position
          */
         slideTo(position) {
-            const nextItem = this._items[position]
+            const nextItem = this._items[position];
             const rotationItems = {
-                'left': nextItem.position === 0 ? this._items[this._items.length - 1] : this._items[nextItem.position - 1],
-                'middle': nextItem,
-                'right': nextItem.position === this._items.length - 1 ? this._items[0] : this._items[nextItem.position + 1]
-            }
-            this._rotate(rotationItems)
-            this._setActiveItem(nextItem.position)
+                left:
+                    nextItem.position === 0
+                        ? this._items[this._items.length - 1]
+                        : this._items[nextItem.position - 1],
+                middle: nextItem,
+                right:
+                    nextItem.position === this._items.length - 1
+                        ? this._items[0]
+                        : this._items[nextItem.position + 1],
+            };
+            this._rotate(rotationItems);
+            this._setActiveItem(nextItem.position);
             if (this._interval) {
-                this.pause()
-                this.cycle()
+                this.pause();
+                this.cycle();
             }
-    
-            this._options.onChange(this)
+
+            this._options.onChange(this);
         }
-    
+
         /**
          * Based on the currently active item it will go to the next position
          */
         next() {
-            const activeItem = this._getActiveItem()
-            let nextItem = null
-    
+            const activeItem = this._getActiveItem();
+            let nextItem = null;
+
             // check if last item
             if (activeItem.position === this._items.length - 1) {
-                nextItem = this._items[0]
+                nextItem = this._items[0];
             } else {
-                nextItem = this._items[activeItem.position + 1]
+                nextItem = this._items[activeItem.position + 1];
             }
-    
-            this.slideTo(nextItem.position)
-    
+
+            this.slideTo(nextItem.position);
+
             // callback function
-            this._options.onNext(this)
+            this._options.onNext(this);
         }
-    
+
         /**
          * Based on the currently active item it will go to the previous position
          */
         prev() {
-            const activeItem = this._getActiveItem()
-            let prevItem = null
-    
+            const activeItem = this._getActiveItem();
+            let prevItem = null;
+
             // check if first item
             if (activeItem.position === 0) {
-                prevItem = this._items[this._items.length - 1]
+                prevItem = this._items[this._items.length - 1];
             } else {
-                prevItem = this._items[activeItem.position - 1]
+                prevItem = this._items[activeItem.position - 1];
             }
-    
-            this.slideTo(prevItem.position)
-    
+
+            this.slideTo(prevItem.position);
+
             // callback function
-            this._options.onPrev(this)
+            this._options.onPrev(this);
         }
-    
+
         /**
          * This method applies the transform classes based on the left, middle, and right rotation carousel items
-         * @param {*} rotationItems 
+         * @param {*} rotationItems
          */
         _rotate(rotationItems) {
             // reset
-            this._items.map(item => {
-                item.el.classList.add('hidden')
-            })
-    
+            this._items.map((item) => {
+                item.el.classList.add('hidden');
+            });
+
             // left item (previously active)
-            rotationItems.left.el.classList.remove('-translate-x-full', 'translate-x-full', 'translate-x-0', 'hidden', 'z-20')
-            rotationItems.left.el.classList.add('-translate-x-full', 'z-10')
-    
+            rotationItems.left.el.classList.remove(
+                '-translate-x-full',
+                'translate-x-full',
+                'translate-x-0',
+                'hidden',
+                'z-20',
+            );
+            rotationItems.left.el.classList.add('-translate-x-full', 'z-10');
+
             // currently active item
-            rotationItems.middle.el.classList.remove('-translate-x-full', 'translate-x-full', 'translate-x-0', 'hidden', 'z-10')
-            rotationItems.middle.el.classList.add('translate-x-0', 'z-20')
-    
+            rotationItems.middle.el.classList.remove(
+                '-translate-x-full',
+                'translate-x-full',
+                'translate-x-0',
+                'hidden',
+                'z-10',
+            );
+            rotationItems.middle.el.classList.add('translate-x-0', 'z-20');
+
             // right item (upcoming active)
-            rotationItems.right.el.classList.remove('-translate-x-full', 'translate-x-full', 'translate-x-0', 'hidden', 'z-20')
-            rotationItems.right.el.classList.add('translate-x-full', 'z-10')
+            rotationItems.right.el.classList.remove(
+                '-translate-x-full',
+                'translate-x-full',
+                'translate-x-0',
+                'hidden',
+                'z-20',
+            );
+            rotationItems.right.el.classList.add('translate-x-full', 'z-10');
         }
-    
+
         /**
          * Set an interval to cycle through the carousel items
          */
         cycle() {
             this._interval = setInterval(() => {
                 this.next();
-            }, this._options.interval)
+            }, this._options.interval);
         }
-    
+
         /**
          * Clears the cycling interval
          */
         pause() {
             clearInterval(this._interval);
         }
-    
+
         /**
          * Get the currently active item
          */
         _getActiveItem() {
-            return this._activeItem
+            return this._activeItem;
         }
-    
+
         /**
          * Set the currently active item and data attribute
-         * @param {*} position 
+         * @param {*} position
          */
         _setActiveItem(position) {
-            this._activeItem = this._items[position]
-    
+            this._activeItem = this._items[position];
+
             // update the indicators if available
             if (this._indicators.length) {
-                this._indicators.map(indicator => {
-                    indicator.el.setAttribute('aria-current', 'false')
-                    indicator.el.classList.remove(...this._options.indicators.activeClasses.split(" "))
-                    indicator.el.classList.add(...this._options.indicators.inactiveClasses.split(" "))
-                })
-                this._indicators[position].el.classList.add(...this._options.indicators.activeClasses.split(" "))
-                this._indicators[position].el.classList.remove(...this._options.indicators.inactiveClasses.split(" "))
-                this._indicators[position].el.setAttribute('aria-current', 'true')
+                this._indicators.map((indicator) => {
+                    indicator.el.setAttribute('aria-current', 'false');
+                    indicator.el.classList.remove(
+                        ...this._options.indicators.activeClasses.split(' '),
+                    );
+                    indicator.el.classList.add(
+                        ...this._options.indicators.inactiveClasses.split(' '),
+                    );
+                });
+                this._indicators[position].el.classList.add(
+                    ...this._options.indicators.activeClasses.split(' '),
+                );
+                this._indicators[position].el.classList.remove(
+                    ...this._options.indicators.inactiveClasses.split(' '),
+                );
+                this._indicators[position].el.setAttribute(
+                    'aria-current',
+                    'true',
+                );
             }
         }
-    
     }
-    
+
     window.Carousel = Carousel;
-    
+
     document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('[data-carousel]').forEach(carouselEl => {
-            const interval = carouselEl.getAttribute('data-carousel-interval')
-            const slide = carouselEl.getAttribute('data-carousel') === 'slide' ? true : false
-    
-            const items = []
-            let defaultPosition = 0
+        document.querySelectorAll('[data-carousel]').forEach((carouselEl) => {
+            const interval = carouselEl.getAttribute('data-carousel-interval');
+            const slide =
+                carouselEl.getAttribute('data-carousel') === 'slide'
+                    ? true
+                    : false;
+
+            const items = [];
+            let defaultPosition = 0;
             if (carouselEl.querySelectorAll('[data-carousel-item]').length) {
-                [...carouselEl.querySelectorAll('[data-carousel-item]')].map((carouselItemEl, position) => {
-                    items.push({
-                        position: position,
-                        el: carouselItemEl
-                    })
-    
-                    if (carouselItemEl.getAttribute('data-carousel-item') === 'active') {
-                        defaultPosition = position
-                    }
-                })
+                [...carouselEl.querySelectorAll('[data-carousel-item]')].map(
+                    (carouselItemEl, position) => {
+                        items.push({
+                            position: position,
+                            el: carouselItemEl,
+                        });
+
+                        if (
+                            carouselItemEl.getAttribute(
+                                'data-carousel-item',
+                            ) === 'active'
+                        ) {
+                            defaultPosition = position;
+                        }
+                    },
+                );
             }
-    
+
             const indicators = [];
-            if (carouselEl.querySelectorAll('[data-carousel-slide-to]').length) {
-                [...carouselEl.querySelectorAll('[data-carousel-slide-to]')].map((indicatorEl) => {
+            if (
+                carouselEl.querySelectorAll('[data-carousel-slide-to]').length
+            ) {
+                [
+                    ...carouselEl.querySelectorAll('[data-carousel-slide-to]'),
+                ].map((indicatorEl) => {
                     indicators.push({
-                        position: indicatorEl.getAttribute('data-carousel-slide-to'),
-                        el: indicatorEl
-                    })
-                })
+                        position: indicatorEl.getAttribute(
+                            'data-carousel-slide-to',
+                        ),
+                        el: indicatorEl,
+                    });
+                });
             }
-    
+
             const carousel = new Carousel(items, {
                 defaultPosition: defaultPosition,
                 indicators: {
-                    items: indicators
+                    items: indicators,
                 },
-                interval: interval ? interval : Default.interval
-            })
-    
+                interval: interval ? interval : Default.interval,
+            });
+
             if (slide) {
                 carousel.cycle();
             }
-    
+
             // check for controls
-            const carouselNextEl = carouselEl.querySelector('[data-carousel-next]')
-            const carouselPrevEl = carouselEl.querySelector('[data-carousel-prev]')
-    
+            const carouselNextEl = carouselEl.querySelector(
+                '[data-carousel-next]',
+            );
+            const carouselPrevEl = carouselEl.querySelector(
+                '[data-carousel-prev]',
+            );
+
             if (carouselNextEl) {
                 carouselNextEl.addEventListener('click', () => {
-                    carousel.next()
-                })
+                    carousel.next();
+                });
             }
-    
+
             if (carouselPrevEl) {
                 carouselPrevEl.addEventListener('click', () => {
-                    carousel.prev()
-                })
+                    carousel.prev();
+                });
             }
-    
-        })
-    })
-    
-} catch (error) {
-    
-}
+        });
+    });
+} catch (error) {}
 
 //********3) Accordions********/
 try {
@@ -1405,265 +1503,289 @@ try {
         alwaysOpen: false,
         activeClasses: 'bg-gray-50 dark:bg-slate-800 text-indigo-600',
         inactiveClasses: 'text-dark dark:text-white',
-        onOpen: () => { },
-        onClose: () => { },
-        onToggle: () => { }
-    }
-    
+        onOpen: () => {},
+        onClose: () => {},
+        onToggle: () => {},
+    };
+
     class Accordion {
         constructor(items = [], options = {}) {
-            this._items = items
-            this._options = { ...Default, ...options }
-            this._init()
+            this._items = items;
+            this._options = { ...Default, ...options };
+            this._init();
         }
-    
+
         _init() {
             if (this._items.length) {
                 // show accordion item based on click
-                this._items.map(item => {
-    
+                this._items.map((item) => {
                     if (item.active) {
-                        this.open(item.id)
+                        this.open(item.id);
                     }
-    
+
                     item.triggerEl.addEventListener('click', () => {
-                        this.toggle(item.id)
-                    })
-                })
+                        this.toggle(item.id);
+                    });
+                });
             }
         }
-    
+
         getItem(id) {
-            return this._items.filter(item => item.id === id)[0]
+            return this._items.filter((item) => item.id === id)[0];
         }
-    
+
         open(id) {
-            const item = this.getItem(id)
-    
+            const item = this.getItem(id);
+
             // don't hide other accordions if always open
             if (!this._options.alwaysOpen) {
-                this._items.map(i => {
+                this._items.map((i) => {
                     if (i !== item) {
-                        i.triggerEl.classList.remove(...this._options.activeClasses.split(" "))
-                        i.triggerEl.classList.add(...this._options.inactiveClasses.split(" "))
-                        i.targetEl.classList.add('hidden')
-                        i.triggerEl.setAttribute('aria-expanded', false)
-                        i.active = false
-    
+                        i.triggerEl.classList.remove(
+                            ...this._options.activeClasses.split(' '),
+                        );
+                        i.triggerEl.classList.add(
+                            ...this._options.inactiveClasses.split(' '),
+                        );
+                        i.targetEl.classList.add('hidden');
+                        i.triggerEl.setAttribute('aria-expanded', false);
+                        i.active = false;
+
                         // rotate icon if set
                         if (i.iconEl) {
-                            i.iconEl.classList.remove('rotate-180')
+                            i.iconEl.classList.remove('rotate-180');
                         }
                     }
-                })
+                });
             }
-    
+
             // show active item
-            item.triggerEl.classList.add(...this._options.activeClasses.split(" "))
-            item.triggerEl.classList.remove(...this._options.inactiveClasses.split(" "))
-            item.triggerEl.setAttribute('aria-expanded', true)
-            item.targetEl.classList.remove('hidden')
-            item.active = true
-    
+            item.triggerEl.classList.add(
+                ...this._options.activeClasses.split(' '),
+            );
+            item.triggerEl.classList.remove(
+                ...this._options.inactiveClasses.split(' '),
+            );
+            item.triggerEl.setAttribute('aria-expanded', true);
+            item.targetEl.classList.remove('hidden');
+            item.active = true;
+
             // rotate icon if set
             if (item.iconEl) {
-                item.iconEl.classList.add('rotate-180')
+                item.iconEl.classList.add('rotate-180');
             }
-    
+
             // callback function
-            this._options.onOpen(this, item)
+            this._options.onOpen(this, item);
         }
-    
+
         toggle(id) {
-            const item = this.getItem(id)
-    
+            const item = this.getItem(id);
+
             if (item.active) {
-                this.close(id)
+                this.close(id);
             } else {
-                this.open(id)
+                this.open(id);
             }
-    
+
             // callback function
-            this._options.onToggle(this, item)
+            this._options.onToggle(this, item);
         }
-    
+
         close(id) {
-            const item = this.getItem(id)
-    
-            item.triggerEl.classList.remove(...this._options.activeClasses.split(" "))
-            item.triggerEl.classList.add(...this._options.inactiveClasses.split(" "))
-            item.targetEl.classList.add('hidden')
-            item.triggerEl.setAttribute('aria-expanded', false)
-            item.active = false
-    
+            const item = this.getItem(id);
+
+            item.triggerEl.classList.remove(
+                ...this._options.activeClasses.split(' '),
+            );
+            item.triggerEl.classList.add(
+                ...this._options.inactiveClasses.split(' '),
+            );
+            item.targetEl.classList.add('hidden');
+            item.triggerEl.setAttribute('aria-expanded', false);
+            item.active = false;
+
             // rotate icon if set
             if (item.iconEl) {
-                item.iconEl.classList.remove('rotate-180')
+                item.iconEl.classList.remove('rotate-180');
             }
-    
+
             // callback function
-            this._options.onClose(this, item)
+            this._options.onClose(this, item);
         }
-    
     }
-    
+
     window.Accordion = Accordion;
-    
+
     document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('[data-accordion]').forEach(accordionEl => {
-    
-            const alwaysOpen = accordionEl.getAttribute('data-accordion')
-            const activeClasses = accordionEl.getAttribute('data-active-classes')
-            const inactiveClasses = accordionEl.getAttribute('data-inactive-classes')
-    
-            const items = []
-            accordionEl.querySelectorAll('[data-accordion-target]').forEach(el => {
-                const item = {
-                    id: el.getAttribute('data-accordion-target'),
-                    triggerEl: el,
-                    targetEl: document.querySelector(el.getAttribute('data-accordion-target')),
-                    iconEl: el.querySelector('[data-accordion-icon]'),
-                    active: el.getAttribute('aria-expanded') === 'true' ? true : false
-                }
-                items.push(item)
-            })
-    
+        document.querySelectorAll('[data-accordion]').forEach((accordionEl) => {
+            const alwaysOpen = accordionEl.getAttribute('data-accordion');
+            const activeClasses = accordionEl.getAttribute(
+                'data-active-classes',
+            );
+            const inactiveClasses = accordionEl.getAttribute(
+                'data-inactive-classes',
+            );
+
+            const items = [];
+            accordionEl
+                .querySelectorAll('[data-accordion-target]')
+                .forEach((el) => {
+                    const item = {
+                        id: el.getAttribute('data-accordion-target'),
+                        triggerEl: el,
+                        targetEl: document.querySelector(
+                            el.getAttribute('data-accordion-target'),
+                        ),
+                        iconEl: el.querySelector('[data-accordion-icon]'),
+                        active:
+                            el.getAttribute('aria-expanded') === 'true'
+                                ? true
+                                : false,
+                    };
+                    items.push(item);
+                });
+
             new Accordion(items, {
                 alwaysOpen: alwaysOpen === 'open' ? true : false,
-                activeClasses: activeClasses ? activeClasses : Default.activeClasses,
-                inactiveClasses: inactiveClasses ? inactiveClasses : Default.inactiveClasses
-            })
-        })
-    })
-} catch (error) {
-    
-}
+                activeClasses: activeClasses
+                    ? activeClasses
+                    : Default.activeClasses,
+                inactiveClasses: inactiveClasses
+                    ? inactiveClasses
+                    : Default.inactiveClasses,
+            });
+        });
+    });
+} catch (error) {}
 
 //=========================================//
 /*            18) Upload Profile           */
 //=========================================//
 try {
     var loadFile = function (event) {
-        
         var image = document.getElementById(event.target.name);
         image.src = URL.createObjectURL(event.target.files[0]);
     };
-      
-} catch (error) {
-    
-}
+} catch (error) {}
 
 //=========================================//
 /*            19) Custom Dropdown          */
 //=========================================//
 
-document.querySelectorAll(".dropdown").forEach(function (item) {
-    item.querySelectorAll(".dropdown-toggle").forEach(function (subitem) {
-        subitem.addEventListener("click", function (event) {
-            subitem.classList.toggle("block");
-            if (subitem.classList.contains("block") != true) {
-                item.querySelector(".dropdown-menu").classList.remove("block")
-                item.querySelector(".dropdown-menu").classList.add("hidden")
+document.querySelectorAll('.dropdown').forEach(function (item) {
+    item.querySelectorAll('.dropdown-toggle').forEach(function (subitem) {
+        subitem.addEventListener('click', function (event) {
+            subitem.classList.toggle('block');
+            if (subitem.classList.contains('block') != true) {
+                item.querySelector('.dropdown-menu').classList.remove('block');
+                item.querySelector('.dropdown-menu').classList.add('hidden');
             } else {
-                dismissDropdownMenu()
-                item.querySelector(".dropdown-menu").classList.add("block")
-                item.querySelector(".dropdown-menu").classList.remove("hidden")
-                if (item.querySelector(".dropdown-menu").classList.contains("block")) {
-                    subitem.classList.add("block")
+                dismissDropdownMenu();
+                item.querySelector('.dropdown-menu').classList.add('block');
+                item.querySelector('.dropdown-menu').classList.remove('hidden');
+                if (
+                    item
+                        .querySelector('.dropdown-menu')
+                        .classList.contains('block')
+                ) {
+                    subitem.classList.add('block');
                 } else {
-                    subitem.classList.remove("block")
+                    subitem.classList.remove('block');
                 }
                 event.stopPropagation();
             }
         });
     });
-  });
-  
-  function dismissDropdownMenu() {
-    document.querySelectorAll(".dropdown-menu").forEach(function (item) {
-        item.classList.remove("block")
-        item.classList.add("hidden")
-    });
-    document.querySelectorAll(".dropdown-toggle").forEach(function (item) {
-        item.classList.remove("block")
-    });
-  }
-  
-  window.addEventListener('click', function (e) {
-    dismissDropdownMenu();
-  });
+});
 
-  // dd-menu
-var ddmenu = document.getElementsByClassName("dd-menu");
-for(var i = 0, len = ddmenu.length; i < len; i++) {
+function dismissDropdownMenu() {
+    document.querySelectorAll('.dropdown-menu').forEach(function (item) {
+        item.classList.remove('block');
+        item.classList.add('hidden');
+    });
+    document.querySelectorAll('.dropdown-toggle').forEach(function (item) {
+        item.classList.remove('block');
+    });
+}
+
+window.addEventListener('click', function (e) {
+    dismissDropdownMenu();
+});
+
+// dd-menu
+var ddmenu = document.getElementsByClassName('dd-menu');
+for (var i = 0, len = ddmenu.length; i < len; i++) {
     ddmenu[i].onclick = function (elem) {
         elem.stopPropagation();
-    }
+    };
 }
 
 //=========================================//
 /*            20) Connect wallet           */
 //=========================================//
-;(async function () {
+(async function () {
     try {
-      //Basic Actions Section
-      const onboardButton = document.getElementById('connectWallet')
-  
-      //   metamask modal
-      const modal = document.getElementById('modal-metamask')
-      const closeModalBtn = document.getElementById('close-modal')
-  
-      //   wallet address
-      const myPublicAddress = document.getElementById('myPublicAddress')
-  
-      //Created check function to see if the MetaMask extension is installed
-      const isMetaMaskInstalled = () => {
-        //Have to check the ethereum binding on the window object to see if it's installed
-        const {ethereum} = window
-        return Boolean(ethereum && ethereum.isMetaMask)
-      }
-  
-      const onClickConnect = async () => {
-        if (!isMetaMaskInstalled()) {
-          //meta mask not installed
-          modal.classList.add('show')
-          modal.style.display = 'block'
-          return
+        //Basic Actions Section
+        const onboardButton = document.getElementById('connectWallet');
+
+        //   metamask modal
+        const modal = document.getElementById('modal-metamask');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        //   wallet address
+        const myPublicAddress = document.getElementById('myPublicAddress');
+
+        //Created check function to see if the MetaMask extension is installed
+        const isMetaMaskInstalled = () => {
+            //Have to check the ethereum binding on the window object to see if it's installed
+            const { ethereum } = window;
+            return Boolean(ethereum && ethereum.isMetaMask);
+        };
+
+        const onClickConnect = async () => {
+            if (!isMetaMaskInstalled()) {
+                //meta mask not installed
+                modal.classList.add('show');
+                modal.style.display = 'block';
+                return;
+            }
+            try {
+                await ethereum.request({ method: 'eth_requestAccounts' });
+                const accounts = await ethereum.request({
+                    method: 'eth_accounts',
+                });
+                myPublicAddress.innerHTML =
+                    accounts[0].split('').slice(0, 6).join('') +
+                    '...' +
+                    accounts[0]
+                        .split('')
+                        .slice(accounts[0].length - 7, accounts[0].length)
+                        .join('');
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const closeModal = () => {
+            modal.classList.remove('show');
+            modal.style.display = 'none';
+        };
+
+        if (isMetaMaskInstalled()) {
+            const accounts = await ethereum.request({ method: 'eth_accounts' });
+            if (!!accounts[0]) {
+                myPublicAddress.innerHTML =
+                    accounts[0].split('').slice(0, 6).join('') +
+                    '...' +
+                    accounts[0]
+                        .split('')
+                        .slice(accounts[0].length - 7, accounts[0].length)
+                        .join('');
+            }
         }
-        try {
-          await ethereum.request({method: 'eth_requestAccounts'})
-          const accounts = await ethereum.request({method: 'eth_accounts'})
-          myPublicAddress.innerHTML =
-            accounts[0].split('').slice(0, 6).join('') +
-            '...' +
-            accounts[0]
-              .split('')
-              .slice(accounts[0].length - 7, accounts[0].length)
-              .join('')
-        } catch (error) {
-          console.error(error)
-        }
-      }
-  
-      const closeModal = () => {
-        modal.classList.remove('show')
-        modal.style.display = 'none'
-      }
-  
-      if (isMetaMaskInstalled()) {
-        const accounts = await ethereum.request({method: 'eth_accounts'})
-        if (!!accounts[0]) {
-          myPublicAddress.innerHTML =
-            accounts[0].split('').slice(0, 6).join('') +
-            '...' +
-            accounts[0]
-              .split('')
-              .slice(accounts[0].length - 7, accounts[0].length)
-              .join('')
-        }
-      }
-  
-      onboardButton.addEventListener('click', onClickConnect)
-      closeModalBtn.addEventListener('click', closeModal)
+
+        onboardButton.addEventListener('click', onClickConnect);
+        closeModalBtn.addEventListener('click', closeModal);
     } catch (error) {}
-})()
+})();
