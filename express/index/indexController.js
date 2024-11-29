@@ -1,5 +1,5 @@
 // controllers/homeController.js
-const productsBusiness = require('../business/productsBusiness');
+const productsBusiness = require('../products/productsBusiness');
 
 const getIndex = async (req, res) => {
     try {

@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
-const authBusiness = require('../business/usersBusiness');
+const authBusiness = require('../authentication/authBusiness');
 
 module.exports = (passport) => {
     passport.use(

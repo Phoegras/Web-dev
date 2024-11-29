@@ -1,4 +1,4 @@
-const usersBusiness = require('../business/usersBusiness');
+const authBusiness = require('./authBusiness');
 const passport = require('passport');
 
 // Show register form
@@ -14,7 +14,7 @@ const showRegisterForm = (req, res) => {
 const register = async (req, res) => {
     try {
         const { phone, name, email, password } = req.body;
-        const existingUser = await usersBusiness.findUserByEmail(email);
+        const existingUser = await authBusiness.findUserByEmail(email);
         console.log(existingUser.email);
         if (existingUser) {
             return res.render('auth-register', { 
@@ -26,7 +26,7 @@ const register = async (req, res) => {
                 name: name,
             });
         }
-        await usersBusiness.createUser({ phone, name, email, password });
+        await authBusiness.createUser({ phone, name, email, password });
         return res.redirect('/auth/register-success');
     } catch (error) {
         res.status(400).send('Registration failed: ' + error.message);

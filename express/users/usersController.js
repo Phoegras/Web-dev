@@ -1,4 +1,4 @@
-const usersBusiness = require('../business/usersBusiness');
+const usersBusiness = require('./usersBusiness');
 
 // Show account information
 const showAccountInfo = async (req, res) => {
