@@ -40,4 +40,4 @@ module.exports = {
     findUserByEmail,
     findUserById,
     comparePassword,
-}
+};

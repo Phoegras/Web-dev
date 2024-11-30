@@ -3,6 +3,7 @@ const isAuthenticated = (req, res, next) => {
         return next();
     }
     req.session.returnTo = req.originalUrl;
+    console.log(req.originalUrl);
     req.flash('error_msg', 'Please log in to access this page');
     res.redirect('/auth/sign-in');
 };
@@ -15,9 +16,9 @@ const isRememberLogin = (req, res, next) => {
         req.session.cookie.maxAge = null;
     }
     next();
-}
+};
 
 module.exports = {
     isAuthenticated,
     isRememberLogin,
-}
+};

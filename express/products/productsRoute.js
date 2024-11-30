@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {
-    getProducts,
-    getProductById,
-} = require('./productsController');
+const { getProducts, getProductById } = require('./productsController');
 
 // Define route for getting all products
 router.get('/', getProducts);
