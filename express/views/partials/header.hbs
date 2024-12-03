@@ -33,33 +33,37 @@
         <!--Login button Start-->
         <ul class='buy-button list-none mb-0'>
             <li class='dropdown inline-block relative me-1'>
-                <button
-                    data-dropdown-toggle='dropdown'
-                    class='dropdown-toggle text-[20px]'
-                    type='button'
-                >
-                    <i class='uil uil-search align-middle'></i>
-                </button>
-                <!-- Dropdown menu -->
-                <div
-                    class='dropdown-menu absolute overflow-hidden end-0 m-0 mt-4 z-10 w-52 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden'
-                    onclick='event.stopPropagation();'
-                >
-                    <div class='relative'>
-                        <i
-                            class='uil uil-search text-lg absolute top-[3px] end-3'
-                        ></i>
-                        <input
-                            type='text'
-                            class='form-input h-9 pe-10 sm:w-44 w-36 border-0 focus:ring-0'
-                            name='s'
-                            id='searchItem'
-                            placeholder='Search...'
-                        />
+                <form action="/products" method="GET"></form>
+                    <button
+                        data-dropdown-toggle='dropdown'
+                        class='dropdown-toggle text-[20px]'
+                        type='button'
+                    >
+                        <i class='uil uil-search align-middle'></i>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div
+                        class='dropdown-menu absolute overflow-hidden end-0 m-0 mt-4 z-10 w-52 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden'
+                        onclick='event.stopPropagation();'
+                    >
+                        <div class='relative'>
+                            <i
+                                class='uil uil-search text-lg absolute top-[3px] end-3'
+                            ></i>
+                            <input
+                                type='text'
+                                value="{{search}}"
+                                class='form-input h-9 pe-10 sm:w-44 w-36 border-0 focus:ring-0'
+                                name='search'
+                                id='searchItem'
+                                placeholder='Search...'
+                            />
+                        </div>
                     </div>
-                </div>
+                </form>
             </li>
 
+            {{#unless isCartPage}}
             <li class='dropdown inline-block relative'>
                 <button
                     data-dropdown-toggle='dropdown'
@@ -70,87 +74,18 @@
                 </button>
                 <!-- Dropdown menu -->
                 <div
-                    class='dropdown-menu absolute end-0 m-0 mt-4 z-10 w-60 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden'
+                    class='cart-dropdown dropdown-menu absolute end-0 m-0 mt-4 z-10 w-60 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 hidden'
                     onclick='event.stopPropagation();'
                 >
                     <ul
                         class='py-3 text-start'
                         aria-labelledby='dropdownDefault'
                     >
-                        <li>
-                            <a
-                                href='#'
-                                class='flex items-center justify-between py-1.5 px-4'
-                            >
-                                <span class='flex items-center'>
-                                    <img
-                                        src='/images/shop/items/s1.jpg'
-                                        class='rounded shadow dark:shadow-gray-800 w-9'
-                                        alt=''
-                                    />
-                                    <span class='ms-3'>
-                                        <span
-                                            class='block font-semibold'
-                                        >T-shirt (M)</span>
-                                        <span
-                                            class='block text-sm text-slate-400'
-                                        >$320 X 2</span>
-                                    </span>
-                                </span>
 
-                                <span class='font-semibold'>$640</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a
-                                href='#'
-                                class='flex items-center justify-between py-1.5 px-4'
-                            >
-                                <span class='flex items-center'>
-                                    <img
-                                        src='/images/shop/items/s2.jpg'
-                                        class='rounded shadow dark:shadow-gray-800 w-9'
-                                        alt=''
-                                    />
-                                    <span class='ms-3'>
-                                        <span
-                                            class='block font-semibold'
-                                        >Bag</span>
-                                        <span
-                                            class='block text-sm text-slate-400'
-                                        >$50 X 5</span>
-                                    </span>
-                                </span>
-
-                                <span class='font-semibold'>$250</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a
-                                href='#'
-                                class='flex items-center justify-between py-1.5 px-4'
-                            >
-                                <span class='flex items-center'>
-                                    <img
-                                        src='/images/shop/items/s3.jpg'
-                                        class='rounded shadow dark:shadow-gray-800 w-9'
-                                        alt=''
-                                    />
-                                    <span class='ms-3'>
-                                        <span class='block font-semibold'>Watch
-                                            (Men)</span>
-                                        <span
-                                            class='block text-sm text-slate-400'
-                                        >$800 X 1</span>
-                                    </span>
-                                </span>
-
-                                <span class='font-semibold'>$800</span>
-                            </a>
-                        </li>
-
+                    {{#if cartItems.length}}
+                    {{#each cartItems}}
+                        {{> cart-item cartItem=this}}
+                    {{/each}}
                         <li
                             class='border-t border-gray-100 dark:border-gray-800 my-2'
                         ></li>
@@ -159,25 +94,27 @@
                             class='flex items-center justify-between py-1.5 px-4'
                         >
                             <h6 class='font-semibold mb-0'>Total($):</h6>
-                            <h6 class='font-semibold mb-0'>$1690</h6>
+                            <h6 class='font-semibold mb-0'>${{total}}</h6>
                         </li>
 
                         <li class='py-1.5 px-4'>
                             <a
-                                href='javascript:void(0)'
+                                href='/cart'
                                 class='py-[5px] px-4 inline-block font-semibold tracking-wide align-middle duration-500 text-sm text-center rounded-md bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white'
                             >View Cart</a>
                             <a
-                                href='javascript:void(0)'
+                                href='/checkout'
                                 class='py-[5px] px-4 inline-block font-semibold tracking-wide align-middle duration-500 text-sm text-center rounded-md bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white'
                             >Checkout</a>
                             <p class='text-sm text-slate-400 mt-1'>*T&C Apply</p>
                         </li>
-
+                    {{else}}
+                        <p class="p-4 text-center">No items in the cart.</p>
+                    {{/if}}
                     </ul>
                 </div>
             </li>
-
+            {{/unless}}
             <li class='inline-block'>
                 <a
                     href='javascript:void(0)'
@@ -269,15 +206,6 @@
                                 ><i class='uil uil-user-plus align-middle me-1'></i>
                                     Sign up
                                 </a>
-                            </li>
-                            <li>
-                                <a
-                                    href='/checkout'
-                                    class='block py-1.5 px-4 hover:text-indigo-600'
-                                ><i
-                                        class='uil uil-arrow-circle-down align-middle me-1'
-                                    ></i>
-                                    Download</a>
                             </li>
                         </ul>
                     {{/if}}

@@ -20,6 +20,7 @@ module.exports = {
 
     add: (a, b) => a + b,
     subtract: (a, b) => a - b,
+    mult: (a, b) => a * b,
     lt: (a, b) => a < b,
     gte: (a, b) => a >= b,
     range: (start, end) => {

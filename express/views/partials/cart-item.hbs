@@ -1,0 +1,21 @@
+<li>
+  <a
+    href="/products/{{item.id}}"
+    class="flex items-center justify-between py-1.5 px-4"
+  >
+    <span class="flex items-center">
+      <img
+        src="{{item.images.[0]}}"
+        class="rounded shadow dark:shadow-gray-800 w-9"
+        alt="{{item.name}}"
+      />
+      <span class="ms-3">
+        <span class="block font-semibold">{{item.product.name}} ({{item.size}})</span>
+        <span class="block text-sm text-slate-400">${{item.product.price}}
+          X
+          {{item.quantity}}</span>
+      </span>
+    </span>
+    <span class="font-semibold">${{item.total}}</span>
+  </a>
+</li>
