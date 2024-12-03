@@ -10,10 +10,11 @@ const passportConfig = require('./config/passport');
 passportConfig(passport);
 const flash = require('connect-flash');
 
-var indexRouter = require('./index/index');
-var usersRouter = require('./users/usersRoute');
+const indexRouter = require('./index/index');
+const usersRouter = require('./users/usersRoute');
 const authRouter = require('./authentication/authRoute');
 const productsRouter = require('./products/productsRoute');
+const cartRouter = require('./cart/cartRoute');
 
 const { seedDatabase, deleteProducts } = require('./products/productsBusiness');
 
@@ -70,6 +71,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/products', productsRouter);
+app.use('/', cartRouter);
 
 //Listen to server
 app.listen(PORT, () => {

@@ -50,9 +50,6 @@ const getProducts = async (req, res) => {
             .map((category) => category.category)
             .filter((category) => category !== null);
 
-        console.log('Products:', products);
-        console.log('Categories:', categories);
-
         res.render('grid-two', {
             layout: 'layout',
             products,
@@ -95,7 +92,7 @@ const getProductById = async (req, res) => {
             product.category,
             product.id,
         );
-        console.log(relevantProducts);
+        
         res.render('item-detail', { product, relevantProducts });
     } catch (error) {
         console.error('Error in getProductById:', error);

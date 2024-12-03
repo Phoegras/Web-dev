@@ -5,14 +5,6 @@ const indexController = require('./indexController');
 /* GET home page. */
 router.get('/', indexController.getIndex);
 
-router.get('/cart', function (req, res, next) {
-    res.render('cart');
-});
-
-router.get('/checkout', function (req, res, next) {
-    res.render('checkout');
-});
-
 router.get('/about', function (req, res, next) {
     res.render('about');
 });
