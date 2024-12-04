@@ -15,6 +15,7 @@ const usersRouter = require('./users/usersRoute');
 const authRouter = require('./authentication/authRoute');
 const productsRouter = require('./products/productsRoute');
 const cartRouter = require('./cart/cartRoute');
+const orderRouter = require('./orders/ordersRoute');
 
 const { seedDatabase, deleteProducts } = require('./products/productsBusiness');
 
@@ -72,6 +73,7 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/products', productsRouter);
 app.use('/', cartRouter);
+app.use('/orders', orderRouter);
 
 //Listen to server
 app.listen(PORT, () => {

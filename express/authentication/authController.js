@@ -13,20 +13,29 @@ const showRegisterForm = (req, res) => {
 // Register
 const register = async (req, res) => {
     try {
-        const { phone, name, email, password } = req.body;
+        const { name, phone, email, password, address } = req.body;
         const existingUser = await authBusiness.findUserByEmail(email);
-        console.log(existingUser.email);
+
         if (existingUser) {
-            return res.render('auth-register', { 
+            return res.render('auth-register', {
                 title: 'Register',
                 noHeader: true,
                 noFooter: true,
                 error: 'Email already exists.',
-                phone: phone,
                 name: name,
+                phone: phone,
+                email: email,
+                address: address,
             });
         }
-        await authBusiness.createUser({ phone, name, email, password });
+
+        await authBusiness.createUser({
+            email,
+            password,
+            name,
+            phone,
+            address,
+        });
         return res.redirect('/auth/register-success');
     } catch (error) {
         res.status(400).send('Registration failed: ' + error.message);

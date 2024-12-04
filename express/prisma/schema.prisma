@@ -13,11 +13,11 @@ type ProductsRating {
 }
 
 model products {
-  id            String     @id @default(auto()) @map("_id") @db.ObjectId
-  v             Int?       @map("__v")
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int?        @map("__v")
   category      String?
   colors        String[]
-  createdAt     DateTime   @default(now())
+  createdAt     DateTime    @default(now())
   description   String
   features      String[]
   images        String[]
@@ -31,33 +31,66 @@ model products {
   rating        Float?
   sizes         String[]
   sold          Int?
-  stock         Int        @default(0)
+  stock         Int         @default(0)
   cartItem      cartItem[]
+  orderItem     orderItem[]
 }
 
 model users {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String @unique(map: "email_1")
-  name     String
-  password String
-  phone    String
-  cart     cart ?
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  email       String       @unique
+  password    String
+  userProfile userProfile?
+  cart        cart?
+  order       order[]
+}
+
+model userProfile {
+  userId  String   @id @map("_id") @db.ObjectId
+  name    String
+  phone   String
+  address String[]
+  user    users    @relation(fields: [userId], references: [id])
 }
 
 model cart {
-  id     String     @id @default(auto()) @map("_id") @db.ObjectId
-  cartItemIds String[] @db.ObjectId
-  userId String     @db.ObjectId @unique
-  items  cartItem[] @relation(fields: [cartItemIds], references: [id])
-  user   users      @relation(fields: [userId], references: [id])
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  cartItemIds String[]   @db.ObjectId
+  userId      String     @unique @db.ObjectId
+  items       cartItem[] @relation(fields: [cartItemIds], references: [id])
+  user        users      @relation(fields: [userId], references: [id])
 }
 
 model cartItem {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  cartIds    String[] @db.ObjectId
+  cartIds   String[] @db.ObjectId
   productId String   @db.ObjectId
   quantity  Int      @default(1)
   size      String
   product   products @relation(fields: [productId], references: [id])
   cart      cart[]   @relation(fields: [cartIds], references: [id])
+}
+
+model order {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  recipient    String
+  phone        String
+  address      String
+  orderItemIds String[]    @db.ObjectId
+  userId       String      @db.ObjectId
+  totalAmount  Float
+  status       String      @default("Pending") // Pending, Paid, Shipped, Delivered
+  createdAt    DateTime    @default(now())
+  user         users       @relation(fields: [userId], references: [id])
+  orderItem    orderItem[]
+}
+
+model orderItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String   @db.ObjectId
+  productId String   @db.ObjectId
+  quantity  Int
+  size      String
+  product   products @relation(fields: [productId], references: [id])
+  order     order    @relation(fields: [orderId], references: [id])
 }
