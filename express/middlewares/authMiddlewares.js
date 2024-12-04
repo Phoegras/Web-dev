@@ -3,18 +3,17 @@ const isAuthenticated = (req, res, next) => {
         return next();
     }
     req.session.returnTo = req.originalUrl;
-    console.log(req.originalUrl);
 
     if (req.headers.accept && req.headers.accept.includes('application/json')) {
         // For AJAX requests, respond with JSON
         return res.status(401).json({
             success: false,
-            message: "User not authenticated. Redirecting to login page.",
+            message: 'User not authenticated. Redirecting to login page.',
         });
     } else {
         // For non-AJAX requests, redirect the user to the sign-in page
-        req.flash("error_msg", "Please log in to access this page");
-        return res.redirect("/auth/sign-in");
+        req.flash('error_msg', 'Please log in to access this page');
+        return res.redirect('/auth/sign-in');
     }
 };
 

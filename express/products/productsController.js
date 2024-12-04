@@ -92,7 +92,7 @@ const getProductById = async (req, res) => {
             product.category,
             product.id,
         );
-        
+
         res.render('item-detail', { product, relevantProducts });
     } catch (error) {
         console.error('Error in getProductById:', error);
