@@ -1,26 +1,28 @@
 //Add a product to cart
 // Update UI for selected size (example functionality)
-document.querySelectorAll(".product-size").forEach((sizeButton) => {
-    sizeButton.addEventListener("click", (e) => {
+document.querySelectorAll('.product-size').forEach((sizeButton) => {
+    sizeButton.addEventListener('click', (e) => {
         e.preventDefault();
-        document.querySelectorAll(".product-size").forEach((btn) => {
-            btn.classList.remove("bg-indigo-600", "text-white", "chosen-size");
-            btn.classList.add("bg-indigo-600/5", "text-indigo-600");
+        document.querySelectorAll('.product-size').forEach((btn) => {
+            btn.classList.remove('bg-indigo-600', 'text-white', 'chosen-size');
+            btn.classList.add('bg-indigo-600/5', 'text-indigo-600');
         });
-        e.target.classList.remove("bg-indigo-600/5", "text-indigo-600");
-        e.target.classList.add("bg-indigo-600", "text-white", "chosen-size");
+        e.target.classList.remove('bg-indigo-600/5', 'text-indigo-600');
+        e.target.classList.add('bg-indigo-600', 'text-white', 'chosen-size');
     });
 });
 
-document.querySelector(".add-to-cart-btn").addEventListener("click", (e) => {
+document.querySelector('.add-to-cart-btn').addEventListener('click', (e) => {
     e.preventDefault(); // Prevent the default button action
 
     const productId = e.target.dataset.productId; // Get product ID
-    const size = document.querySelector(".chosen-size")?.textContent.trim(); // Get selected size
-    const quantity = parseInt(document.querySelector("input[name=quantity]").value); // Get quantity
+    const size = document.querySelector('.chosen-size')?.textContent.trim(); // Get selected size
+    const quantity = parseInt(
+        document.querySelector('input[name=quantity]').value,
+    ); // Get quantity
 
     if (!size) {
-        alert("Please select a size.");
+        alert('Please select a size.');
         return;
     }
 
@@ -32,50 +34,50 @@ document.querySelector(".add-to-cart-btn").addEventListener("click", (e) => {
     };
 
     // Send data to the server
-    fetch("/cart", {
-        method: "POST",
+    fetch('/cart', {
+        method: 'POST',
         headers: {
-            'Accept': 'application/json',
+            Accept: 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
     })
-    .then((response) => {
-        if (response.status === 401) {
-            // Redirect to sign-in if not authenticated
-            alert("Please sign in to add items to the cart.");
-            window.location.href = "/auth/sign-in";
-            console.log(data);
-            return;
-        }
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        .then((response) => {
+            if (response.status === 401) {
+                // Redirect to sign-in if not authenticated
+                alert('Please sign in to add items to the cart.');
+                window.location.href = '/auth/sign-in';
+                console.log(data);
+                return;
+            }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
-        // Check if the response is JSON
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-            throw new Error("Server did not return JSON");
-        }
+            // Check if the response is JSON
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Server did not return JSON');
+            }
 
-        return response.json();
-    })
-    .then((data) => {
-        console.log("Response data:", data);
-        if (data.success) {
-            alert('Item added');
-            updateCartDropdown();
-        } else {
-            alert('Failed to add item');
-        }
-    })
-    .catch((error) => {
-        console.error("Error:", error.message);
-    });
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Response data:', data);
+            if (data.success) {
+                alert('Item added');
+                updateCartDropdown();
+            } else {
+                alert('Failed to add item');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error.message);
+        });
 });
 
 // Remove an item in cart
-document.querySelectorAll('.remove-item-btn').forEach(button => {
+document.querySelectorAll('.remove-item-btn').forEach((button) => {
     button.addEventListener('click', function (e) {
         e.preventDefault();
 
@@ -84,36 +86,40 @@ document.querySelectorAll('.remove-item-btn').forEach(button => {
         fetch(`/cart/${itemId}`, {
             method: 'DELETE',
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Item removed');
-                // remove the item row dynamically.
-                this.closest('tr').remove();
-                // Update cart totals
-                updateCartTotals();
-                updateCartDropdown();
-            } else {
-                alert('Failed to remove item');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    alert('Item removed');
+                    // remove the item row dynamically.
+                    this.closest('tr').remove();
+                    // Update cart totals
+                    updateCartTotals();
+                    updateCartDropdown();
+                } else {
+                    alert('Failed to remove item');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     });
 });
 
 // Update product quantity in cart
-document.querySelectorAll('.quantity-input').forEach(input => {
+document.querySelectorAll('.quantity-input').forEach((input) => {
     input.addEventListener('change', function () {
         const itemId = this.dataset.itemId;
         const quantity = this.value;
-        const productRow = document.querySelector(`.product-row[data-item-id="${itemId}"]`);
+        const productRow = document.querySelector(
+            `.product-row[data-item-id="${itemId}"]`,
+        );
         const unitPrice = parseFloat(productRow.dataset.price);
         const totalProductPrice = unitPrice * quantity;
 
         // Update product total price
-        const productTotalPriceElement = productRow.querySelector('.product-total-price');
+        const productTotalPriceElement = productRow.querySelector(
+            '.product-total-price',
+        );
         productTotalPriceElement.textContent = `$${totalProductPrice.toFixed(2)}`;
 
         fetch('/cart/', {
@@ -123,18 +129,18 @@ document.querySelectorAll('.quantity-input').forEach(input => {
             },
             body: JSON.stringify({ itemId, quantity }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                updateCartTotals(); // Recalculate subtotal and total
-                updateCartDropdown();
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    updateCartTotals(); // Recalculate subtotal and total
+                    updateCartDropdown();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     });
 });
 
@@ -142,9 +148,12 @@ function updateCartTotals() {
     let subtotal = 0;
 
     // Loop through each product row to calculate the subtotal
-    document.querySelectorAll('.product-row').forEach(row => {
+    document.querySelectorAll('.product-row').forEach((row) => {
         const unitPrice = parseFloat(row.dataset.price);
-        const quantity = parseInt(row.querySelector('.quantity-input').value, 10);
+        const quantity = parseInt(
+            row.querySelector('.quantity-input').value,
+            10,
+        );
         subtotal += unitPrice * quantity;
     });
 
@@ -167,7 +176,7 @@ async function updateCartDropdown() {
         const response = await fetch('/cart', {
             method: 'GET',
             headers: {
-                'Accept': 'application/json',
+                Accept: 'application/json',
             },
         }); // Same route used for both full page and dropdown
         const { cartItems, subtotal, total } = await response.json();
@@ -175,9 +184,12 @@ async function updateCartDropdown() {
         const cartList = document.querySelector('.cart-dropdown ul');
 
         if (cartItems.length) {
-            const cartItemsHtml = cartItems.map(item => {
-                const productImage = item.product.images?.[0] || '/images/placeholder-image.png';
-                return `
+            const cartItemsHtml = cartItems
+                .map((item) => {
+                    const productImage =
+                        item.product.images?.[0] ||
+                        '/images/placeholder-image.png';
+                    return `
                 <li>
                     <a
                         href="/products/${item.id}"
@@ -199,7 +211,9 @@ async function updateCartDropdown() {
                         <span class="font-semibold">${(item.product.price * item.quantity).toFixed(2)}</span>
                     </a>
                 </li>
-            `}).join('');
+            `;
+                })
+                .join('');
 
             cartList.innerHTML = `
                 ${cartItemsHtml}

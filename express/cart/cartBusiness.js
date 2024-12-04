@@ -14,7 +14,7 @@ async function getCartWithItem(userId) {
     const cart = await prisma.cart.findFirst({
         where: { userId },
         include: { items: { include: { product: true } } },
-      });
+    });
     return cart;
 }
 
@@ -31,7 +31,9 @@ async function createCart(userId, productId, size, quantity) {
 
 // Find if item already exists in cart
 async function findCartItem(cart, productId, size) {
-    const existingItem = cart.items.find(item => (item.productId === productId && item.size === size));
+    const existingItem = cart.items.find(
+        (item) => item.productId === productId && item.size === size,
+    );
     return existingItem;
 }
 
@@ -40,7 +42,7 @@ async function updateCartItem(existingItem, quantity) {
     const updatedItem = await prisma.cartItem.update({
         where: {
             id: existingItem.id,
-            size: existingItem.size
+            size: existingItem.size,
         },
         data: { quantity: existingItem.quantity + quantity },
     });
@@ -51,7 +53,7 @@ async function updateCartItem(existingItem, quantity) {
 async function updateQuantity(itemId, quantity) {
     const updatedItem = await prisma.cartItem.update({
         where: {
-            id: itemId
+            id: itemId,
         },
         data: { quantity: quantity },
     });
@@ -72,7 +74,7 @@ async function addToCart(userId, productId, size, quantity) {
 async function removeFromCart(cartItemId) {
     await prisma.cartItem.delete({
         where: { id: cartItemId },
-      });
+    });
 }
 
 module.exports = {
@@ -83,5 +85,5 @@ module.exports = {
     updateCartItem,
     updateQuantity,
     addToCart,
-    removeFromCart
+    removeFromCart,
 };

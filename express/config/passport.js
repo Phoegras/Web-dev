@@ -9,8 +9,9 @@ module.exports = (passport) => {
                 try {
                     const user = await authBusiness.findUserByEmail(email);
                     if (!user) {
-                        console.log('USER NOT FOUND');
-                        return done(null, false, { message: 'User not found.' });
+                        return done(null, false, {
+                            message: 'User not found.',
+                        });
                     }
 
                     const isMatch = await authBusiness.comparePassword(
@@ -18,12 +19,10 @@ module.exports = (passport) => {
                         user.password,
                     );
                     if (!isMatch) {
-                        console.log('WRONG PASSWORD');
                         return done(null, false, {
                             message: 'Incorrect password.',
                         });
                     }
-                    console.log('LOGIN SUCCESSFULLY');
                     return done(null, user);
                 } catch (err) {
                     return done(err);

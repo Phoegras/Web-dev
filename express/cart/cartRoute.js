@@ -5,8 +5,6 @@ const authMiddleware = require('../middlewares/authMiddlewares');
 
 router.use(authMiddleware.isAuthenticated);
 
-router.get('/checkout', cartController.getCheckout);
-
 router.post('/cart', cartController.addToCart);
 
 router.get('/cart', cartController.getCart);
