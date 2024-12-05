@@ -59,10 +59,6 @@ const calculateTotalPrice = (cartItems) => {
     return { subtotal, taxes, total };
 };
 
-const getCheckout = (req, res, next) => {
-    res.render('checkout');
-};
-
 const addToCart = async (req, res) => {
     const { productId, size, quantity } = req.body;
     const userId = req.session.passport.user;
