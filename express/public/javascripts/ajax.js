@@ -12,7 +12,7 @@ document.querySelectorAll('.product-size').forEach((sizeButton) => {
     });
 });
 
-document.querySelector('.add-to-cart-btn').addEventListener('click', (e) => {
+document.querySelector('.add-to-cart-btn')?.addEventListener('click', (e) => {
     e.preventDefault(); // Prevent the default button action
 
     const productId = e.target.dataset.productId; // Get product ID
