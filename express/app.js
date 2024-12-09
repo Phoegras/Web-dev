@@ -72,7 +72,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/products', productsRouter);
-app.use('/', cartRouter);
+app.use('/cart', cartRouter);
 app.use('/orders', orderRouter);
 
 //Listen to server

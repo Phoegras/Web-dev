@@ -72,8 +72,31 @@ async function addToCart(userId, productId, size, quantity) {
 
 //Delete item from cart
 async function removeFromCart(cartItemId) {
+    const cart = await prisma.cart.findFirst({
+        where: {
+            cartItemIds: { has: cartItemId }, // Check if the cart has the item
+        },
+    });
+
+    if (!cart) {
+        throw new Error("Cart not found or cart item does not exist.");
+    }
+
+    const updatedCartItemIds = cart.cartItemIds.filter(id => id !== cartItemId); // Remove the item
+
+    await prisma.cart.update({
+        where: {
+            id: cart.id, // Update the specific cart
+        },
+        data: {
+            cartItemIds: updatedCartItemIds, // Set the updated array
+        },
+    });
+
     await prisma.cartItem.delete({
-        where: { id: cartItemId },
+        where: {
+            id: cartItemId, // Delete the cart item
+        },
     });
 }
 

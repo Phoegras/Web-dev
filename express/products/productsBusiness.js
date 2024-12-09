@@ -3,7 +3,32 @@ const prisma = require('../prismaClient'); // Import Prisma client instance
 /**
  * Fetch products with pagination and sorting.
  */
-async function getProducts(query, page, limit, sortCriteria) {
+async function getProducts(search, category, page, limit, sortCriteria) {
+    let query = {
+        OR: [
+            {
+                name: {
+                    contains: search,
+                    mode: 'insensitive', // Case-insensitive search
+                },
+            },
+            {
+                description: {
+                    contains: search,
+                    mode: 'insensitive',
+                },
+            },
+        ],
+    };
+
+    if (category) {
+        query = {
+            AND: [
+                query,
+                { category: category }, // Filter by category if specified
+            ],
+        };
+    }
     const products = await prisma.products.findMany({
         where: query,
         orderBy: sortCriteria,
@@ -27,7 +52,32 @@ async function getProductsWithCriteria(criterias, limit) {
 /**
  * Get total product count for pagination.
  */
-async function getTotalProducts(query) {
+async function getTotalProducts(search, category) {
+    let query = {
+        OR: [
+            {
+                name: {
+                    contains: search,
+                    mode: 'insensitive', // Case-insensitive search
+                },
+            },
+            {
+                description: {
+                    contains: search,
+                    mode: 'insensitive',
+                },
+            },
+        ],
+    };
+
+    if (category) {
+        query = {
+            AND: [
+                query,
+                { category: category }, // Filter by category if specified
+            ],
+        };
+    }
     const totalProducts = await prisma.products.count({
         where: query,
     });

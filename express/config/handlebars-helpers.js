@@ -18,10 +18,13 @@ module.exports = {
         return arg1 === arg2;
     },
 
+    max: (a, b) => Math.max(a, b),
+    min: (a, b) => Math.min(a, b),
     add: (a, b) => a + b,
     subtract: (a, b) => a - b,
     mult: (a, b) => a * b,
     lt: (a, b) => a < b,
+    gt: (a, b) => a > b,
     gte: (a, b) => a >= b,
     range: (start, end) => {
         let range = [];

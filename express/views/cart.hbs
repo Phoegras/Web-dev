@@ -41,11 +41,11 @@
                     </thead>
                     <tbody>
                         {{#each cartItems}}
-                        <tr class="product-row bg-white dark:bg-slate-900 {{#unless @last}}border-t border-gray-100 dark:border-gray-800{{/unless}}" data-item-id="{{this.id}}" data-price="{{this.product.price}}">
+                        <tr class="product-row bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-gray-800" data-item-id="{{this.id}}" data-price="{{this.product.price}}">
                             <td class="p-4">
-                                <a href="#" data-item-id="{{this.id}}" class="remove-item-btn">
+                                <button onclick='removeItem(this)'>
                                     <i class="mdi mdi-window-close text-red-600"></i>
-                                </a>
+                                </button>
                             </td>
                             <td class="p-4">
                                 <span class="flex items-center">

@@ -322,23 +322,35 @@ try {
 /* Dark & Light Mode */
 /*********************/
 try {
-    function changeTheme(e) {
-        e.preventDefault();
-        const htmlTag = document.getElementsByTagName('html')[0];
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkbox = document.getElementById("chk");
+        const html = document.documentElement;
 
-        if (htmlTag.className.includes('dark')) {
-            htmlTag.className = 'light';
-        } else {
-            htmlTag.className = 'dark';
-        }
-    }
+        // Function to apply the theme based on localStorage
+        const applyTheme = () => {
+            if (localStorage.getItem("theme") === "dark") {
+                html.classList.add("dark");
+                checkbox.checked = true;
+            } else {
+                html.classList.remove("dark");
+                checkbox.checked = false;
+            }
+        };
 
-    const switcher = document.getElementById('theme-mode');
-    switcher?.addEventListener('click', changeTheme);
+        // Apply theme on page load
+        applyTheme();
 
-    const chk = document.getElementById('chk');
-
-    chk.addEventListener('change', changeTheme);
+        // Add an event listener for the switch
+        checkbox.addEventListener("change", function () {
+            if (this.checked) {
+                localStorage.setItem("theme", "dark");
+                html.classList.add("dark");
+            } else {
+                localStorage.setItem("theme", "light");
+                html.classList.remove("dark");
+            }
+        });
+    });
 } catch (err) {}
 
 /*********************/
