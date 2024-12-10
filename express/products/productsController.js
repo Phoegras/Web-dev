@@ -11,44 +11,40 @@ const getProducts = async (req, res) => {
 
         const search = req.query.search || '';
         const category = req.query.category || '';
-        let query = {
-            OR: [
-                {
-                    name: {
-                        contains: search,
-                        mode: 'insensitive', // Case-insensitive search
-                    },
-                },
-                {
-                    description: {
-                        contains: search,
-                        mode: 'insensitive',
-                    },
-                },
-            ],
-        };
-
-        if (category) {
-            query = {
-                AND: [
-                    query,
-                    { category: category }, // Filter by category if specified
-                ],
-            };
-        }
 
         const products = await productsBusiness.getProducts(
-            query,
+            search,
+            category,
             page,
             limit,
             sortCriteria,
         );
-        const totalProducts = await productsBusiness.getTotalProducts(query);
+        const totalProducts = await productsBusiness.getTotalProducts(search, category);
         const totalPages = Math.ceil(totalProducts / limit);
         let categories = await productsBusiness.getDistinctCategories();
         categories = categories
             .map((category) => category.category)
             .filter((category) => category !== null);
+
+            // Check if this is an AJAX request
+        if (req.headers['sec-fetch-dest'] == 'empty') {
+            console.log('AJAX request detected');
+            // Respond with partial views for content and pagination
+            
+            res.json({ 
+                products,
+                totalProducts,
+                sortOption,
+                search,
+                category,
+                categories,
+                pagination: {
+                    currentPage: page,
+                    totalPages,
+                    limit, }
+        });
+            return;
+        }
 
         res.render('grid-two', {
             layout: 'layout',

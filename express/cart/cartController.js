@@ -17,13 +17,12 @@ const getCart = async (req, res, next) => {
             ({ subtotal, taxes, total } = calculateTotalPrice(cart.items));
         }
 
-        if (req.xhr || req.headers.accept?.includes('application/json')) {
+        if (req.headers['sec-fetch-dest'] == 'empty') {
             // If AJAX or API request, respond with JSON
             console.log('get cart with item AJAX');
             return res.json({
                 cartItems,
                 subtotal,
-                taxes,
                 total,
             });
         } else {
@@ -38,7 +37,7 @@ const getCart = async (req, res, next) => {
             });
         }
     } catch (error) {
-        if (req.xhr || req.headers.accept?.includes('application/json')) {
+        if (req.headers['sec-fetch-dest'] == 'empty') {
             return res.status(500).json({ error: error.message });
         }
         res.status(500).render('error', { error: 'Failed to load the cart' });
@@ -57,10 +56,6 @@ const calculateTotalPrice = (cartItems) => {
     const taxes = Math.round(subtotal * vat * 100) / 100;
     const total = Math.round((subtotal + taxes) * 100) / 100;
     return { subtotal, taxes, total };
-};
-
-const getCheckout = (req, res, next) => {
-    res.render('checkout');
 };
 
 const addToCart = async (req, res) => {
