@@ -4,7 +4,7 @@ const isAuthenticated = (req, res, next) => {
     }
     req.session.returnTo = req.originalUrl;
 
-    if (req.headers.accept && req.headers.accept.includes('application/json')) {
+    if (req.headers['sec-fetch-dest'] == 'empty') {
         // For AJAX requests, respond with JSON
         return res.status(401).json({
             success: false,

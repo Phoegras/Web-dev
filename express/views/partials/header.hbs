@@ -33,7 +33,7 @@
         <!--Login button Start-->
         <ul class='buy-button list-none mb-0'>
             <li class='dropdown inline-block relative me-1'>
-                <form action="/products" method="GET"></form>
+                <form action="/products" method="GET">
                     <button
                         data-dropdown-toggle='dropdown'
                         class='dropdown-toggle text-[20px]'
@@ -47,13 +47,13 @@
                         onclick='event.stopPropagation();'
                     >
                         <div class='relative'>
-                            <i
+                            <button type="submit"><i
                                 class='uil uil-search text-lg absolute top-[3px] end-3'
-                            ></i>
+                            ></i></button>
                             <input
                                 type='text'
                                 value="{{search}}"
-                                class='form-input h-9 pe-10 sm:w-44 w-36 border-0 focus:ring-0'
+                                class='form-input h-9 pe-10 sm:w-44 w-36 border-0 focus:ring-0 dark:bg-slate-900'
                                 name='search'
                                 id='searchItem'
                                 placeholder='Search...'
@@ -69,6 +69,7 @@
                     data-dropdown-toggle='dropdown'
                     class='dropdown-toggle size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white'
                     type='button'
+                    onclick="getCartDropDown()"
                 >
                     <i class='mdi mdi-cart'></i>
                 </button>

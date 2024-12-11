@@ -4,7 +4,10 @@ async function findUserByEmail(email) {
     const user = await prisma.users.findUnique({
         where: { email },
     });
-    return user;
+    const userProfile = await prisma.userProfile.findFirst({
+        where: { userId: user.id },
+    });
+    return {user, userProfile};
 }
 
 async function findUserById(id) {

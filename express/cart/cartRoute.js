@@ -5,12 +5,12 @@ const authMiddleware = require('../middlewares/authMiddlewares');
 
 router.use(authMiddleware.isAuthenticated);
 
-router.post('/cart', cartController.addToCart);
+router.post('/', cartController.addToCart);
 
-router.get('/cart', cartController.getCart);
+router.get('/', cartController.getCart);
 
-router.put('/cart', cartController.updateCart);
+router.put('/', cartController.updateCart);
 
-router.delete('/cart/:cartItemId', cartController.removeFromCart);
+router.delete('/:cartItemId', cartController.removeFromCart);
 
 module.exports = router;
