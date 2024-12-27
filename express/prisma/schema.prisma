@@ -16,6 +16,7 @@ model products {
   id            String      @id @default(auto()) @map("_id") @db.ObjectId
   v             Int?        @map("__v")
   category      String?
+  manufacturer  String?
   colors        String[]
   createdAt     DateTime    @default(now())
   description   String
@@ -34,6 +35,7 @@ model products {
   stock         Int         @default(0)
   cartItem      cartItem[]
   orderItem     orderItem[]
+  reviews       review[]
 }
 
 model users {
@@ -50,7 +52,9 @@ model userProfile {
   name    String
   phone   String
   address String[]
+  avatar String?
   user    users    @relation(fields: [userId], references: [id])
+  reviews     review[]
 }
 
 model cart {
@@ -93,4 +97,16 @@ model orderItem {
   size      String
   product   products @relation(fields: [productId], references: [id])
   order     order    @relation(fields: [orderId], references: [id])
+}
+
+model review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId String    @db.ObjectId
+  product   products  @relation(fields: [productId], references: [id])
+  userId    String    @db.ObjectId
+  userProfile      userProfile     @relation(fields: [userId], references: [userId])
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
