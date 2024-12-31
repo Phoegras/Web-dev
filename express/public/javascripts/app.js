@@ -322,17 +322,17 @@ try {
 /* Dark & Light Mode */
 /*********************/
 try {
-    document.addEventListener("DOMContentLoaded", function () {
-        const checkbox = document.getElementById("chk");
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkbox = document.getElementById('chk');
         const html = document.documentElement;
 
         // Function to apply the theme based on localStorage
         const applyTheme = () => {
-            if (localStorage.getItem("theme") === "dark") {
-                html.classList.add("dark");
+            if (localStorage.getItem('theme') === 'dark') {
+                html.classList.add('dark');
                 checkbox.checked = true;
             } else {
-                html.classList.remove("dark");
+                html.classList.remove('dark');
                 checkbox.checked = false;
             }
         };
@@ -341,13 +341,13 @@ try {
         applyTheme();
 
         // Add an event listener for the switch
-        checkbox.addEventListener("change", function () {
+        checkbox.addEventListener('change', function () {
             if (this.checked) {
-                localStorage.setItem("theme", "dark");
-                html.classList.add("dark");
+                localStorage.setItem('theme', 'dark');
+                html.classList.add('dark');
             } else {
-                localStorage.setItem("theme", "light");
-                html.classList.remove("dark");
+                localStorage.setItem('theme', 'light');
+                html.classList.remove('dark');
             }
         });
     });

@@ -1,4 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const authBusiness = require('../authentication/authBusiness');
 
 module.exports = (passport) => {
@@ -26,6 +28,36 @@ module.exports = (passport) => {
                     return done(null, user);
                 } catch (err) {
                     return done(err);
+                }
+            },
+        )
+    );
+
+    passport.use(
+        new GoogleStrategy(
+            {
+                clientID: process.env.GOOGLE_CLIENT_ID,
+                clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+                callbackURL: `${process.env.APP_URL}/auth/google/callback`,
+            },
+            async (accessToken, refreshToken, profile, done) => {
+                try {
+                    let user = await authBusiness.findUserByEmail(
+                        profile.emails[0].value,
+                    );
+                    const data = {
+                        email: profile.emails[0].value,
+                        name: profile.displayName,
+                        type: 'GOOGLE',
+                        emailVerifiedAt: new Date(),
+                    };
+                    if (!user) {
+                        user = await authBusiness.createUser(data);
+                    }
+
+                    done(null, user);
+                } catch (err) {
+                    done(err, null);
                 }
             },
         ),
