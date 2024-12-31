@@ -4,6 +4,7 @@ const { findUserProfileById } = require('../users/usersBusiness');
 /**
  * Fetch products with pagination and sorting.
  */
+
 async function getProducts(search, category, manufacturer, page, limit, sortCriteria, min, max) {
     let query = {
         OR: [
@@ -47,6 +48,7 @@ async function getProducts(search, category, manufacturer, page, limit, sortCrit
             ],
         };
     }
+  
     const products = await prisma.products.findMany({
         where: query,
         orderBy: sortCriteria,
@@ -81,6 +83,7 @@ async function getProductsWithManufacturer(manufacturers, limit) {
 /**
  * Get total product count for pagination.
  */
+
 async function getTotalProducts(search, category, manufacturer) {
     let query = {
         OR: [
@@ -116,6 +119,7 @@ async function getTotalProducts(search, category, manufacturer) {
             ],
         };
     }
+
     const totalProducts = await prisma.products.count({
         where: query,
     });

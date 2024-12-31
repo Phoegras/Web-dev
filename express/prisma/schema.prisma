@@ -39,21 +39,24 @@ model products {
 }
 
 model users {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  email       String       @unique
-  password    String
-  userProfile userProfile?
-  cart        cart?
-  order       order[]
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  email           String       @unique
+  password        String?
+  type            String       @default("LOCAL")
+  userProfile     userProfile?
+  emailVerifiedAt DateTime?
+  cart            cart?
+  order           order[]
 }
 
 model userProfile {
-  userId  String   @id @map("_id") @db.ObjectId
-  name    String
-  phone   String
-  address String[]
+  userId      String    @id @map("_id") @db.ObjectId
+  name        String
+  phone       String?
+  dateOfBirth DateTime?
+  address     String?
   avatar String?
-  user    users    @relation(fields: [userId], references: [id])
+  user        users     @relation(fields: [userId], references: [id])
   reviews     review[]
 }
 
