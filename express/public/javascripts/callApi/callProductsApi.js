@@ -6,13 +6,20 @@ async function renderProducts(products) {
         return '<p>No products available.</p>';
     }
 
-    return products.map(product => {
-        const labelClass = product.label === 'New' ? 'bg-orange-600' :
-            product.label === 'Sale' ? 'bg-blue-600' :
-                product.label === 'Featured' ? 'bg-green-600' :
-                    product.label === 'Popular' ? 'bg-cyan-500' : 'bg-gray-600';
+    return products
+        .map((product) => {
+            const labelClass =
+                product.label === 'New'
+                    ? 'bg-orange-600'
+                    : product.label === 'Sale'
+                      ? 'bg-blue-600'
+                      : product.label === 'Featured'
+                        ? 'bg-green-600'
+                        : product.label === 'Popular'
+                          ? 'bg-cyan-500'
+                          : 'bg-gray-600';
 
-        return `
+            return `
         <div class="group">
             <div class="relative overflow-hidden shadow dark:shadow-gray-800 group-hover:shadow-lg group-hover:dark:shadow-gray-800 rounded-md duration-500">
                 <a href="/products/${product.id}">
@@ -35,14 +42,18 @@ async function renderProducts(products) {
                         </a>
                     </li>
                 </ul>
-                ${product.label ? `
+                ${
+                    product.label
+                        ? `
                 <ul class="list-none absolute top-[10px] start-4">
                     <li>
                         <a href="javascript:void(0)" class="text-white text-[10px] font-bold px-2.5 py-0.5 rounded h-5 ${labelClass}">
                             ${product.label}
                         </a>
                     </li>
-                </ul>` : ''}
+                </ul>`
+                        : ''
+                }
             </div>
             <div class="mt-4">
                 <a href="/products/${product.id}" class="hover:text-indigo-600 text-lg font-semibold">
@@ -63,7 +74,8 @@ async function renderProducts(products) {
             </div>
         </div>
         `;
-    }).join('');
+        })
+        .join('');
 }
 async function renderPagination(pagination) {
     if (!pagination || pagination.totalPages <= 1) {
@@ -118,7 +130,9 @@ async function renderPagination(pagination) {
             (page === currentPage - 3 || page === currentPage + 3) &&
             totalPages > 6
         ) {
-            buttons.push('<li><span class="size-[40px] text-gray-400">...</span></li>');
+            buttons.push(
+                '<li><span class="size-[40px] text-gray-400">...</span></li>',
+            );
         }
     }
 
@@ -136,7 +150,13 @@ async function renderPagination(pagination) {
 
     return `<ul class="inline-flex items-center -space-x-px">${buttons.join('')}</ul>`;
 }
-async function loadProducts(search = null, category = null, sort = null, page = null, limit = null) {
+async function loadProducts(
+    search = null,
+    category = null,
+    sort = null,
+    page = null,
+    limit = null,
+) {
     try {
         // Build query string dynamically
         const params = new URLSearchParams();
@@ -155,7 +175,9 @@ async function loadProducts(search = null, category = null, sort = null, page = 
         productContainer.innerHTML = await renderProducts(data.products);
 
         // Render pagination
-        const paginationContainer = document.querySelector('#pagination-container');
+        const paginationContainer = document.querySelector(
+            '#pagination-container',
+        );
         paginationContainer.innerHTML = await renderPagination(data.pagination);
 
         // Update browser URL

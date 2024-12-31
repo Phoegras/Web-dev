@@ -19,19 +19,22 @@ const getProducts = async (req, res) => {
             limit,
             sortCriteria,
         );
-        const totalProducts = await productsBusiness.getTotalProducts(search, category);
+        const totalProducts = await productsBusiness.getTotalProducts(
+            search,
+            category,
+        );
         const totalPages = Math.ceil(totalProducts / limit);
         let categories = await productsBusiness.getDistinctCategories();
         categories = categories
             .map((category) => category.category)
             .filter((category) => category !== null);
 
-            // Check if this is an AJAX request
+        // Check if this is an AJAX request
         if (req.headers['sec-fetch-dest'] == 'empty') {
             console.log('AJAX request detected');
             // Respond with partial views for content and pagination
-            
-            res.json({ 
+
+            res.json({
                 products,
                 totalProducts,
                 sortOption,
@@ -41,8 +44,9 @@ const getProducts = async (req, res) => {
                 pagination: {
                     currentPage: page,
                     totalPages,
-                    limit, }
-        });
+                    limit,
+                },
+            });
             return;
         }
 
