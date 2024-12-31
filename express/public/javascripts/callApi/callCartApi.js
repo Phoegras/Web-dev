@@ -66,7 +66,7 @@ async function addToCart(productId) {
         console.error('Error adding product to cart:', error);
         alert('An error occurred. Please try again.');
     }
-}
+};
 
 /********************************/
 /*    Remove an item in cart    */
@@ -92,7 +92,7 @@ async function removeItem(element) {
     } catch (error) {
         console.error('Error:', error);
     }
-}
+};
 
 /**************************************/
 /*  Update product quantity in cart   */

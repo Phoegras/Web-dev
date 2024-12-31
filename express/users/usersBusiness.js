@@ -7,6 +7,7 @@ async function findUserByEmail(email) {
     const userProfile = await prisma.userProfile.findFirst({
         where: { userId: user.id },
     });
+  
     return { user, userProfile };
 }
 

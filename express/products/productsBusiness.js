@@ -1,9 +1,11 @@
 const prisma = require('../prismaClient'); // Import Prisma client instance
+const { findUserProfileById } = require('../users/usersBusiness');
 
 /**
  * Fetch products with pagination and sorting.
  */
-async function getProducts(search, category, page, limit, sortCriteria) {
+
+async function getProducts(search, category, manufacturer, page, limit, sortCriteria, min, max) {
     let query = {
         OR: [
             {
@@ -19,6 +21,14 @@ async function getProducts(search, category, page, limit, sortCriteria) {
                 },
             },
         ],
+        AND: [
+            { 
+                price: { 
+                    gte: min,
+                    lte: max,
+                } 
+            },
+        ],
     };
 
     if (category) {
@@ -29,6 +39,16 @@ async function getProducts(search, category, page, limit, sortCriteria) {
             ],
         };
     }
+
+    if (manufacturer) {
+        query = {
+            AND: [
+                query,
+                { manufacturer: manufacturer }, // Filter by category if specified
+            ],
+        };
+    }
+  
     const products = await prisma.products.findMany({
         where: query,
         orderBy: sortCriteria,
@@ -50,9 +70,21 @@ async function getProductsWithCriteria(criterias, limit) {
 }
 
 /**
+ * Fetch products with certain manufacturer.
+ */
+async function getProductsWithManufacturer(manufacturers, limit) {
+    const products = await prisma.products.findMany({
+        where: manufacturers,
+        take: limit,
+    });
+    return products;
+}
+
+/**
  * Get total product count for pagination.
  */
-async function getTotalProducts(search, category) {
+
+async function getTotalProducts(search, category, manufacturer) {
     let query = {
         OR: [
             {
@@ -78,6 +110,16 @@ async function getTotalProducts(search, category) {
             ],
         };
     }
+
+    if (manufacturer) {
+        query = {
+            AND: [
+                query,
+                { manufacturer: manufacturer }, // Filter by category if specified
+            ],
+        };
+    }
+
     const totalProducts = await prisma.products.count({
         where: query,
     });
@@ -93,6 +135,17 @@ async function getDistinctCategories() {
         select: { category: true },
     });
     return categories;
+}
+
+/**
+ * Fetch distinct manufacturers.
+ */
+async function getDistinctManufacturers() {
+    const manufacturer = await prisma.products.findMany({
+        distinct: ['manufacturer'],
+        select: { manufacturer: true },
+    });
+    return manufacturer;
 }
 
 /**
@@ -117,6 +170,49 @@ async function getRelevantProducts(category, excludeId) {
         take: 4, // Limit to 4 products
     });
     return relevantProducts;
+}
+
+// Fetch reviews for a product
+async function getProductReviews(productId, limit, skip) {
+    const reviews = await prisma.review.findMany({
+        where: { productId },
+        orderBy: { createdAt: 'desc' },
+        take: limit,
+        skip: skip,
+        include: {
+            userProfile: {
+                select: {
+                    name: true,
+                    avatar: true,
+                },
+            },
+        },
+    });
+    return reviews;
+}
+
+async function getProductReviewByUserId(productId, userId) {
+    const review = await prisma.review.findFirst({
+        where: { productId, userId },
+    });
+    return review;
+}
+
+async function getNumOfReviews(productId) {
+    return await prisma.review.count({ where: { productId } });
+}
+
+async function createReview(productId, userId, rating, comment) {
+
+    const review = await prisma.review.create({
+        data: {
+            productId,
+            userId,
+            rating,
+            comment,
+        },
+    });
+    return review;
 }
 
 // Seed the database with sample data for testing
@@ -303,10 +399,16 @@ const deleteProducts = async () => {
 module.exports = {
     getProducts,
     getProductsWithCriteria,
+    getProductsWithManufacturer,
     getTotalProducts,
     getDistinctCategories,
+    getDistinctManufacturers,
     getProductById,
     getRelevantProducts,
+    getProductReviews,
+    getProductReviewByUserId,
+    getNumOfReviews,
+    createReview,
     seedDatabase,
     deleteProducts,
 };
