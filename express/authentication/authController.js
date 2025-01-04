@@ -2,6 +2,7 @@ const authBusiness = require('./authBusiness');
 const passport = require('passport');
 const mailer = require('../utils/mailer');
 const bcrypt = require('bcryptjs');
+const validator = require('validator');
 
 // Show register form
 const showRegisterForm = (req, res) => {
@@ -27,16 +28,14 @@ const register = async (req, res) => {
         // Check if user already exists
         const existingUser = await authBusiness.findUserByEmail(email);
         if (existingUser) {
-            return res.status(400).json({ message: 'Email already exists.' });
+            return res.status(400).json({ message: 'Account already exists.' });
         }
 
         // Validate password complexity
-        const passwordRegex =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*?])[A-Za-z\d!@#$%^&*?]{8,}$/;
-        if (!passwordRegex.test(password)) {
+        if (!validator.isStrongPassword(password)) {
             return res.status(400).json({
                 message:
-                    'Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.',
+                    'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.',
             });
         }
 
@@ -216,74 +215,120 @@ const showForgotPasswordForm = (req, res) => {
 const forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
-
         const user = await authBusiness.findUserByEmail(email);
 
         if (!user) {
-            return res.status(404).json({
-                message: "Email doesn't exist",
+            return res.status(200).json({
+                message: 'If the email exists, a password reset link has been sent.',
             });
         }
 
-        const hashedEmail = await bcrypt.hash(
-            user.email,
-            parseInt(process.env.BCRYPT_SALT_ROUND),
-        );
-        const resetLink = `${process.env.APP_URL}/auth/re-password?email=${user.email}&token=${hashedEmail}`;
+        const crypto = require('crypto');
+        const token = crypto.randomBytes(32).toString('hex');
+        const hashedToken = await bcrypt.hash(token, parseInt(process.env.BCRYPT_SALT_ROUND));
+        const tokenExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
 
-        const { success, message, mailError } = await mailer.sendMail(
+        await authBusiness.storeResetToken(user.id, hashedToken, tokenExpiry);
+
+        const resetLink = `${process.env.APP_URL}/auth/re-password?email=${user.email}&token=${token}`;
+        await mailer.sendMail(
             user.email,
             'Reset password',
-            `<a href="${resetLink}">Reset Password</a>`,
+            `<a href="${resetLink}">Reset Password</a>`
         );
 
-        if (!success) {
-            return res.status(404).json({
-                message: message,
-            });
-        } else {
-            res.status(201).json({
-                message: 'Password reset link sent to your email.',
-            });
-        }
-
-
+        res.status(200).json({
+            message: 'If the email exists, a password reset link has been sent.',
+        });
     } catch (error) {
         console.error(error.message);
-        res.redirect('/auth/forgot-password');
-    }
-};
-
-// Show re-password form
-const showRePasswordForm = (req, res) => {
-    if (!req.query.email || !req.query.token) {
-        res.redirect('/auth/forgot-password');
-    } else {
-        res.render('auth-re-password', {
-            title: 'Reset Your Password',
-            noHeader: true,
-            noFooter: true,
-            email: req.query.email,
-            token: req.query.token,
+        res.status(500).json({
+            message: 'An unexpected error occurred. Please try again later.',
         });
     }
 };
 
+// Show re-password form
+const showRePasswordForm = async (req, res) => {
+    const { email, token } = req.query;
+
+    if (!email || !token) {
+        return res.redirect('/errors?message=Invalid link');
+    }
+
+    console.log(email);
+
+
+    try {
+        const resetRecord = await authBusiness.findResetTokenByEmail(email);
+
+        if (!resetRecord) {
+            return res.redirect('/errors?message=Reset link not found');
+        }
+
+        if (resetRecord.expiry < Date.now()) {
+            return res.redirect('/errors?message=Reset link has expired');
+        }
+
+        const isTokenValid = await bcrypt.compare(token, resetRecord.hashedToken);
+        if (!isTokenValid) {
+            return res.redirect('/errors?message=Invalid reset token');
+        }
+
+        res.render('auth-re-password', {
+            title: 'Reset Your Password',
+            noHeader: true,
+            noFooter: true,
+            token: token,
+            email: email,
+        });
+    } catch (error) {
+        console.error(error.message);
+        res.redirect('/auth/error?message=An unexpected error occurred');
+    }
+};
+
 // Reset password
-const resetPassword = (req, res) => {
-    const { email, token, password } = req.body;
-    if (!email || !token || !password) {
-        res.redirect('/auth/forgot-password');
-    } else {
-        bcrypt.compare(email, token, (err, result) => {
-            if (result == true) {
-                authBusiness.changePassword(email, password);
-                res.status(201).json({
-                    message: 'Password has been changed successfully!',
-                });
-            } else {
-                res.redirect('/auth/forgot-password');
-            }
+const resetPassword = async (req, res) => {
+    const { token, email, password } = req.body;
+
+    if (!token || !email || !password) {
+        return res.status(400).json({
+            message: 'Invalid data.',
+        });
+    }
+
+    try {
+        const resetRecord = await authBusiness.findResetTokenByEmail(email);
+
+        if (!resetRecord || resetRecord.expiry < Date.now()) {
+            return res.status(400).json({ message: 'Reset link has expired' });
+        }
+
+        const isTokenValid = await bcrypt.compare(token, resetRecord.hashedToken);
+        if (!isTokenValid) {
+            return res.status(400).json({ message: 'Reset link not found' });
+        }
+
+        if (!validator.isStrongPassword(password)) {
+            return res.status(400).json({
+                message:
+                    'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.',
+            });
+        }
+
+        console.log(resetRecord);
+
+        await authBusiness.changePassword(resetRecord.userId, password);
+        await authBusiness.deleteResetToken(resetRecord.id);
+
+        res.status(200).json({
+            message: 'Password has been changed successfully!',
+        });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({
+            message: 'An unexpected error occurred. Please try again later.',
         });
     }
 };
