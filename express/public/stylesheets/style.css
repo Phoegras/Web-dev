@@ -36,6 +36,7 @@ input::-webkit-inner-spin-button {
     position: absolute;
     border-radius: 5px;
     background: #4f46e5;
+}
 
 textarea {
     resize: none;
