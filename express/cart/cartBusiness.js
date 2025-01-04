@@ -79,10 +79,12 @@ async function removeFromCart(cartItemId) {
     });
 
     if (!cart) {
-        throw new Error("Cart not found or cart item does not exist.");
+        throw new Error('Cart not found or cart item does not exist.');
     }
 
-    const updatedCartItemIds = cart.cartItemIds.filter(id => id !== cartItemId); // Remove the item
+    const updatedCartItemIds = cart.cartItemIds.filter(
+        (id) => id !== cartItemId,
+    ); // Remove the item
 
     await prisma.cart.update({
         where: {

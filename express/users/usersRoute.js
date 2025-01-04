@@ -9,4 +9,10 @@ router.get(
     userController.showAccountInfo,
 );
 
+router.put(
+    '/update-profile',
+    authMiddleware.isAuthenticated,
+    userController.updateUserProfile,
+);
+
 module.exports = router;

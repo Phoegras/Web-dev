@@ -15,7 +15,7 @@ const createOrder = async (userId, recipient, phone, address) => {
             include: {
                 items: {
                     include: {
-                        product: true, // Lấy thông tin sản phẩm nếu cần
+                        product: true,
                     },
                 },
             },
@@ -25,7 +25,6 @@ const createOrder = async (userId, recipient, phone, address) => {
             throw new Error('Cart is empty or does not exist.');
         }
 
-        // Tính tổng tiền và chuẩn bị dữ liệu cho orderItem
         const orderItems = cart.items.map((item) => ({
             productId: item.productId,
             quantity: item.quantity,
@@ -36,7 +35,6 @@ const createOrder = async (userId, recipient, phone, address) => {
             0,
         );
 
-        // Tạo đơn hàng
         const order = await prisma.order.create({
             data: {
                 recipient,
@@ -50,7 +48,6 @@ const createOrder = async (userId, recipient, phone, address) => {
             },
         });
 
-        // Xóa giỏ hàng (hoặc các item trong giỏ hàng)
         await prisma.cartItem.deleteMany({
             where: { id: { in: cart.items.map((item) => item.id) } },
         });
@@ -76,11 +73,10 @@ const calculateOrderTotal = (orderItems) => {
 
 const clearCart = async (userId) => {
     try {
-        // Tìm giỏ hàng của người dùng
         const cart = await prisma.cart.findUnique({
             where: { userId },
             include: {
-                items: true, // Bao gồm các mục trong giỏ hàng
+                items: true,
             },
         });
 
@@ -89,7 +85,6 @@ const clearCart = async (userId) => {
             return;
         }
 
-        // Xóa các mục trong giỏ hàng
         await prisma.cartItem.deleteMany({
             where: { id: { in: cart.items.map((item) => item.id) } },
         });

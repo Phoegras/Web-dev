@@ -28,7 +28,13 @@ const getProducts = async (req, res) => {
             min, 
             max
         );
-        const totalProducts = await productsBusiness.getTotalProducts(search, category, manufacturer);
+
+        const totalProducts = await productsBusiness.getTotalProducts(
+            search,
+            category,
+            manufacturer
+        );
+
         const totalPages = Math.ceil(totalProducts / limit);
 
         let categories = await productsBusiness.getDistinctCategories();

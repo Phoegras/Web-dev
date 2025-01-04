@@ -23,7 +23,8 @@ async function addToCart(productId) {
         ); // Get quantity
 
         if (!size) {
-            document.getElementById("not-choose-size").innerHTML = "Please select a size.";
+            document.getElementById('not-choose-size').innerHTML =
+                'Please select a size.';
             return;
         }
 
@@ -67,7 +68,6 @@ async function addToCart(productId) {
     }
 };
 
-
 /********************************/
 /*    Remove an item in cart    */
 /********************************/
@@ -93,7 +93,6 @@ async function removeItem(element) {
         console.error('Error:', error);
     }
 };
-
 
 /**************************************/
 /*  Update product quantity in cart   */
@@ -167,7 +166,7 @@ async function updateCartDropDown() {
         const response = await fetch('/cart', {
             method: 'GET',
             headers: {
-                'Accept': 'application/json',
+                Accept: 'application/json',
             },
         }); // Same route used for both full page and dropdown
 
@@ -188,12 +187,14 @@ async function updateCartDropDown() {
 function renderCartDropDown(cartItems, subtotal, total) {
     const cartList = document.querySelector('.cart-dropdown ul');
 
-    if(!cartList) return;
-    
+    if (!cartList) return;
+
     if (cartItems.length) {
-        const cartItemsHtml = cartItems.map(item => {
-            const productImage = item.product.images?.[0] || '/images/placeholder-image.png';
-            return `
+        const cartItemsHtml = cartItems
+            .map((item) => {
+                const productImage =
+                    item.product.images?.[0] || '/images/placeholder-image.png';
+                return `
             <li>
                 <a
                     href="/products/${item.id}"
@@ -215,7 +216,9 @@ function renderCartDropDown(cartItems, subtotal, total) {
                     <span class="font-semibold">${(item.product.price * item.quantity).toFixed(2)}</span>
                 </a>
             </li>
-        `}).join('');
+        `;
+            })
+            .join('');
 
         cartList.innerHTML = `
             ${cartItemsHtml}

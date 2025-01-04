@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type ProductsRating {
+  /// Multiple data types found: Float: 87.5%, Int: 12.5% out of 24 sampled entries
+  score Json
+}
+
+model products {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int?        @map("__v")
+  category      String?
+  manufacturer  String?
+  colors        String[]
+  createdAt     DateTime    @default(now())
+  description   String
+  features      String[]
+  images        String[]
+  label         String
+  material      String?
+  name          String
+  originalPrice Int
+  overview      String?
+  /// Multiple data types found: Float: 87.5%, Int: 12.5% out of 24 sampled entries
+  price         Float
+  rating        Float?
+  sizes         String[]
+  sold          Int?
+  stock         Int         @default(0)
+  cartItem      cartItem[]
+  orderItem     orderItem[]
+  reviews       review[]
+}
+
+model users {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  email           String       @unique
+  password        String?
+  type            String       @default("LOCAL")
+  userProfile     userProfile?
+  emailVerifiedAt DateTime?
+  cart            cart?
+  order           order[]
+}
+
+model userProfile {
+  userId      String    @id @map("_id") @db.ObjectId
+  name        String
+  phone       String?
+  dateOfBirth DateTime?
+  address     String?
+  avatar      String?
+  user        users     @relation(fields: [userId], references: [id])
+  reviews     review[]
+}
+
+model cart {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  cartItemIds String[]   @db.ObjectId
+  userId      String     @unique @db.ObjectId
+  items       cartItem[] @relation(fields: [cartItemIds], references: [id])
+  user        users      @relation(fields: [userId], references: [id])
+}
+
+model cartItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  cartIds   String[] @db.ObjectId
+  productId String   @db.ObjectId
+  quantity  Int      @default(1)
+  size      String
+  product   products @relation(fields: [productId], references: [id])
+  cart      cart[]   @relation(fields: [cartIds], references: [id])
+}
+
+model order {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  recipient    String
+  phone        String
+  address      String
+  orderItemIds String[]    @db.ObjectId
+  userId       String      @db.ObjectId
+  totalAmount  Float
+  status       String      @default("Pending") // Pending, Paid, Shipped, Delivered
+  createdAt    DateTime    @default(now())
+  user         users       @relation(fields: [userId], references: [id])
+  orderItem    orderItem[]
+}
+
+model orderItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String   @db.ObjectId
+  productId String   @db.ObjectId
+  quantity  Int
+  size      String
+  product   products @relation(fields: [productId], references: [id])
+  order     order    @relation(fields: [orderId], references: [id])
+}
+
+model review {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  productId   String      @db.ObjectId
+  product     products    @relation(fields: [productId], references: [id])
+  userId      String      @db.ObjectId
+  userProfile userProfile @relation(fields: [userId], references: [userId])
+  rating      Int
+  comment     String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model admins {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  email           String        @unique
+  password        String
+  role            String        @default("admin")
+  adminProfile    adminProfile?
+  emailVerifiedAt DateTime?
+}
+
+model adminProfile {
+  adminId     String    @id @map("_id") @db.ObjectId
+  name        String
+  phone       String?
+  dateOfBirth DateTime?
+  address     String?
+  avatar      String?
+  admin       admins    @relation(fields: [adminId], references: [id])
+}
