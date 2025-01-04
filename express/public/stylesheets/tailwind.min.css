@@ -2840,8 +2840,8 @@ video {
 .bg-\[url\(\'\/images\/food\/cta\.jpg\'\)\] {
     background-image: url('/images/food/cta.jpg') !important;
 }
-.bg-\[url\(\'\/images\/food\/food-menu\.png\'\)\] {
-    background-image: url('/images/food/food-menu.png') !important;
+.bg-\[url\(\'\/images\/error\.png\'\)\] {
+    background-image: url('/images/error.png') !important;
 }
 .bg-\[url\(\'\/images\/food\/menu\.jpg\'\)\] {
     background-image: url('/images/food/menu.jpg') !important;

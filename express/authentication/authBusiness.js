@@ -85,19 +85,49 @@ async function verifyUserEmail(email) {
     }
 }
 
-const changePassword = async (email, newPassword) => {
-    const hashedPassword = await bcrypt.hash(
-        newPassword,
-        parseInt(parseInt(process.env.BCRYPT_SALT_ROUND)),
-    );
-    try {
-        await prisma.users.update({
-            where: { email: email },
-            data: { password: hashedPassword },
-        });
-    } catch (error) {
-        console.error('Error in changing password:', error.message);
+const storeResetToken = async (userId, hashedToken, expiry) => {
+    return prisma.resetToken.upsert({
+        where: { userId },
+        update: {
+            hashedToken,
+            expiry,
+        },
+        create: {
+            userId,
+            hashedToken,
+            expiry,
+        },
+    });
+};
+
+async function findResetTokenByEmail(email) {
+    const user = await prisma.users.findUnique({
+        where: { email },
+    });
+
+    if (!user) {
+        return null;
     }
+
+    const resetToken = await prisma.resetToken.findUnique({
+        where: { userId: user.id },
+    });
+
+    return resetToken;
+}
+
+const changePassword = async (userId, newPassword) => {
+    const hashedPassword = await bcrypt.hash(newPassword, parseInt(process.env.BCRYPT_SALT_ROUND));
+    return prisma.users.update({
+        where: { id: userId },
+        data: { password: hashedPassword },
+    });
+};
+
+const deleteResetToken = async (tokenId) => {
+    return prisma.resetToken.delete({
+        where: { id: tokenId },
+    });
 };
 
 module.exports = {
@@ -107,4 +137,7 @@ module.exports = {
     comparePassword,
     verifyUserEmail,
     changePassword,
+    storeResetToken,
+    findResetTokenByEmail,
+    deleteResetToken,
 };
