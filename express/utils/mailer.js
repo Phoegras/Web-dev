@@ -18,29 +18,7 @@ exports.sendMail = async (to, subject, htmlContent) => {
         subject: subject,
         html: htmlContent,
     };
-
-    try {
-        const info = await transport.sendMail(options);
-        return {
-            success: true,
-            message: 'Email sent successfully',
-            info
-        }
-    } catch (err) {
-        if (err.response && err.response.includes('550')) {
-            // Email not found
-            return {
-                success: false,
-                message: 'Invalid recipient address. Email does not exist.',
-                error: err
-            };
-        }
-
-        // Other errors
-        return {
-            success: false,
-            message: 'Failed to send email. Please try again later.',
-            error: err
-        };
-    }
+    
+    const info = await transport.sendMail(options);
+    return info;
 };

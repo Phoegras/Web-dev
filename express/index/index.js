@@ -5,15 +5,10 @@ const indexController = require('./indexController');
 /* GET home page. */
 router.get('/', indexController.getIndex);
 
-router.get('/about', function (req, res, next) {
-    res.render('about');
-});
+router.get('/about', indexController.getAbout);
 
-router.get('/contact', (req, res) => {
-    res.render('contact', {
-        title: 'Contact Us',
-        noFooter: true,
-    });
-});
+router.get('/contact', indexController.getContact);
+
+router.get('/errors', indexController.getErrorPage);
 
 module.exports = router;
