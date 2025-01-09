@@ -25,9 +25,9 @@ const register = async (req, res) => {
                 .json({ message: 'All fields are required.' });
         }
 
-        // Check if user already exists
-        const existingUser = await authBusiness.findUserByEmail(email);
-        if (existingUser) {
+        // Check if admin already exists
+        const existingadmin = await authBusiness.findAdminByEmail(email);
+        if (existingadmin) {
             return res.status(400).json({ message: 'Account already exists.' });
         }
 
@@ -60,8 +60,8 @@ const register = async (req, res) => {
                 message: message,
             });
         } else {
-            // Create user
-            await authBusiness.createUser({
+            // Create admin
+            await authBusiness.createadmin({
                 email,
                 password,
                 name,
@@ -127,7 +127,7 @@ const showSignInForm = (req, res) => {
 
 // Sign in
 const signIn = async (req, res, next) => {
-    passport.authenticate('local', async (err, user, info) => {
+    passport.authenticate('local', async (err, admin, info) => {
         if (err) {
             return res.status(500).json({
                 success: false,
@@ -135,7 +135,7 @@ const signIn = async (req, res, next) => {
             });
         }
 
-        if (!user) {
+        if (!admin) {
             return res.status(401).json({
                 success: false,
                 message: info.message || 'Invalid email or password.',
@@ -144,9 +144,9 @@ const signIn = async (req, res, next) => {
 
         try {
             // Check if email is verified
-            const userInDb = await authBusiness.findUserByEmail(user.email);
+            const adminInDb = await authBusiness.findAdminByEmail(admin.email);
 
-            if (!userInDb.emailVerifiedAt) {
+            if (!adminInDb.emailVerifiedAt) {
                 return res.status(403).json({
                     success: false,
                     message: 'Please verify your email before logging in.',
@@ -155,7 +155,7 @@ const signIn = async (req, res, next) => {
 
             // Handle successful login
             const redirectTo = req.session.returnTo || '/';
-            req.login(user, (err) => {
+            req.login(admin, (err) => {
                 if (err) {
                     return res.status(500).json({
                         success: false,
@@ -163,12 +163,8 @@ const signIn = async (req, res, next) => {
                     });
                 }
 
-                // Set cookie expiration based on "Remember Me" option
-                if (req.body.rememberMe === 'yes') {
-                    req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
-                } else {
-                    req.session.cookie.expires = false;
-                }
+                // Set cookie expiration
+                req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
 
                 delete req.session.returnTo;
                 return res.status(200).json({
@@ -200,9 +196,9 @@ const showForgotPasswordForm = (req, res) => {
 const forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
-        const user = await authBusiness.findUserByEmail(email);
+        const admin = await authBusiness.findAdminByEmail(email);
 
-        if (!user) {
+        if (!admin) {
             return res.status(200).json({
                 message: 'If the email exists, a password reset link has been sent.',
             });
@@ -213,11 +209,11 @@ const forgotPassword = async (req, res) => {
         const hashedToken = await bcrypt.hash(token, parseInt(process.env.BCRYPT_SALT_ROUND));
         const tokenExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
 
-        await authBusiness.storeResetToken(user.id, hashedToken, tokenExpiry);
+        await authBusiness.storeResetToken(admin.id, hashedToken, tokenExpiry);
 
-        const resetLink = `${process.env.APP_URL}/auth/re-password?email=${user.email}&token=${token}`;
+        const resetLink = `${process.env.APP_URL}/auth/re-password?email=${admin.email}&token=${token}`;
         await mailer.sendMail(
-            user.email,
+            admin.email,
             'Reset password',
             `<a href="${resetLink}">Reset Password</a>`
         );
@@ -304,7 +300,7 @@ const resetPassword = async (req, res) => {
 
         console.log(resetRecord);
 
-        await authBusiness.changePassword(resetRecord.userId, password);
+        await authBusiness.changePassword(resetRecord.adminId, password);
         await authBusiness.deleteResetToken(resetRecord.id);
 
         res.status(200).json({

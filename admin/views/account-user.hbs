@@ -1,0 +1,77 @@
+<!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <!-- Breadcrumb Start -->
+            <div
+              class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                Customer accounts
+              </h2>
+
+              <nav>
+                <ol class="flex items-center gap-2">
+                  <li>
+                    <a class="font-medium" href="/">Dashboard /</a>
+                  </li>
+                  <li class="font-medium text-primary">Tables</li>
+                </ol>
+              </nav>
+            </div>
+            <!-- Breadcrumb End -->
+
+            <!-- ====== Table Section Start -->
+            <div class="flex flex-col gap-10">
+
+              <!-- ====== Table Three Start -->
+              <div
+  class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
+>
+  <div class="max-w-full overflow-x-auto">
+    <table class="w-full table-auto">
+      <thead>
+        <tr class="bg-gray-2 text-left dark:bg-meta-4">
+          <th
+            class="min-w-[170px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
+          >
+            Full name
+          </th>
+          <th
+            class="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white"
+          >
+            Email
+          </th>
+          <th
+            class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
+          >
+            Status
+          </th>
+          <th class="px-4 py-4 font-medium text-black dark:text-white">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.fullName}}</td>
+            <td>{{this.email}}</td>
+            <td>{{#if this.isActive}}Active{{else}}Inactive{{/if}}</td>
+            <td>
+                <a href="/users/edit/{{this.id}}">Edit</a>
+                <a href="/users/delete/{{this.id}}" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+              <!-- ====== Table Three End -->
+            </div>
+            <!-- ====== Table Section End -->
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
