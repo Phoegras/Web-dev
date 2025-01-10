@@ -16,7 +16,7 @@ async function initializeSuperAdmin() {
                 data: {
                     email: process.env.SUPER_ADMIN_EMAIL,
                     password: hashedPassword,
-                    role: 'super_admin',
+                    role: 'SUPER_ADMIN',
                     emailVerifiedAt: new Date(),
                     adminProfile: {
                         create: {

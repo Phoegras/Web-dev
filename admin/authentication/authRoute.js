@@ -4,8 +4,8 @@ const authController = require('./authController');
 const authMiddleware = require('../middlewares/authMiddlewares');
 
 // Register
-router.get('/register', authMiddleware.isSuperAdmin, authController.showRegisterForm);
-router.post('/register', authMiddleware.isSuperAdmin, authController.register);
+router.get('/register', authController.showRegisterForm);
+router.post('/register', authController.register);
 router.get('/verify', authController.verify);
 router.get('/register-success', authController.showRegisterSuccess);
 

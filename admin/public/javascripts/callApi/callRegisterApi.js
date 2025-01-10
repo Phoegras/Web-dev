@@ -1,19 +1,25 @@
 document
-    .getElementById('registerButton')
-    .addEventListener('click', async () => {
+    .getElementById('registerForm')
+    .addEventListener('submit', async (event) => {
+        event.preventDefault();
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        const termsAccepted = document.getElementById('AcceptT&C').checked;
+        const confirmedPassword = document.getElementById('confirmed-password').value;
         const loadingSpinner = document.getElementById('loadingSpinner');
         const errorMessage = document.getElementById('error-message');
 
         errorMessage.classList.add('hidden');
 
         // Validate inputs
-        if (!name || !email || !password || !termsAccepted) {
-            errorMessage.innerText =
-                'Please fill in all fields and accept the Terms and Conditions.';
+        if (!name || !email || !password) {
+            errorMessage.innerText = 'Please fill in all fields!';
+            errorMessage.classList.remove('hidden');
+            return;
+        }
+
+        if (password != confirmedPassword) {
+            errorMessage.innerText = 'Confirmed password does not match!';
             errorMessage.classList.remove('hidden');
             return;
         }
@@ -38,10 +44,11 @@ document
             const result = await response.json();
 
             if (response.ok) {
-                window.location.href = '/auth/register-success';
+                alert('Create new account successfully!');
+                document.getElementById('registerForm').reset();
             } else {
                 errorMessage.innerText =
-                    result.message || 'THAT BAI.';
+                    result.message || 'Failed.';
                 errorMessage.classList.remove('hidden');
             }
         } catch (error) {

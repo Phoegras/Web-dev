@@ -1,6 +1,9 @@
 
 function getIndex(req, res) {
-    res.render('index');
+    const admin = req.user;
+    res.render('index', {
+        admin,
+    })
 }
 
 module.exports = {

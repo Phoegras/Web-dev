@@ -26,8 +26,12 @@ const register = async (req, res) => {
         }
 
         // Check if admin already exists
-        const existingadmin = await authBusiness.findAdminByEmail(email);
-        if (existingadmin) {
+        const existingAdmin = await authBusiness.findAdminByEmail(email);
+        if (existingAdmin) {
+            return res.status(400).json({ message: 'Account already exists.' });
+        }
+
+        if (email === process.env.SUPER_ADMIN_EMAIL) {
             return res.status(400).json({ message: 'Account already exists.' });
         }
 
@@ -49,29 +53,23 @@ const register = async (req, res) => {
         const verificationLink = `${process.env.APP_URL}/auth/verify?email=${email}&token=${hashedEmail}`;
 
         // Send verification email
-        const { success, message, error } = await mailer.sendMail(
+        await mailer.sendMail(
             email,
             'Verify Email',
             `<a href="${verificationLink}">Click here to verify your email</a>`,
         );
 
-        if (!success) {
-            return res.status(404).json({
-                message: message,
-            });
-        } else {
-            // Create admin
-            await authBusiness.createadmin({
-                email,
-                password,
-                name,
-            });
+        // Create admin
+        await authBusiness.createAdmin({
+            email,
+            password,
+            name,
+        });
 
-            return res.status(201).json({
-                message:
-                    'Registration successful. Please check your email to verify your account.',
-            });
-        }
+        return res.status(201).json({
+            message:
+                'Registration successful. Please check your email to verify your account.',
+        });
     } catch (error) {
         console.error(error);
         return res
