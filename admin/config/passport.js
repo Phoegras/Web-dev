@@ -9,58 +9,28 @@ module.exports = (passport) => {
             { usernameField: 'email' },
             async (email, password, done) => {
                 try {
-                    const user = await authBusiness.findUserByEmail(email);
-                    if (!user) {
+                    const admin = await authBusiness.findAdminByEmail(email);
+                    if (!admin) {
                         return done(null, false, {
-                            message: 'User not found.',
+                            message: 'Admin not found.',
                         });
                     }
 
                     const isMatch = await authBusiness.comparePassword(
                         password,
-                        user.password,
+                        admin.password,
                     );
                     if (!isMatch) {
                         return done(null, false, {
                             message: 'Incorrect password.',
                         });
                     }
-                    return done(null, user);
+                    return done(null, admin);
                 } catch (err) {
                     return done(err);
                 }
             },
         )
-    );
-
-    passport.use(
-        new GoogleStrategy(
-            {
-                clientID: process.env.GOOGLE_CLIENT_ID,
-                clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-                callbackURL: `${process.env.APP_URL}/auth/google/callback`,
-            },
-            async (accessToken, refreshToken, profile, done) => {
-                try {
-                    let user = await authBusiness.findUserByEmail(
-                        profile.emails[0].value,
-                    );
-                    const data = {
-                        email: profile.emails[0].value,
-                        name: profile.displayName,
-                        type: 'GOOGLE',
-                        emailVerifiedAt: new Date(),
-                    };
-                    if (!user) {
-                        user = await authBusiness.createUser(data);
-                    }
-
-                    done(null, user);
-                } catch (err) {
-                    done(err, null);
-                }
-            },
-        ),
     );
 
     passport.serializeUser((user, done) => {
@@ -69,11 +39,11 @@ module.exports = (passport) => {
 
     passport.deserializeUser(async (id, done) => {
         try {
-            const user = await authBusiness.findUserById(id);
-            if (!user) {
-                return done(new Error('User not found'));
+            const admin = await authBusiness.findAdminById(id);
+            if (!admin) {
+                return done(new Error('Admin not found'));
             }
-            done(null, user);
+            done(null, admin);
         } catch (err) {
             done(err);
         }
