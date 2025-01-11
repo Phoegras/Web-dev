@@ -1,0 +1,137 @@
+        <main>
+          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <!-- Breadcrumb Start -->
+            <div
+              class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                Products
+              </h2>
+
+              <nav>
+                <ol class="flex items-center gap-2">
+                  <li>
+                    <a class="font-medium" href="/">Dashboard /</a>
+                  </li>
+                  <li class="font-medium text-primary">Tables</li>
+                </ol>
+              </nav>
+            </div>
+            <!-- Breadcrumb End -->
+            <div class="flex justify-end gap-9">
+                <a
+                    href="/products/add"
+                    class="inline-flex items-center justify-center rounded-md border border-primary mb-2 px-1 py-2 text-center font-medium text-sm hover:bg-opacity-90 lg:px-6 xl:px-8"
+                  >
+                    + Add new Product
+                  </a>
+            </div>
+            <!-- ====== Table Section Start -->
+            <div class="flex flex-col gap-10">
+
+              <!-- ====== Table Three Start -->
+              <div
+  class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+>
+  <div class="max-w-full overflow-x-auto">
+    <table class="w-full table-auto">
+      <thead>
+        <tr class="bg-gray-2 text-left dark:bg-meta-4 cursor-pointer">
+          <th
+            class="min-w-[170px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
+            data-sort="name"
+          >
+            Product name
+            <span class="sort-indicator">↑↓</span>
+          </th>
+          <th
+            class="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white"
+          >
+            Category
+          </th>
+          <th
+            class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
+          >
+            Manufacturer
+          </th>
+          <th
+            class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
+            data-sort="price"
+          >
+            Price
+            <span class="sort-indicator">↑↓</span>
+          </th>
+          <th
+            class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
+            data-sort="sold"
+          >
+            Sold
+            <span class="sort-indicator">↑↓</span>
+          </th>
+          <th
+            class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
+          >
+            Status
+          </th>
+          <th class="px-4 py-4 font-medium text-black dark:text-white">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+        <tr>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark xl:pl-11">
+                <div class="flex items-center">
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+                        <div class="h-12.5 w-15 rounded-md">
+                        <img src="{{this.images.[0]}}" alt="{{this.name}}" />
+                        </div>
+                        <p class="text-sm font-medium text-black dark:text-white">
+                        {{this.name}}
+                        </p>
+                    </div>
+                </div>
+            </td>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">{{this.category}}</td>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">{{this.manufacturer}}</td>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">${{this.price}}</td>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">{{this.sold}}</td>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+            <p
+              class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success"
+            >
+              {{this.status}}
+            </p>
+          </td>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                <div class="flex items-center space-x-3.5">
+                <a href="/products/{{this.id}}"><i class="ri-edit-line"></i></a>
+                <button 
+                class="hover:text-primary"
+                onclick="deleteProduct('{{this.id}}')"
+                >
+                <i class="ri-delete-bin-6-line"></i>
+              </button>
+              </div>
+            </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+              <!-- ====== Table Three End -->
+            </div>
+            <!-- ====== Table Section End -->
+
+            <!-- Pagination Controls -->
+            <div id="pagination-controls" class="pagination-controls cursor-pointer text-base flex items-center justify-center gap-4 mt-12">
+              <button id="prev-page" disabled><i class="ri-arrow-left-s-line"></i></button>
+              <span id="current-page" class="text-gray-100">{{ pagination.currentPage }}</span>
+              <button id="next-page"><i class="ri-arrow-right-s-line"></i></button>
+            </div>
+          </div>
+        </main>
+<script src="/javascripts/callApi/callProductApi.js"></script>

@@ -22,10 +22,11 @@ model products {
   description   String
   features      String[]
   images        String[]
-  label         String
+  label         String?
   material      String?
   name          String
-  originalPrice Int
+  status       String      @default("On stock") // On stock, Out of stock, suspend, ...
+  originalPrice Float
   overview      String?
   /// Multiple data types found: Float: 87.5%, Int: 12.5% out of 24 sampled entries
   price         Float
