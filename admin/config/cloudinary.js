@@ -15,6 +15,17 @@ module.exports ={
         return res;
     },
 
+    uploadMultiple: async function(files, folder) {
+        const uploads = files.map((file) =>
+            cloudinary.uploader.upload(
+                `data:${file.mimetype};base64,${file.buffer.toString("base64")}`, {
+                resource_type: "image",
+                folder: folder,
+            })
+        );
+        return Promise.all(uploads); // Wait for all uploads to complete
+    },
+
     reSizeImage: (id, h, w) => {
         return cloudinary.url(id, {
             height: h,
