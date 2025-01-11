@@ -15,6 +15,7 @@ const init = require('./config/initialize');
 const indexRouter = require('./index/index');
 const accountRouter = require('./accounts/accountsRoute');
 const authRouter = require('./authentication/authRoute');
+const adminRouter = require('./admin/adminRoute');
 // const categoryRouter = require('./categories/categoriesRoute');
 // const manufacturerRouter = require('./manufacturers/manufacturersRoute');
 // const productRouter = require('./products/productsRoute');
@@ -69,6 +70,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/accounts', accountRouter);
 app.use('/auth', authRouter);
+app.use('/admin', adminRouter);
 // app.use('/categories', categoryRouter);
 // app.use('/manufacturers', manufacturerRouter);
 // app.use('/products', productsRouter);

@@ -3,8 +3,6 @@ document
     .addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        console.log("hiiiii")
-
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
