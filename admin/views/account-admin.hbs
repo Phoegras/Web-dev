@@ -5,7 +5,7 @@
       class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
     >
       <h2 class="text-title-md2 font-bold text-black dark:text-white">
-        Admin
+        Customer
       </h2>
 
       <nav>
@@ -35,8 +35,8 @@
           class="border border-gray-300 rounded-md px-4 py-2"
         />
         <button
+          id="apply-filter"
           class="inline-flex items-center justify-center rounded-md border border-primary px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-opacity-90"
-          onclick="applyFilters()"
         >
           Apply Filters
         </button>
@@ -61,7 +61,6 @@
                 <th
                   class="min-w-[170px] px-4 py-4 font-medium text-black dark:text-white"
                   data-sort="name"
-                  onclick="sortAccounts('name')"
                 >
                   Name
                   <span class="sort-indicator">↑↓</span>
@@ -69,15 +68,13 @@
                 <th
                   class="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white"
                   data-sort="email"
-                  onclick="sortAccounts('email')"
                 >
                   Email
                   <span class="sort-indicator">↑↓</span>
                 </th>
                 <th
                   class="min-w-[170px] px-4 py-4 font-medium text-black dark:text-white"
-                  data-sort="registration"
-                  onclick="sortAccounts('registrationTime')"
+                  data-sort="emailVerifiedAt"
                 >
                   Registration Time
                   <span class="sort-indicator">↑↓</span>
@@ -96,7 +93,7 @@
                 <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark xl:pl-11">
                   <img
                     src="{{this.avatar}}"
-                    alt="{{this.name}}'s avatar"
+                    alt="{{this.adminProfile.name}}'s avatar"
                     class="w-10 h-10 rounded-full"
                   />
                 </td>
@@ -128,18 +125,23 @@
                 <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <div class="flex items-center space-x-3.5">
                     {{#if this.isCurrentUser}}
-                    <span class="text-gray-400">Cannot ban yourself</span>
+                      <!-- No button is displayed -->
                     {{else}}
-                    <button
-                      class="hover:text-primary"
-                      onclick="toggleAccountStatus('{{this.id}}', '{{this.status}}')"
-                    >
                       {{#if (eq this.status 'ACTIVE')}}
-                      Ban
+                        <button
+                          class="hover:text-red-500"
+                          onclick="handleBan('{{this.id}}')"
+                        >
+                          Ban
+                        </button>
                       {{else}}
-                      Unban
+                        <button
+                          class="hover:text-green-500"
+                          onclick="handleUnban('{{this.id}}')"
+                        >
+                          Unban
+                        </button>
                       {{/if}}
-                    </button>
                     {{/if}}
                   </div>
                 </td>
@@ -164,4 +166,4 @@
     </div>
   </div>
 </main>
-<script src="/javascripts/callApi/callAccountApi.js"></script>
+<script src="/javascripts/callApi/callAdminAccountApi.js"></script>

@@ -84,6 +84,14 @@ const getUserAccountsApi = async (req, res) => {
 const banAccount = async (req, res) => {
     const { type, id } = req.params;
 
+    const admin = await accountsBusiness.findAdminById(req.user.id);
+    console.log(admin.role)
+    console.log(type.type)
+    if (type.type === 'admin' && admin.role !== 'SUPER_ADMIN') {
+        console.log('hello');
+        res.status(500).json({ message: "You don't have permission to this activity!" });
+    }
+
     try {
         accountsBusiness.banAccountById(type.type, id);
         res.json({ message: `Account ${id} has been banned.` });

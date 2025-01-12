@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
     const fetchAccounts = async () => {
       try {
-        const name = filterNameInput.value || ' ';
-        const email = filterEmailInput.value || '.';
+        const name = filterNameInput.value || '';
+        const email = filterEmailInput.value || '';
         const response = await fetch(
-          `/accounts/user/api?page=${currentPage}&limit=${limit}&sort=${sortKey}&order=${sortOrder}&name=${name}&email=${email}`
+          `/accounts/admin/api?page=${currentPage}&limit=${limit}&sort=${sortKey}&order=${sortOrder}&name=${name}&email=${email}`
         );
   
         if (!response.ok) throw new Error('Failed to fetch accounts.');
@@ -35,13 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="px-4 py-5 xl:pl-11">
                   <img
                     src="${account.avatar}"
-                    alt="${account.userProfile?.name || 'Avatar'}"
+                    alt="${account.adminProfile?.name || 'Avatar'}"
                     class="w-10 h-10 rounded-full"
                   />
                 </td>
                 <td class="px-4 py-5">
                   <p class="text-sm font-medium text-black dark:text-white">
-                    ${account.userProfile?.name || 'N/A'}
+                    ${account.adminProfile?.name || 'N/A'}
                     ${account.isCurrentUser ? '<span class="text-primary font-bold">(You)</span>' : ''}
                   </p>
                 </td>
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function handleBan(accountId) {
     if (confirm('Are you sure you want to ban this account?')) {
-        fetch(`/accounts/user/${accountId}/ban`, {
+        fetch(`/accounts/admin/${accountId}/ban`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
         })
@@ -162,7 +162,7 @@ function handleBan(accountId) {
 
 function handleUnban(accountId) {
     if (confirm('Are you sure you want to unban this account?')) {
-        fetch(`/accounts/user/${accountId}/unban`, {
+        fetch(`/accounts/admin/${accountId}/unban`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
         })

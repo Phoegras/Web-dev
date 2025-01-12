@@ -94,9 +94,17 @@ const unbanAccountById = async (type, id) => {
     });
 }
 
+const findAdminById = async (id) => {
+    const admin = await prisma.admins.findUnique({
+        where: { id },
+    });
+    return admin;
+}
+
 module.exports = {
     getAccounts,
     countAccounts,
     banAccountById,
     unbanAccountById,
+    findAdminById,
 };
