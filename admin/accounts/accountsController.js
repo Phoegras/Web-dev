@@ -1,21 +1,30 @@
 const accountsBusiness = require('./accountsBusiness');
 
-const getUserAccountList = async (req, res) => {
+const getUserAccounts = async (req, res) => {
     try {
-        const { type = 'user', name, email, sortKey, sortOrder, page = 1, limit = 10 } = req.query;
+        const type = req.params;
+        const { name, email, sortKey, sortOrder, page = 1, limit = 10 } = req.query;
 
         const filter = {};
-        if (name) filter.name = { contains: name, mode: 'insensitive' };
         if (email) filter.email = { contains: email, mode: 'insensitive' };
+        if (name) {
+            if (type.type === 'user') {
+                filter.userProfile = { name: { contains: name, mode: 'insensitive' } };
+            } else if (type.type === 'admin') {
+                filter.adminProfile = { name: { contains: name, mode: 'insensitive' } };
+            }
+        }
 
         const sort = sortKey ? { key: sortKey, order: sortOrder || 'asc' } : null;
 
         const [accounts, total] = await Promise.all([
-            accountsBusiness.getAccounts(type, filter, sort, Number(page), Number(limit)),
-            accountsBusiness.countAccounts(type, filter),
+            accountsBusiness.getAccounts(type.type, filter, sort, Number(page), Number(limit)),
+            accountsBusiness.countAccounts(type.type, filter),
         ]);
 
-        res.render('account-user', {
+        view = type.type === 'user' ? 'account-user' : 'account-admin';
+
+        res.render(view, {
             accounts,
             filter: { name, email },
             sortKey,
@@ -32,39 +41,74 @@ const getUserAccountList = async (req, res) => {
     }
 };
 
-const getAdminAccountList = async (req, res) => {
+const getUserAccountsApi = async (req, res) => {
+    const type = req.params;
+    const { name, email, sort = 'email', order = 'asc', page = 1, limit = 10 } = req.query;
+
+    const sortKey = sort;
+    const sortOrder = order;
+
+    const filter = {};
+
+    if (email) filter.email = { contains: email, mode: 'insensitive' };
+
+    if (name) {
+        if (type.type === 'user') {
+            filter.userProfile = {
+                name: { contains: name, mode: 'insensitive' },
+            };
+        } else if (type.type === 'admin') {
+            filter.adminProfile = {
+                name: { contains: name, mode: 'insensitive' },
+            };
+        }
+    }
+
+    const orderBy = sortKey ? { key: sortKey, order: sortOrder || 'asc' } : null;
+
+    const [accounts, total] = await Promise.all([
+        accountsBusiness.getAccounts(type.type, filter, orderBy, Number(page), Number(limit)),
+        accountsBusiness.countAccounts(type.type, filter),
+    ]);
+
+    res.json({
+        accounts,
+        pagination: {
+            currentPage: Number(page),
+            totalPages: Math.ceil(total / limit),
+            total,
+        },
+    });
+};
+
+const banAccount = async (req, res) => {
+    const { type, id } = req.params;
+
     try {
-        const { type = 'admin', name, email, sortKey, sortOrder, page = 1, limit = 10 } = req.query;
-
-        const filter = {};
-        if (name) filter.name = { contains: name, mode: 'insensitive' };
-        if (email) filter.email = { contains: email, mode: 'insensitive' };
-
-        const sort = sortKey ? { key: sortKey, order: sortOrder || 'asc' } : null;
-
-        const [accounts, total] = await Promise.all([
-            accountsBusiness.getAccounts(type, filter, sort, Number(page), Number(limit)),
-            accountsBusiness.countAccounts(type, filter),
-        ]);
-
-        res.render('account-admin', {
-            accounts,
-            filter: { name, email },
-            sortKey,
-            sortOrder,
-            pagination: {
-                currentPage: Number(page),
-                totalPages: Math.ceil(total / limit),
-                total,
-            },
-        });
+        accountsBusiness.banAccountById(type.type, id);
+        res.json({ message: `Account ${id} has been banned.` });
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ message: 'Failed to ban the account', error });
     }
 };
+
+const unbanAccount = async (req, res) => {
+    const { type, id } = req.params;
+
+    try {
+        accountsBusiness.unbanAccountById(type.type, id);
+        res.json({ message: `Account ${id} has been unbanned.` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to unban the account', error });
+    }
+};
+
 
 module.exports = {
-    getUserAccountList,
-    getAdminAccountList,
+    getUserAccounts,
+    getUserAccountsApi,
+    banAccount,
+    unbanAccount,
 }
