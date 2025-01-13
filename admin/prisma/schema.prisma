@@ -12,24 +12,42 @@ type ProductsRating {
   score Json
 }
 
+model categories {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products  products[]
+}
+
+model manufacturers {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products  products[]
+}
+
 model products {
   id            String      @id @default(auto()) @map("_id") @db.ObjectId
   v             Int?        @map("__v")
-  category      String?
-  manufacturer  String?
+  category      String?        
+  manufacturer  String?  
+  categoryName       categories?    @relation(fields: [category], references: [name])
+  manufacturerName   manufacturers? @relation(fields: [manufacturer], references: [name])
   colors        String[]
   createdAt     DateTime    @default(now())
-  description   String
+  description   String?
   features      String[]
   images        String[]
   label         String?
   material      String?
   name          String
-  status       String      @default("On stock") // On stock, Out of stock, suspend, ...
+  status       String      @default("On stock") // On stock, Out of stock, Suspend, ...
   originalPrice Float
   overview      String?
   /// Multiple data types found: Float: 87.5%, Int: 12.5% out of 24 sampled entries
-  price         Float
+  price         Float?
   rating        Float?
   sizes         String[]
   sold          Int?

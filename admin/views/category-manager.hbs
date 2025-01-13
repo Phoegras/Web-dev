@@ -1,0 +1,192 @@
+        <!-- ===== Main Content Start ===== -->
+        <main>
+          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <!-- Breadcrumb Start -->
+            <div
+              class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                Category Manager
+              </h2>
+
+              <nav>
+                <ol class="flex items-center gap-2">
+                  <li>
+                    <a class="font-medium" href="/">Dashboard /</a>
+                  </li>
+                  <li class="font-medium text-primary">Category Manager</li>
+                </ol>
+              </nav>
+            </div>
+            <!-- Breadcrumb End -->
+
+            <!-- ====== Form Elements Section Start -->
+      <div class="grid grid-cols-1 gap-9 sm:grid-cols-2">
+        <div class="flex flex-col gap-9">
+          <!-- Edit Category Form -->
+          <div
+            class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+          >
+            <div
+              class="border-b border-stroke px-6.5 py-4 dark:border-strokedark"
+            >
+              <h3 class="font-medium text-black dark:text-white">
+                Category Manager
+              </h3>
+            </div>
+            <form id="add-category-form" onsubmit="addCategory(event)">
+              <div class="p-6.5">
+                <!-- Product Name -->
+                <div class="mb-4.5">
+                  <label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                  >
+                    Category Name
+                  </label>
+                  <input
+                    id="category-name"
+                    type="text"
+                    name="name"
+                    value=""
+                    placeholder="Enter category name"
+                    class="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                </div>
+
+                <!-- Submit Button -->
+                <button
+                  type="submit"
+                  class="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
+                >
+                  Add Category
+                </button>
+              </div>
+            </form>
+          </div>
+        </div >
+        <div class="flex flex-col gap-10">
+
+              <!-- ====== Table Three Start -->
+              <div
+  class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+>
+  <div class="max-w-full overflow-x-auto overflow-y-auto">
+    <table class="w-full table-auto">
+      <thead>
+        <tr class="bg-gray-2 text-left dark:bg-meta-4 cursor-pointer">
+          <th
+            class="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white"
+          >
+            Existing Categories
+          </th>
+
+
+          <th class="px-4 py-4 font-medium text-black dark:text-white">
+            
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+  {{#each categories}}
+  <tr>
+    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+      <span id="category-name-{{this.id}}" class="inline">{{this.name}}</span>
+      <input
+        id="edit-category-input-{{this.id}}"
+        type="text"
+        value="{{this.name}}"
+        class="hidden w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
+      />
+    </td>
+    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+      <div class="flex items-center space-x-3.5">
+        <button
+          id="edit-btn-{{this.id}}"
+          class="hover:text-primary"
+          onclick="enableEditMode('{{this.id}}')"
+        >
+          <i class="ri-edit-line"></i>
+        </button>
+        <button
+          id="save-btn-{{this.id}}"
+          class="hidden hover:text-primary"
+          onclick="saveCategory('{{this.id}}')"
+        >
+          <i class="ri-check-line"></i>
+        </button>
+        <button
+          class="hover:text-primary"
+          onclick="deleteCategory('{{this.id}}')"
+        >
+          <i class="ri-delete-bin-6-line"></i>
+        </button>
+      </div>
+    </td>
+  </tr>
+  {{/each}}
+</tbody>
+
+    </table>
+  </div>
+</div>
+
+              <!-- ====== Table Three End -->
+            </div>
+        </div>
+
+            <!-- ====== Form Elements Section End -->
+          </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+
+    <script>
+      function dropdown() {
+        return {
+          options: [],
+          selected: [],
+          show: false,
+          open() {
+            this.show = true;
+          },
+          close() {
+            this.show = false;
+          },
+          isOpen() {
+            return this.show === true;
+          },
+          select(index, event) {
+            if (!this.options[index].selected) {
+              this.options[index].selected = true;
+              this.options[index].element = event.target;
+              this.selected.push(index);
+            } else {
+              this.selected.splice(this.selected.lastIndexOf(index), 1);
+              this.options[index].selected = false;
+            }
+          },
+          remove(index, option) {
+            this.options[option].selected = false;
+            this.selected.splice(index, 1);
+          },
+          loadOptions() {
+            const options = document.getElementById("select").options;
+            for (let i = 0; i < options.length; i++) {
+              this.options.push({
+                value: options[i].value,
+                text: options[i].innerText,
+                selected:
+                  options[i].getAttribute("selected") != null
+                    ? options[i].getAttribute("selected")
+                    : false,
+              });
+            }
+          },
+          selectedValues() {
+            return this.selected.map((option) => {
+              return this.options[option].value;
+            });
+          },
+        };
+      }
+    </script>
+<script src="/javascripts/callApi/categoryManufacturerApi/callCategoryApi.js"></script>

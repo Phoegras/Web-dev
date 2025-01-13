@@ -8,7 +8,8 @@ cloudinary.config({
 
 module.exports ={
     uploadSingle: async function (file, folder) {
-        const res = await cloudinary.uploader.upload(file, {
+        const res = await cloudinary.uploader.upload(
+            `data:${file.mimetype};base64,${file.buffer.toString("base64")}`, {
             resource_type: "auto",
             folder: folder,
         });
