@@ -18,11 +18,10 @@ const isAuthenticated = (req, res, next) => {
 };
 
 const isSuperAdmin = (req, res, next) => {
-    if (req.isAuthenticated() && req.admin.role === 'super_admin') {
+    if (req.isAuthenticated() && req.user.role === 'SUPER_ADMIN') {
         return next();
     }
-    req.flash('error_msg', 'You do not have permission to access this page.');
-    res.redirect('/auth/sign-in');
+    res.status(403).json({ message: 'You do not have permission to do this.' });
 };
 
 module.exports = {
