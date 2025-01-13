@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const headers = document.querySelectorAll("thead th[data-sort]");
-    console.log(headers);
+
     headers.forEach(header => {
       header.addEventListener("click", () => {
-        console.log("Sorting by:", header.getAttribute("data-sort"));
         const sortKey = header.getAttribute("data-sort");
         const currentOrder = header.dataset.order || "asc"; // Default to ascending order
         const newOrder = currentOrder === "asc" ? "desc" : "asc";
@@ -34,11 +33,24 @@ document.addEventListener("DOMContentLoaded", () => {
   
   function renderProducts(products) {
     const tbody = document.querySelector("tbody");
-    tbody.innerHTML = products
+    if (products.length === 0) {
+      tbody.innerHTML =
+        '<p class="text-center text-gray-600 font-medium">No products found.</p>';
+    }
+    else tbody.innerHTML = products
       .map(
-        product => `
+        (product) => {
+          const statusClass =
+                product.status === 'On stock'
+                    ? 'bg-success text-success'
+                    : product.status === 'Out of stock'
+                      ? 'bg-danger text-danger'
+                      : product.status === 'Suspend'
+                        ? 'bg-warning text-warning'
+                          : 'bg-gray-600 text-gray-600';
+          return `
       <tr>
-        <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
           <div class="flex items-center">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
               <div class="h-12.5 w-15 rounded-md">
@@ -53,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">$${product.price}</td>
         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">${product.sold}</td>
         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-          <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">
+          <p class="inline-flex rounded-full bg-opacity-10 px-3 py-1 text-sm font-medium ${ statusClass}">
             ${product.status}
           </p>
         </td>
@@ -64,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </td>
       </tr>
-    `
+    `}
       )
       .join("");
   }
@@ -113,12 +125,41 @@ const fetchProducts = async (page = 1) => {
   }
 };
 
+const filterProducts = async (page = 1) => {
+  try {
+    const category = document.getElementById("filter-category").value;
+    const manufacturer = document.getElementById("filter-manufacturer").value;
+    const status = document.getElementById("filter-status").value;
+    const name = document.getElementById("search").value;
+    console.log("Filtering products for page:", page);
+    const queryParams = new URLSearchParams({
+      page,
+      limit,
+      category,
+      manufacturer,
+      status,
+      name,
+    });
+
+    const response = await fetch(`/products/api/filter?${queryParams}`);
+    const data = await response.json();
+
+    if (response.ok) {
+      renderProducts(data.products);
+      updatePaginationControls(data.pagination.currentPage, data.pagination.totalPages);
+    } else {
+      console.error(data.error);
+    }
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+};
+
 const updatePaginationControls = (current, total) => {
   const prevButton = document.getElementById("prev-page");
   const nextButton = document.getElementById("next-page");
   const currentPageDisplay = document.getElementById("current-page");
 
-  console.log("Current page:", currentPageDisplay);
   currentPageDisplay.innerHTML = current;
 
   if (current <= 1) {
