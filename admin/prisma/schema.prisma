@@ -44,6 +44,7 @@ model users {
   email           String       @unique
   password        String?
   type            String       @default("LOCAL")
+  status          String       @default("ACTIVE")
   userProfile     userProfile?
   emailVerifiedAt DateTime?
   cart            cart?
@@ -56,7 +57,7 @@ model userProfile {
   phone       String?
   dateOfBirth DateTime?
   address     String?
-  avatar      String?
+  avatar      String?   @default("https://res.cloudinary.com/dylup3xat/image/upload/v1736678877/default_d4np0i.jpg")
   user        users     @relation(fields: [userId], references: [id])
   reviews     review[]
 }
@@ -120,6 +121,7 @@ model admins {
   email           String        @unique
   password        String
   role            String        @default("ADMIN")
+  status          String        @default("ACTIVE")
   adminProfile    adminProfile?
   emailVerifiedAt DateTime?
 }
@@ -130,6 +132,6 @@ model adminProfile {
   phone       String?
   dateOfBirth DateTime?
   address     String?
-  avatar      String?
+  avatar      String?   @default("https://res.cloudinary.com/dylup3xat/image/upload/v1736678877/default_d4np0i.jpg")
   admin       admins    @relation(fields: [adminId], references: [id])
 }
