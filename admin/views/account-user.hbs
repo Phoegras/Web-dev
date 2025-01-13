@@ -90,12 +90,18 @@
             <tbody>
               {{#each accounts}}
               <tr :class="{'bg-gray-100 dark:bg-gray-800': this.isCurrentUser}">
-                <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark xl:pl-11">
-                  <img
-                    src="{{this.avatar}}"
-                    alt="{{this.userProfile.name}}'s avatar"
-                    class="w-10 h-10 rounded-full"
-                  />
+                <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p class="text-sm font-medium text-black dark:text-white">
+                    <a 
+                      href="/users/{{this.id}}" 
+                      class="text-primary hover:underline"
+                    >
+                      {{this.userProfile.name}}
+                    </a>
+                    {{#if this.isCurrentUser}}
+                    <span class="text-primary font-bold">(You)</span>
+                    {{/if}}
+                  </p>
                 </td>
                 <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <p class="text-sm font-medium text-black dark:text-white">

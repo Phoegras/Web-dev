@@ -1,0 +1,118 @@
+<main>
+  <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+    <!-- Breadcrumb Start -->
+    <div
+      class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <h2 class="text-title-md2 font-bold text-black dark:text-white">
+        Order Details
+      </h2>
+
+      <nav>
+        <ol class="flex items-center gap-2">
+          <li>
+            <a class="font-medium" href="/">Dashboard /</a>
+          </li>
+          <li>
+            <a class="font-medium" href="/orders">Orders /</a>
+          </li>
+          <li class="font-medium text-primary">Order Details</li>
+        </ol>
+      </nav>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Order Summary Section -->
+    <div class="bg-white dark:bg-boxdark rounded-lg p-6 shadow-md mb-6">
+      <h3 class="text-lg font-bold text-black dark:text-white mb-4">Order Summary</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Order ID:</p>
+          <p class="font-medium">{{order.id}}</p>
+        </div>
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Customer Name:</p>
+          <p class="font-medium">{{order.user.userProfile.name}}</p>
+        </div>
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Order Date:</p>
+          <p class="font-medium">{{order.createdAt}}</p>
+        </div>
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Total Amount:</p>
+          <p class="font-medium">${{order.totalAmount}}</p>
+        </div>
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Status:</p>
+          <p class="font-medium">{{order.status}}</p>
+        </div>
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Payment Method:</p>
+          <p class="font-medium">{{order.paymentMethod}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shipping Information -->
+    <div class="bg-white dark:bg-boxdark rounded-lg p-6 shadow-md mb-6">
+      <h3 class="text-lg font-bold text-black dark:text-white mb-4">Shipping Information</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Recipient Name:</p>
+          <p class="font-medium">{{order.recipient}}</p>
+        </div>
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Address:</p>
+          <p class="font-medium">{{order.address}}</p>
+        </div>
+        <div>
+          <p class="text-gray-700 dark:text-gray-300">Phone:</p>
+          <p class="font-medium">{{order.phone}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Items in Order -->
+    <div class="bg-white dark:bg-boxdark rounded-lg p-6 shadow-md">
+      <h3 class="text-lg font-bold text-black dark:text-white mb-4">Items in Order</h3>
+      <table class="w-full table-auto">
+        <thead>
+          <tr class="bg-gray-2 text-left dark:bg-meta-4">
+            <th class="px-4 py-4 font-medium text-black dark:text-white">Item</th>
+            <th class="px-4 py-4 font-medium text-black dark:text-white">Quantity</th>
+            <th class="px-4 py-4 font-medium text-black dark:text-white">Price</th>
+            <th class="px-4 py-4 font-medium text-black dark:text-white">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each order.orderItem}}
+          <tr>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+              {{this.product.name}}
+            </td>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+              {{this.quantity}}
+            </td>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+              ${{this.product.price}}
+            </td>
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+              ${{mult this.quantity this.product.price}}
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Back Button -->
+    <div class="mt-6">
+      <a
+        href="/orders"
+        class="inline-flex items-center justify-center rounded-md border border-primary px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-opacity-90"
+      >
+        Back to Orders
+      </a>
+    </div>
+  </div>
+</main>

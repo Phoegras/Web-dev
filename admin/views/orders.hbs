@@ -1,0 +1,172 @@
+<main>
+  <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+    <!-- Breadcrumb Start -->
+    <div
+      class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <h2 class="text-title-md2 font-bold text-black dark:text-white">
+        Orders
+      </h2>
+
+      <nav>
+        <ol class="flex items-center gap-2">
+          <li>
+            <a class="font-medium" href="/">Dashboard /</a>
+          </li>
+          <li class="font-medium text-primary">Orders</li>
+        </ol>
+      </nav>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Filter and Actions Section -->
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-center gap-4">
+            <!-- Filter by Order ID -->
+            <input
+            type="text"
+            id="filter-order-id"
+            placeholder="Filter by Order ID"
+            class="border border-gray-300 rounded-md px-4 py-2"
+            />
+            
+            <!-- Filter by Order Status -->
+            <select
+            id="filter-order-status"
+            class="border border-gray-300 rounded-md px-4 py-2 text-sm text-gray-700 bg-white dark:bg-gray-800 dark:text-white"
+            >
+            <option value="" selected>All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Paid">Paid</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+            </select>
+
+            <!-- Apply Filters Button -->
+            <button
+            id="apply-order-filter"
+            class="inline-flex items-center justify-center rounded-md border border-primary px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-opacity-90"
+            >
+            Apply Filters
+            </button>
+        </div>
+    </div>
+
+    <!-- ====== Table Section Start -->
+    <div class="flex flex-col gap-10 mt-6">
+      <div
+        class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+      >
+        <div class="max-w-full overflow-x-auto">
+          <table class="w-full table-auto">
+            <thead>
+              <tr class="bg-gray-2 text-left dark:bg-meta-4 cursor-pointer">
+                <th
+                  class="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
+                >
+                  Order ID
+                </th>
+                <th
+                  class="min-w-[170px] px-4 py-4 font-medium text-black dark:text-white"
+                >
+                  Customer Name
+                </th>
+                <th
+                  class="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white"
+                  data-sort="createdAt"
+                >
+                  Order Date
+                  <span class="sort-indicator">↑↓</span>
+                </th>
+                <th
+                  class="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white"
+                >
+                  Total Amount
+                </th>
+                <th
+                  class="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white"
+                >
+                  Status
+                </th>
+                <th class="px-4 py-4 font-medium text-black dark:text-white">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+               <tbody>
+                {{#each orders}}
+                <tr>
+                    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                    <a
+                        href="/orders/{{this.id}}"
+                        class="text-primary hover:underline"
+                    >
+                        {{this.id}}
+                    </a>
+                    </td>
+                    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                    {{this.user.userProfile.name}}
+                    </td>
+                    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                    {{this.createdAt}}
+                    </td>
+                    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                    ${{this.totalAmount}}
+                    </td>
+                    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                    <div class="relative">
+                        <select
+                        id="status-select-{{this.id}}"
+                        class="border rounded-md px-2 py-1 bg-white dark:bg-gray-800 dark:text-white"
+                        >
+                        <option value="Pending" {{#if (eq this.status 'Pending')}}selected{{/if}}>
+                            Pending
+                        </option>
+                        <option value="Completed" {{#if (eq this.status 'Paid')}}selected{{/if}}>
+                            Paid
+                        </option>
+                        <option value="Completed" {{#if (eq this.status 'Shipped')}}selected{{/if}}>
+                            Shipped
+                        </option>
+                        <option value="Delivered" {{#if (eq this.status 'Delivered')}}selected{{/if}}>
+                            Delivered
+                        </option>
+                        <option value="Cancelled" {{#if (eq this.status 'Cancelled')}}selected{{/if}}>
+                            Cancelled
+                        </option>
+                        </select>
+                    </div>
+                    </td>
+                    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                    <div class="flex items-center space-x-3.5">
+                        <button
+                        id="confirm-btn"
+                        class="hover:text-green-500"
+                        onclick="confirmStatusUpdate('{{this.id}}')"
+                        >
+                        Confirm
+                        </button>
+                    </div>
+                    </td>
+                </tr>
+                {{/each}}
+                </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- ====== Table Section End -->
+
+    <!-- Pagination Controls -->
+    <div
+      id="pagination-controls"
+      class="pagination-controls cursor-pointer text-base flex items-center justify-center gap-4 mt-12"
+    >
+      <button id="prev-page" disabled><i class="ri-arrow-left-s-line"></i></button>
+      <span id="current-page" class="text-gray-100">{{ pagination.currentPage }}</span>
+      <button id="next-page"><i class="ri-arrow-right-s-line"></i></button>
+    </div>
+  </div>
+</main>
+<script src="/javascripts/callApi/callOrderApi.js"></script>
