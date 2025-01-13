@@ -5,7 +5,7 @@
       class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
     >
       <h2 class="text-title-md2 font-bold text-black dark:text-white">
-        Customer accounts
+        Customer
       </h2>
 
       <nav>
@@ -13,63 +13,157 @@
           <li>
             <a class="font-medium" href="/">Dashboard /</a>
           </li>
-          <li class="font-medium text-primary">Tables</li>
+          <li class="font-medium text-primary">Accounts</li>
         </ol>
       </nav>
     </div>
     <!-- Breadcrumb End -->
 
-    <!-- ====== Table Section Start -->
-    <div class="flex flex-col gap-10">
-
-      <!-- ====== Table Three Start -->
-                  <div
-      class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
-    >
-      <div class="max-w-full overflow-x-auto">
-        <table class="w-full table-auto">
-          <thead>
-            <tr class="bg-gray-2 text-left dark:bg-meta-4">
-              <th
-                class="min-w-[170px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
-              >
-                Full name
-              </th>
-              <th
-                class="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white"
-              >
-                Email
-              </th>
-              <th
-                class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
-              >
-                Status
-              </th>
-              <th class="px-4 py-4 font-medium text-black dark:text-white">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each users}}
-            <tr>
-                <td>{{this.id}}</td>
-                <td>{{this.fullName}}</td>
-                <td>{{this.email}}</td>
-                <td>{{#if this.isActive}}Active{{else}}Inactive{{/if}}</td>
-                <td>
-                    <a href="/users/edit/{{this.id}}">Edit</a>
-                    <a href="/users/delete/{{this.id}}" onclick="return confirm('Are you sure?')">Delete</a>
-                </td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
+    <!-- Filter and Actions Section -->
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-4">
+        <input
+          type="text"
+          id="filter-name"
+          placeholder="Filter by name"
+          class="border border-gray-300 rounded-md px-4 py-2"
+        />
+        <input
+          type="text"
+          id="filter-email"
+          placeholder="Filter by email"
+          class="border border-gray-300 rounded-md px-4 py-2"
+        />
+        <button
+          id="apply-filter"
+          class="inline-flex items-center justify-center rounded-md border border-primary px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-opacity-90"
+        >
+          Apply Filters
+        </button>
       </div>
     </div>
 
+    <!-- ====== Table Section Start -->
+    <div class="flex flex-col gap-10 mt-6">
+      <!-- ====== Table Three Start -->
+      <div
+        class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+      >
+        <div class="max-w-full overflow-x-auto">
+          <table class="w-full table-auto">
+            <thead>
+              <tr class="bg-gray-2 text-left dark:bg-meta-4 cursor-pointer">
+                <th
+                  class="min-w-[100px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
+                >
+                  Avatar
+                </th>
+                <th
+                  class="min-w-[170px] px-4 py-4 font-medium text-black dark:text-white"
+                  data-sort="name"
+                >
+                  Name
+                  <span class="sort-indicator">↑↓</span>
+                </th>
+                <th
+                  class="min-w-[200px] px-4 py-4 font-medium text-black dark:text-white"
+                  data-sort="email"
+                >
+                  Email
+                  <span class="sort-indicator">↑↓</span>
+                </th>
+                <th
+                  class="min-w-[170px] px-4 py-4 font-medium text-black dark:text-white"
+                  data-sort="emailVerifiedAt"
+                >
+                  Registration Time
+                  <span class="sort-indicator">↑↓</span>
+                </th>
+                <th class="px-4 py-4 font-medium text-black dark:text-white">
+                  Status
+                </th>
+                <th class="px-4 py-4 font-medium text-black dark:text-white">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each accounts}}
+              <tr :class="{'bg-gray-100 dark:bg-gray-800': this.isCurrentUser}">
+                <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark xl:pl-11">
+                  <img
+                    src="{{this.avatar}}"
+                    alt="{{this.userProfile.name}}'s avatar"
+                    class="w-10 h-10 rounded-full"
+                  />
+                </td>
+                <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p class="text-sm font-medium text-black dark:text-white">
+                    {{this.userProfile.name}}
+                    {{#if this.isCurrentUser}}
+                    <span class="text-primary font-bold">(You)</span>
+                    {{/if}}
+                  </p>
+                </td>
+                <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  {{this.email}}
+                </td>
+                <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  {{this.emailVerifiedAt}}
+                </td>
+                <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p
+                    class="inline-flex rounded-full px-3 py-1 text-sm font-medium"
+                    :class="{
+                      'bg-success bg-opacity-10 text-success': this.status === 'ACTIVE',
+                      'bg-danger bg-opacity-10 text-danger': this.status === 'BANNED'
+                    }"
+                  >
+                    {{this.status}}
+                  </p>
+                </td>
+                <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <div class="flex items-center space-x-3.5">
+                    {{#if this.isCurrentUser}}
+                      <!-- No button is displayed -->
+                    {{else}}
+                      {{#if (eq this.status 'ACTIVE')}}
+                        <button
+                          class="hover:text-red-500"
+                          onclick="handleBan('{{this.id}}')"
+                        >
+                          Ban
+                        </button>
+                      {{else}}
+                        <button
+                          class="hover:text-green-500"
+                          onclick="handleUnban('{{this.id}}')"
+                        >
+                          Unban
+                        </button>
+                      {{/if}}
+                    {{/if}}
+                  </div>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
       <!-- ====== Table Three End -->
     </div>
     <!-- ====== Table Section End -->
+
+    <!-- Pagination Controls -->
+    <div
+      id="pagination-controls"
+      class="pagination-controls cursor-pointer text-base flex items-center justify-center gap-4 mt-12"
+    >
+      <button id="prev-page" disabled><i class="ri-arrow-left-s-line"></i></button>
+      <span id="current-page" class="text-gray-100">{{ pagination.currentPage }}</span>
+      <button id="next-page"><i class="ri-arrow-right-s-line"></i></button>
+    </div>
   </div>
 </main>
+<script src="/javascripts/callApi/callUserAccountApi.js"></script>
