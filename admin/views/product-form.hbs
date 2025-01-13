@@ -6,7 +6,7 @@
               class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
             >
               <h2 class="text-title-md2 font-bold text-black dark:text-white">
-                Edit Product
+                Add or Update Product
               </h2>
 
               <nav>
@@ -14,7 +14,7 @@
                   <li>
                     <a class="font-medium" href="/">Dashboard /</a>
                   </li>
-                  <li class="font-medium text-primary">Edit Product</li>
+                  <li class="font-medium text-primary">Add or Update Product</li>
                 </ol>
               </nav>
             </div>
@@ -30,7 +30,7 @@
       class="border-b border-stroke px-6.5 py-4 dark:border-strokedark"
     >
       <h3 class="font-medium text-black dark:text-white">
-        Edit Product
+        Add or Update Product
       </h3>
     </div>
     <form action="/products/{{product.id}}" method="post" enctype="multipart/form-data">
@@ -43,6 +43,7 @@
             Product Name
           </label>
           <input
+            required
             type="text"
             name="name"
             value="{{product.name}}"
@@ -91,14 +92,19 @@
           <label class="mb-3 block text-sm font-medium text-black dark:text-white">
             Manufacturer
           </label>
-          <input
-            type="text"
+          <select
             name="manufacturer"
             value="{{product.manufacturer}}"
-            placeholder="Enter manufacturer name"
             class="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             required
-          />
+          >
+            <option value="" disabled selected>Select Manufacturer</option>
+            {{#each manufacturers}}
+            <option value="{{this}}" {{#ifEquals this ../product.manufacturer}}selected{{/ifEquals}}>
+                {{this}}
+            </option>
+            {{/each}}
+          </select>
         </div>
 
       <!-- Product Price -->
@@ -111,6 +117,7 @@
           <input
             required
             type="number"
+            step="0.1"
             name="originalPrice"
             value="{{product.originalPrice}}"
             placeholder="Enter product price"
@@ -126,9 +133,9 @@
             Price
           </label>
           <input
-            required
             type="number"
             name="price"
+            step="0.1"
             value="{{product.price}}"
             placeholder="Enter product price"
             class="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -163,6 +170,7 @@
             Stock
           </label>
           <input
+            required
             type="number"
             name="stock"
             value="{{product.stock}}"
@@ -180,7 +188,6 @@
             name="label"
             value="{{product.label}}"
             class="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-            required
           >
             <option value="" disabled selected>Select label</option>
             {{#each label}}
@@ -346,7 +353,53 @@
           </div>
         </div>
 
-        <!-- Upload New Images -->
+
+        <!-- Images -->
+         <!-- Existing images -->
+         {{#each product.images}}
+          <input type="hidden" name="existingImages" value="{{this}}" />
+        {{/each}}
+        <div class="p-4">
+  <!-- Image Upload Section -->
+  <div
+    class="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-6 bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
+    id="image-picker-container"
+  >
+    <input
+      type="file"
+      id="image-input"
+      name="files"
+      class="hidden"
+      accept="image/png, image/jpeg, image/gif"
+      multiple
+    />
+    <label
+      for="image-input"
+      class="flex flex-col items-center justify-center cursor-pointer"
+    >
+      <i class="ri-image-fill"></i>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        Drag and drop or <span class="text-blue-500 underline">browse</span> to upload
+      </p>
+      <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+    </label>
+  </div>
+
+  <!-- Selected Images Section -->
+  <div class="mt-4">
+    <h4 class="text-lg font-medium text-gray-800 dark:text-gray-300 mb-2">Selected Images</h4>
+    <div
+      id="image-preview"
+      class="flex gap-4 overflow-x-auto p-2 border rounded-md border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700"
+    >
+      <!-- Dynamic Images Will Be Added Here -->
+    </div>
+  </div>
+</div>
+
+
+
+        {{!-- <!-- Upload New Images -->
         <div class="mb-4.5">
           <label
             class="mb-3 block text-sm font-medium text-black dark:text-white"
@@ -369,18 +422,18 @@
           >
             Existing Images
           </label>
-          <div class="flex flex-nowrap gap-4 overflow-x-auto h-32">
+          <div class="flex flex-nowrap overflow-x-auto gap-4 h-20">
             {{#each product.images as |image|}}
-            <div class="h-32" >
+            <div class="h-12" >
                 <img
                 src="{{image}}"
                 alt="Product Image"
-                class="rounded border border-stroke object-cover"
+                class="rounded border border-stroke object-cover h-full w-full"
                 />
             </div>
             {{/each}}
           </div>
-        </div>
+        </div> --}}
 
         <!-- Material -->
         <div class="mb-4.5">
@@ -464,3 +517,105 @@
         };
       }
     </script>
+<script>
+  // JavaScript for Image Picker
+  const imageInput = document.getElementById("image-input");
+const imagePreview = document.getElementById("image-preview");
+
+// Array to store selected image objects (existing & new images)
+let selectedImages = [];
+
+// Preload existing product images
+const existingProductImages = {{#if product.images}} {{{json product.images}}} {{else}} [] {{/if}};
+
+// Add existing product images to selectedImages array
+existingProductImages.forEach((url) => {
+  selectedImages.push({ file: null, url });
+});
+
+// Render all images initially
+renderImages();
+
+// Event Listener for Input Change
+imageInput.addEventListener("change", (e) => {
+  const files = Array.from(e.target.files);
+
+  // Append new files to selectedImages
+  files.forEach((file) => {
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      selectedImages.push({ file, url: event.target.result }); // Add new file
+      renderImages(); // Update preview
+      updateFileInput(); // Sync file input
+    };
+
+    reader.readAsDataURL(file); // Convert file to Data URL
+  });
+});
+
+// Function to render images in the preview
+function renderImages() {
+  imagePreview.innerHTML = ""; // Clear current images
+
+  selectedImages.forEach((image, index) => {
+    const imageElement = document.createElement("div");
+    imageElement.className =
+      "relative flex-shrink-0 w-16 h-16 border rounded-md overflow-hidden";
+
+    // Image Element
+    const img = document.createElement("img");
+    img.src = image.url;
+    img.alt = "Product Image";
+    img.className = "w-full h-full object-cover";
+
+    // Remove Button
+    const removeBtn = document.createElement("button");
+    removeBtn.className =
+      "absolute top-1 right-1 bg-red-500 text-white rounded-full p-1";
+    removeBtn.innerHTML = "&times;";
+    removeBtn.onclick = () => {
+      // Remove the image from selectedImages
+      selectedImages.splice(index, 1);
+
+      if (!image.file) {
+        // Remove existing image input if the image is from the server
+        removeExistingImageInput(image.url);
+      }
+
+      renderImages(); // Re-render preview
+      updateFileInput(); // Sync file input
+    };
+
+    imageElement.appendChild(img);
+    imageElement.appendChild(removeBtn);
+    imagePreview.appendChild(imageElement);
+  });
+}
+
+// Function to remove an existing image's input field
+function removeExistingImageInput(imageUrl) {
+  const inputToRemove = document.querySelector(
+    `input[type="hidden"][value="${imageUrl}"]`
+  );
+  if (inputToRemove) {
+    inputToRemove.remove();
+  }
+}
+
+// Function to update the file input dynamically
+function updateFileInput() {
+  const dataTransfer = new DataTransfer();
+
+  selectedImages.forEach((image) => {
+    if (image.file) {
+      // Only add new files to the file input
+      dataTransfer.items.add(image.file);
+    }
+  });
+
+  imageInput.files = dataTransfer.files; // Update the file input
+  console.log(imageInput.files);
+}
+
+</script>

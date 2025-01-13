@@ -35,9 +35,7 @@ const updateAvatar = async (req, res) => {
         if (!req.file) {
             return res.status(400).json({ error: 'No file uploaded' });
         }
-        const b64 = Buffer.from(req.file.buffer).toString('base64');
-        const dataURI = `data:${req.file.mimetype};base64,${b64}`;
-        const result = await cloudinary.uploadSingle(dataURI, 'admins');
+        const result = await cloudinary.uploadSingle(req.file, 'admins');
         if (!result || !result.secure_url) {
             return res.status(500).json({ error: 'Failed to upload to Cloudinary' });
         }

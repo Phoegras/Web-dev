@@ -18,14 +18,66 @@
               </nav>
             </div>
             <!-- Breadcrumb End -->
-            <div class="flex justify-end gap-9">
+<!-- ====== Button End -->
+
+            <div class="flex justify-between gap-4">
+                <div class="relative flex items-center">
+                <input type="text" id="search" class="border rounded-md mb-2 px-4 py-2 w-48" placeholder="Search" />
+                <i class="ri-search-line absolute right-4"></i>
+                </div>
+                <div class="flex justify-end gap-4">
                 <a
                     href="/products/add"
                     class="inline-flex items-center justify-center rounded-md border border-primary mb-2 px-1 py-2 text-center font-medium text-sm hover:bg-opacity-90 lg:px-6 xl:px-8"
                   >
-                    + Add new Product
+                    Add Product <i class="ri-add-line"></i>
                   </a>
+                  <button
+                    class="inline-flex items-center justify-center rounded-md border border-primary mb-2 px-1 py-2 text-center font-medium text-sm hover:bg-opacity-90 lg:px-6 xl:px-8"
+                  >
+                    Filter <i class="ri-filter-3-line"></i>
+                  </button>
+                </div>
             </div>
+<!-- ====== Button End -->
+
+<!-- ====== Filter Start -->
+
+            <div id="filters" class="flex flex-wrap justify-end gap-4 mb-6">
+  <select id="filter-category" class="border rounded-lg px-4 py-2 w-48">
+            <option value="">All Category</option>
+            {{#each categories}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+    <!-- Add more categories as needed -->
+  </select>
+
+  <select id="filter-manufacturer" class="border rounded-lg px-4 py-2 w-48">
+    <option value="">All Manufacturers</option>
+            {{#each manufacturers}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+    <!-- Add more manufacturers as needed -->
+  </select>
+
+
+
+  <select id="filter-status" class="border rounded-lg px-4 py-2 w-48">
+    <option value="">All Status</option>
+            {{#each status}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+  </select>
+
+  <button
+    id="apply-filters"
+    class="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-600 transition border border-primary"
+    onclick="filterProducts({{pagination.currentPage}})"
+  >
+    Apply Filters
+  </button>
+</div>
+<!-- ====== Filter End -->
             <!-- ====== Table Section Start -->
             <div class="flex flex-col gap-10">
 
@@ -38,7 +90,7 @@
       <thead>
         <tr class="bg-gray-2 text-left dark:bg-meta-4 cursor-pointer">
           <th
-            class="min-w-[170px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
+            class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white xl:pl-4"
             data-sort="name"
           >
             Product name
@@ -81,7 +133,7 @@
       <tbody>
         {{#each products}}
         <tr>
-            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark xl:pl-11">
+            <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                 <div class="flex items-center">
                     <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
                         <div class="h-12.5 w-15 rounded-md">
@@ -99,7 +151,11 @@
             <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">{{this.sold}}</td>
             <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <p
-              class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success"
+              class="inline-flex rounded-full bg-opacity-10 px-3 py-1 text-sm font-medium 
+              {{#ifEquals this.status 'On stock'}}bg-success text-success
+                {{else ifEquals this.status 'Out of stock'}}bg-danger text-danger
+                {{else ifEquals this.status 'Suspend'}}bg-warning text-warning
+                {{else}}bg-gray-600 text-gray-600{{/ifEquals}}"
             >
               {{this.status}}
             </p>

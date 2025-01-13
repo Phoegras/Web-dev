@@ -1,6 +1,9 @@
 const productsBusiness = require('./productsBusiness');
-const status = ['On Stock', 'Out of Stock', 'Suspend'];
-const categories = [, 'Clothing', 'Shoes', 'Accessories', 'Electronics', 'Home', 'Beauty', 'Toys', 'Sports', 'Bags', 'Furniture', 'Other'];
+const {getManufacturers} = require('./manufacturers/manufacturersBusiness');
+const {getCategories} = require('./categories/categoriesBusiness');
+
+const status = ['On stock', 'Out of stock', 'Suspend'];
+
 const label = ['Featured', 'New', 'Sale', 'Popular'];
 // Get all products
 // const getProducts = async (req, res) => {
@@ -110,8 +113,15 @@ const getProducts = async (req, res) => {
     
         const totalProducts = await productsBusiness.getTotalProducts();
     
+        const categoriesList = await getCategories();
+        const categories = categoriesList.map((category) => category.name);
+        const manufacturersList = await getManufacturers();
+        const manufacturers = manufacturersList.map((manufacturer) => manufacturer.name);
+
+
         const totalPages = Math.ceil(totalProducts / limit);
     
+
         res.render('products', {
             layout: 'layout',
             products,
@@ -121,6 +131,9 @@ const getProducts = async (req, res) => {
                 totalPages,
                 limit,
             },
+            categories,
+            manufacturers,
+            status,
         });
     } catch (error) {
         console.log('Error fetching products:', error);
@@ -132,13 +145,24 @@ const getProductsApi = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
+        const category = req.query.category;
+        const manufacturer = req.query.manufacturer;
+        const status = req.query.status;
+        const search = req.query.search;
+
+        const filters = {};
+        if (category) filters.category = category;
+        if (manufacturer) filters.manufacturer = manufacturer;
+        if (status) filters.status = status;
+        if (search) filters.search = search;
 
         const products = await productsBusiness.getProducts(
             page,
             limit,
+            filters
         );
 
-        const totalProducts = await productsBusiness.getTotalProducts();
+        const totalProducts = await productsBusiness.getTotalProducts(filters);
 
         const totalPages = Math.ceil(totalProducts / limit);
 
@@ -173,9 +197,12 @@ const getProductById = async (req, res) => {
         if (!product) {
             return res.status(404).send('Product not found');
         }
+        const categoriesList = await getCategories();
+        const categories = categoriesList.map((category) => category.name);
+        const manufacturersList = await getManufacturers();
+        const manufacturers = manufacturersList.map((manufacturer) => manufacturer.name);
 
-
-        res.render('product-form', { product, categories, status, label });
+        res.render('product-form', { product, categories, manufacturers, status, label });
     } catch (error) {
         console.error('Error in getProductById:', error);
         res.status(500).send('Server Error');
@@ -217,11 +244,13 @@ const filterProducts = async (req, res) => {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
 
+        console.log(page, limit);
         const name = req.query.name || '';
         const category = req.query.category || '';
         const manufacturer = req.query.manufacturer || '';
+        const status = req.query.status || '';
 
-        const products = await productsBusiness.filterProducts(name, category, manufacturer, page, limit);
+        const products = await productsBusiness.filterProducts(name, category, manufacturer, status, page, limit);
 
         const totalProducts = await productsBusiness.getTotalProducts();
 
@@ -243,7 +272,11 @@ const filterProducts = async (req, res) => {
 const { uploadMultiple } = require("../config/cloudinary");
 
 const getProductForm = async (req, res) => {
-    res.render('product-form', { categories, status, label });
+    const categoriesList = await getCategories();
+    const categories = categoriesList.map((category) => category.name);
+    const manufacturersList = await getManufacturers();
+    const manufacturers = manufacturersList.map((manufacturer) => manufacturer.name);
+    res.render('product-form', { categories, manufacturers, status, label });
 };
 
 const getProductInput = (req) => {
@@ -290,8 +323,14 @@ const editProduct = async (req, res) => {
     const { id } = req.params;
     const updatedFields = getProductInput(req);
     const files = req.files;
+    console.log('Files:', req);
 
-    console.log("updated fields", updatedFields);
+    const existingImages = req.body.existingImages ?
+        Array.isArray(req.body.existingImages)
+        ? req.body.existingImages 
+        : [req.body.existingImages]
+    : [];
+    
     try {
         if (!id) {
             return res.status(400).json({ error: "Product ID is required" });
@@ -302,13 +341,10 @@ const editProduct = async (req, res) => {
         if (files && files.length > 0) {
             const uploads = await uploadMultiple(files, "products");
             imageUrls = uploads.map((upload) => upload.secure_url);
+            console.log('Image URLs:', imageUrls);
         }
 
-        // Merge the new images with existing ones
-        if (imageUrls.length > 0) {
-            const existingProduct = await productsBusiness.getProductImages(id);
-            updatedFields.images = [...(existingProduct.images || []), ...imageUrls];
-        }
+        updatedFields.images = [...existingImages, ...imageUrls] || [];
 
         const updatedProduct = await productsBusiness.editProductInfo(id, updatedFields);
         console.log('Product updated:', updatedProduct);

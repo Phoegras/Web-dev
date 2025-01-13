@@ -1,20 +1,20 @@
 const prisma = require('../prismaClient'); // Import Prisma client instance
-const { get } = require('./productsRoute');
 
 /**
  * Fetch products with pagination.
  */
 
-async function getProducts(page, limit) {
+async function getProducts(page, limit, filters) {
     const products = await prisma.products.findMany({
+        where: filters,
         skip: (page - 1) * limit,
         take: limit,
     });
     return products;
 }
 
-async function getTotalProducts() {
-    const totalProducts = await prisma.products.count();
+async function getTotalProducts(filters) {
+    const totalProducts = await prisma.products.count({ where: filters });
     return totalProducts;
 }
 
@@ -181,7 +181,7 @@ async function sortProducts(sort, order, page, limit) {
     return products;
 }
 
-function getFilterCriteria(name, category, manufacturer) {
+function getFilterCriteria(name, category, manufacturer, status) {
     let query = {
         OR: [
             {
@@ -216,11 +216,20 @@ function getFilterCriteria(name, category, manufacturer) {
             ],
         };
     }
+
+    if (status) {
+        query = {
+            AND: [
+                query,
+                { status: status }, // Filter by category if specified
+            ],
+        };
+    }
     return query;
 }
 // Filter products
-async function filterProducts(name, category, manufacturer, page, limit) {
-    const filterCriteria = getFilterCriteria(name, category, manufacturer);
+async function filterProducts(name, category, manufacturer, status, page, limit) {
+    const filterCriteria = getFilterCriteria(name, category, manufacturer, status);
 
     const products = await prisma.products.findMany({
         where: filterCriteria,
@@ -269,6 +278,30 @@ async function getProductImages(id) {
 }
 
 const addNewProduct = async (product) => {
+    
+    const categoryExists = await prisma.categories.findUnique({
+        where: { name: product.category },
+      });
+      if (!categoryExists) {
+        throw new Error(`Category "${product.category}" does not exist.`);
+      }
+  
+      const manufacturerExists = await prisma.manufacturers.findUnique({
+        where: { name: product.manufacturer },
+      });
+      if (!manufacturerExists) {
+        throw new Error(`Manufacturer "${product.manufacturer}" does not exist.`);
+      }
+
+    product.categoryName = {
+        connect: { name: product.category }, // Use the relationship field
+    };
+    product.manufacturerName = {
+    connect: { name: product.manufacturer }, // Use the relationship field
+    };
+    delete product.category;
+    delete product.manufacturer;
+    
     const newProduct = await prisma.products.create({
         data: product,
     });

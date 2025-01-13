@@ -33,4 +33,6 @@ module.exports = {
         }
         return range;
     },
+
+    json: (context) => JSON.stringify(context),
 };
