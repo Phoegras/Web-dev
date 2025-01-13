@@ -45,4 +45,6 @@ module.exports = {
     },
     
     json: (context) => JSON.stringify(context),
+
+    includes: (a, b) => a.includes(b),
 };
