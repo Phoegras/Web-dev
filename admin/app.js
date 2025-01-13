@@ -21,7 +21,7 @@ const categoryRouter = require('./products/categories/categoriesRoute');
 const manufacturerRouter = require('./products/manufacturers/manufacturersRoute');
 const productsRouter = require('./products/productsRoute');
 const ordersRouter = require('./orders/ordersRoute');
-// const reportRouter = require('./reports/reportsRoute');
+const reportRouter = require('./reports/reportsRoute');
 
 require('dotenv').config();
 
@@ -72,17 +72,11 @@ app.use('/', indexRouter);
 app.use('/accounts', accountRouter);
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
-<<<<<<< HEAD
-app.use('/users', usersRouter);
-// app.use('/categories', categoryRouter);
-// app.use('/manufacturers', manufacturerRouter);
-=======
 app.use('/categories', categoryRouter);
 app.use('/manufacturers', manufacturerRouter);
->>>>>>> 1f859199aaf8e1e6fde63f9de1d0a197a96345b5
 app.use('/products', productsRouter);
 app.use('/orders', ordersRouter);
-// app.use('/reports', reportRouter);
+app.use('/reports', reportRouter);
 
 // Initialize super admin
 init.initializeSuperAdmin();
