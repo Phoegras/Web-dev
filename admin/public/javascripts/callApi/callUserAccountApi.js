@@ -27,48 +27,58 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   
     const renderTable = (accounts) => {
-        const tbody = document.querySelector('tbody');
-        tbody.innerHTML = accounts
-          .map(
-            (account) => `
-              <tr class="border-b border-[#eee] dark:border-strokedark">
-                <td class="px-4 py-5 xl:pl-11">
-                  <img
-                    src="${account.avatar}"
-                    alt="${account.userProfile?.name || 'Avatar'}"
-                    class="w-10 h-10 rounded-full"
-                  />
-                </td>
-                <td class="px-4 py-5">
-                  <p class="text-sm font-medium text-black dark:text-white">
-                    ${account.userProfile?.name || 'N/A'}
-                    ${account.isCurrentUser ? '<span class="text-primary font-bold">(You)</span>' : ''}
-                  </p>
-                </td>
-                <td class="px-4 py-5">
-                  <p class="text-sm text-black dark:text-white">${account.email}</p>
-                </td>
-                <td class="px-4 py-5">
-                  <p class="text-sm text-black dark:text-white">${account.emailVerifiedAt || 'N/A'}</p>
-                </td>
-                <td class="px-4 py-5">
-                  <p
-                    class="inline-flex rounded-full px-3 py-1 text-sm font-medium ${
-                      account.status === 'ACTIVE'
-                        ? 'bg-success bg-opacity-10 text-success'
-                        : 'bg-danger bg-opacity-10 text-danger'
-                    }"
+      const tbody = document.querySelector('tbody');
+      tbody.innerHTML = accounts
+        .map(
+          (account) => `
+            <tr class="border-b border-[#eee] dark:border-strokedark">
+              <td class="px-4 py-5 xl:pl-11">
+                <img
+                  src="${account.avatar}"
+                  alt="${account.userProfile?.name || 'Avatar'}"
+                  class="w-10 h-10 rounded-full"
+                />
+              </td>
+              <td class="px-4 py-5">
+                <p class="text-sm font-medium text-black dark:text-white">
+                  <a 
+                    href="/users/${account.id}" 
+                    class="text-black"
                   >
-                    ${account.status}
-                  </p>
-                </td>
-                <td class="px-4 py-5">
-                  <div class="flex items-center space-x-3.5">
-                    ${
-                      account.isCurrentUser
-                        ? '<span class="text-gray-400">Cannot ban yourself</span>'
-                        : `
-                          ${account.status === 'ACTIVE'
+                    ${account.userProfile?.name || 'N/A'}
+                  </a>
+                  ${
+                    account.isCurrentUser 
+                    ? '<span class="text-primary font-bold">(You)</span>' 
+                    : ''
+                  }
+                </p>
+              </td>
+              <td class="px-4 py-5">
+                <p class="text-sm text-black dark:text-white">${account.email}</p>
+              </td>
+              <td class="px-4 py-5">
+                <p class="text-sm text-black dark:text-white">${account.emailVerifiedAt || 'N/A'}</p>
+              </td>
+              <td class="px-4 py-5">
+                <p
+                  class="inline-flex rounded-full px-3 py-1 text-sm font-medium ${
+                    account.status === 'ACTIVE'
+                      ? 'bg-success bg-opacity-10 text-success'
+                      : 'bg-danger bg-opacity-10 text-danger'
+                  }"
+                >
+                  ${account.status}
+                </p>
+              </td>
+              <td class="px-4 py-5">
+                <div class="flex items-center space-x-3.5">
+                  ${
+                    account.isCurrentUser
+                      ? '<span class="text-gray-400">Cannot ban yourself</span>'
+                      : `
+                        ${
+                          account.status === 'ACTIVE'
                             ? `
                               <button
                                 class="hover:text-red-500"
@@ -84,17 +94,19 @@ document.addEventListener('DOMContentLoaded', () => {
                               >
                                 Unban
                               </button>
-                            `}
-                        `
-                    }
-                  </div>
-                </td>
-              </tr>
-            `
-          )
-          .join('');
-        };
-        
+                            `
+                        }
+                      `
+                  }
+                </div>
+              </td>
+            </tr>
+          `
+        )
+        .join('');
+  };
+  
+    
   
     const updatePagination = ({ currentPage: current, totalPages }) => {
       const prevButton = document.getElementById('prev-page');

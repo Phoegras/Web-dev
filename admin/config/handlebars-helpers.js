@@ -34,5 +34,15 @@ module.exports = {
         return range;
     },
 
+    round: function (num) {
+        return Math.round(num);
+    },
+
+    get: function (obj, path) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : undefined;
+        }, obj);
+    },
+    
     json: (context) => JSON.stringify(context),
 };
