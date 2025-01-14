@@ -10,6 +10,7 @@ const showRegisterForm = (req, res) => {
         title: 'Register',
         noHeader: true,
         noFooter: true,
+        admin: req.user,
     });
 };
 
@@ -111,6 +112,7 @@ const showRegisterSuccess = (req, res) => {
         title: 'Register',
         noHeader: true,
         noFooter: true,
+        admin: req.user,
     });
 };
 

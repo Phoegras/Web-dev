@@ -39,7 +39,7 @@ model products {
   createdAt     DateTime    @default(now())
   description   String?
   features      String[]
-  images        String[]
+  images        String[]  @default(["https://res.cloudinary.com/dylup3xat/image/upload/v1736838894/products/yassmwnahria99wavvkd.png"])
   label         String?
   material      String?
   name          String

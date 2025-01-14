@@ -5,7 +5,7 @@ module.exports = {
 getAllCategories: async (req, res) => {
   try {
     const categories = await getCategories();
-    res.render('category-manager', { categories });
+    res.render('category-manager', { categories, admin: req.user });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }

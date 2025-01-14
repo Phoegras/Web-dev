@@ -5,7 +5,8 @@ const { use } = require('passport');
 // Show account information
 const showAccountInfo = async (req, res) => {
     try {
-        const user = usersBusiness.findUserById(req.user.id);
+        const user = await usersBusiness.findUserById(req.user.id);
+        console.log(user);
         const orders = await usersBusiness.getOrdersByUserId(req.user.id);
         res.render('account', {
             title: 'Account',

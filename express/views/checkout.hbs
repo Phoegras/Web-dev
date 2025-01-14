@@ -27,7 +27,7 @@
                 <div class="p-6 rounded-md shadow dark:shadow-gray-800">
                     <h3 class="text-xl leading-normal font-semibold">Billing address</h3>
 
-                    <form action="/orders/place-order?cartId={{cartItems.id}}" method="POST">
+                    <form action="/orders/create_payment_url?cartId={{cartItems.id}}" method="POST">
                         <div class="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-5">
                             <div class="lg:col-span-12">
                                 <label class="form-label font-semibold"> Ricipent : <span class="text-red-600">*</span></label>
@@ -78,31 +78,12 @@
                                 </div>
                             </div>
 
-                            <div class="lg:col-span-6">
-                                <label class="form-label font-semibold">Account Holder Name : <span class="text-red-600">*</span></label>
+                            <div class="lg:col-span-12">
+                                <label class="form-label font-semibold">Total ammount : <span class="text-red-600"></span></label>
                                 <input type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Name:"
-                                    id="accountname" name="name" required="">
+                                    id="amount" name="amount" required="" value="{{total}}" readonly>
                             </div>
-
-                            <div class="lg:col-span-6">
-                                <label class="form-label font-semibold">Credit card number : <span class="text-red-600">*</span></label>
-                                <input type="number" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
-                                    placeholder="**** **** **** ****" id="cardnumber" name="number" required="">
-                            </div>
-
-                            {{!-- <div class="lg:col-span-3">
-                                <label class="form-label font-semibold">Expiration : <span class="text-red-600">*</span></label>
-                                <input type="number" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
-                                    placeholder="" id="expiration" name="number" required="">
-                            </div>
-
-                            <div class="lg:col-span-3">
-                                <label class="form-label font-semibold">CVV : <span class="text-red-600">*</span></label>
-                                <input type="number" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
-                                    placeholder="" id="cvv" name="number" required="">
-                            </div> --}}
                         </div>
-
                         <div class="mt-4">
                             <input type="submit" class="py-2 px-5 mt-20 inline-block tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full" value="Checkout">
                         </div>

@@ -24,6 +24,7 @@ const ordersRouter = require('./orders/ordersRoute');
 const reportRouter = require('./reports/reportsRoute');
 
 require('dotenv').config();
+const authMiddleware = require('./middlewares/authMiddlewares');
 
 var app = express();
 const PORT = process.env.PORT || 8000;
@@ -68,9 +69,12 @@ app.use((req, res, next) => {
 });
 
 // //Routes
+app.use('/auth', authRouter);
+
+app.use(authMiddleware.isAuthenticated);
+
 app.use('/', indexRouter);
 app.use('/accounts', accountRouter);
-app.use('/auth', authRouter);
 app.use('/admins', adminRouter);
 app.use('/users', usersRouter);
 app.use('/categories', categoryRouter);
