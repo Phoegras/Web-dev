@@ -176,6 +176,8 @@ async function fetchProducts(page, limit) {
         const response = await fetch(`/products?${params.toString()}`);
         const data = await response.json();
 
+        //Total products
+        document.getElementById('total-products').innerHTML = `${data.totalProducts} results`;
         // Render product list
         const productContainer = document.querySelector('#content-container');
         productContainer.innerHTML = await renderProducts(data.products);
