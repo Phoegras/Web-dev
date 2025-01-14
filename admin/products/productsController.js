@@ -196,7 +196,7 @@ const getProductInput = (req) => {
         stock: parseInt(req.body.stock) || 0,
         colors: req.body.colors.split(','),
         sizes: req.body.sizes.split(','),
-        label: req.body.label,
+        label: req.body.label || '',
         material: req.body.material,
         originalPrice: parseFloat(req.body.originalPrice) || 0,
         price: parseFloat(req.body.price) || 0,
