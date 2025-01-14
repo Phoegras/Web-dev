@@ -100,7 +100,7 @@ const storeResetToken = async (userId, hashedToken, expiry) => {
     });
 };
 
-async function findResetTokenByEmail(email) {
+const findResetTokenByEmail = async (email) => {
     const user = await prisma.users.findUnique({
         where: { email },
     });

@@ -4,9 +4,8 @@ const usersBusiness = require('./usersBusiness');
 const showAccountInfo = async (req, res) => {
     const id = req.params;
     try {
-        const user = await usersBusiness.findUserById(id);
-        console.log(user);
-        res.render('user-detail', { user });
+        const account = await usersBusiness.findUserById(id);
+        res.render('user-detail', { account });
     } catch (error) {
         res.status(500).json({ message: 'Error getting user information' });
     }

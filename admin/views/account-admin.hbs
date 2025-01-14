@@ -5,7 +5,7 @@
       class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
     >
       <h2 class="text-title-md2 font-bold text-black dark:text-white">
-        Customer
+        Admin
       </h2>
 
       <nav>
@@ -92,9 +92,9 @@
               <tr :class="{'bg-gray-100 dark:bg-gray-800': this.isCurrentUser}">
                 <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark xl:pl-11">
                   <img
-                    src="{{this.avatar}}"
                     alt="{{this.adminProfile.name}}'s avatar"
                     class="w-10 h-10 rounded-full"
+                    src={{this.adminProfile.avatar}}
                   />
                 </td>
                 <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">

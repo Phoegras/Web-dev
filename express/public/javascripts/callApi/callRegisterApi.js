@@ -38,10 +38,10 @@ document
             const result = await response.json();
 
             if (response.ok) {
-                window.location.href = '/auth/register-success';
+                window.location.href = `/auth/register-success?email=${email}`;
             } else {
                 errorMessage.innerText =
-                    result.message || 'THAT BAI.';
+                    result.message || 'Failed.';
                 errorMessage.classList.remove('hidden');
             }
         } catch (error) {

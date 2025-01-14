@@ -7,7 +7,7 @@ const { upload } = require('../middlewares/multer');
 router.get(
     '/profile',
     authMiddleware.isAuthenticated,
-    adminController.showAccountInfo,
+    adminController.showCurrentAccountInfo,
 );
 
 router.put(
@@ -21,6 +21,11 @@ router.post(
     authMiddleware.isAuthenticated,
     upload.single('avatar'),
     adminController.updateAvatar,
+);
+
+router.get(
+    '/:id',
+    adminController.showAccountDetailById,
 );
 
 module.exports = router;

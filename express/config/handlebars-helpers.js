@@ -1,3 +1,5 @@
+const { format } = require('date-fns');
+
 module.exports = {
     times: function (n, block) {
         let accum = '';
@@ -32,5 +34,9 @@ module.exports = {
             range.push(i);
         }
         return range;
+    },
+    formatDate: (date, formatString) => {
+        if (!date) return '';
+        return format(new Date(date), formatString);
     },
 };

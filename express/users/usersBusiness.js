@@ -14,6 +14,9 @@ async function findUserByEmail(email) {
 async function findUserById(id) {
     const user = await prisma.users.findUnique({
         where: { id },
+        include: {
+            userProfile: true,
+        }
     });
     return user;
 }
@@ -33,8 +36,29 @@ async function updateUserProfile(userId, name, address, phone, dateOfBirth) {
     return updatedUser;
 }
 
+async function updateUserAvatar(userId, avatarUrl) {
+    const updatedUser = await prisma.userProfile.update({
+        where: { userId: userId },
+        data: { avatar: avatarUrl },
+    });
+    return updatedUser;
+}
+
+const getOrdersByUserId = async (userId) => {
+    const orders = await prisma.order.findMany({
+        where: { userId },
+        include: {
+            orderItem: true, 
+        },
+        orderBy: { createdAt: 'desc' }
+    })
+    return orders;
+}
+
 module.exports = {
     findUserByEmail,
     findUserById,
     updateUserProfile,
+    updateUserAvatar,
+    getOrdersByUserId,
 };
