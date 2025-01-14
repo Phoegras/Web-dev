@@ -3,7 +3,8 @@ const {getManufacturers} = require('./manufacturers/manufacturersBusiness');
 const {getCategories} = require('./categories/categoriesBusiness');
 
 const status = ['On stock', 'Out of stock', 'Suspend'];
-
+const colors = ['Black', 'Gray', 'Blue', 'Lavender', 'Green', 'Orange'];
+const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '38', '39', '40', '41', '42', 'One size'];
 const label = ['Featured', 'New', 'Sale', 'Popular'];
 // Get all products
 // const getProducts = async (req, res) => {
@@ -202,7 +203,7 @@ const getProductById = async (req, res) => {
         const manufacturersList = await getManufacturers();
         const manufacturers = manufacturersList.map((manufacturer) => manufacturer.name);
 
-        res.render('product-form', { product, categories, manufacturers, status, label });
+        res.render('product-form', { product, categories, manufacturers, colors, sizes, status, label });
     } catch (error) {
         console.error('Error in getProductById:', error);
         res.status(500).send('Server Error');
@@ -276,21 +277,24 @@ const getProductForm = async (req, res) => {
     const categories = categoriesList.map((category) => category.name);
     const manufacturersList = await getManufacturers();
     const manufacturers = manufacturersList.map((manufacturer) => manufacturer.name);
-    res.render('product-form', { categories, manufacturers, status, label });
+    res.render('product-form', { categories, manufacturers, colors, sizes, status, label });
 };
 
 const getProductInput = (req) => {
+    console.log(req.body);
     return {
-        name: req.body.name,
-        description: req.body.description,
-        category: req.body.category,
-        manufacturer: req.body.manufacturer,
-        status: req.body.status,
-        stock: parseInt(req.body.stock),
-        label: req.body.label,
-        material: req.body.material,
-        originalPrice: parseFloat(req.body.originalPrice),
-        price: parseFloat(req.body.price),
+        name: req.body.name || "",
+        description: req.body.description || "",
+        category: req.body.category || "",
+        manufacturer: req.body.manufacturer || "",
+        status: req.body.status || "Suspend",
+        stock: parseInt(req.body.stock) || 0,
+        colors: req.body.colors.split(',') || [],
+        sizes: req.body.sizes.split(',') || [],
+        label: req.body.label || "",
+        material: req.body.material || "",
+        originalPrice: parseFloat(req.body.originalPrice) || 0,
+        price: parseFloat(req.body.price) || 0,
     };
 };
 
@@ -323,7 +327,6 @@ const editProduct = async (req, res) => {
     const { id } = req.params;
     const updatedFields = getProductInput(req);
     const files = req.files;
-    console.log('Files:', req);
 
     const existingImages = req.body.existingImages ?
         Array.isArray(req.body.existingImages)

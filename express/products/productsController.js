@@ -131,7 +131,9 @@ const getProductById = async (req, res) => {
             review.updatedAtFormatted = formatDate(review.updatedAt, formatter);
         });
 
-        res.render('item-detail', { title: 'Product Details', product, relevantProducts, reviews, numOfReviews });
+        res.render('item-detail', { 
+            title: product.name,
+            product, relevantProducts, reviews, numOfReviews });
     } catch (error) {
         console.error('Error in getProductById:', error);
         res.status(500).send('Server Error');

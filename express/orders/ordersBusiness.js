@@ -1,5 +1,4 @@
 const prisma = require('../prismaClient');
-const { get } = require('./ordersRoute');
 
 const getUserProfile = async (userId) => {
     return prisma.userProfile.findUnique({
@@ -7,6 +6,20 @@ const getUserProfile = async (userId) => {
         select: { name: true, phone: true, address: true },
     });
 };
+
+const getOrders = async (userId) => {
+    return prisma.order.findMany({
+        where: { userId },
+        include: {
+            orderItem: {
+                include: {
+                    product: true,
+                },
+            },
+        },
+        orderBy: {createdAt: 'desc'},
+    });
+}
 
 const createOrder = async (userId, recipient, phone, address) => {
     try {
@@ -123,6 +136,7 @@ const getOrderById = async (id) => {
 
 module.exports = {
     getUserProfile,
+    getOrders,
     createOrder,
     calculateOrderTotal,
     clearCart,

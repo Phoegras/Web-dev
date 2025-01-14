@@ -1,6 +1,16 @@
 const ordersBusiness = require('./ordersBusiness');
 const cartBusiness = require('../cart/cartBusiness');
 
+const getOrders = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const orders = await ordersBusiness.getOrders(userId);
+        res.json({ success: true, data: orders });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error fetching orders' });
+    }
+}
+
 const renderCheckoutPage = async (req, res) => {
     try {
         const userId = req.user.id;
@@ -98,6 +108,7 @@ const getOrderById = async (req, res) => {
 
 
 module.exports = {
+    getOrders,
     renderCheckoutPage,
     placeOrder,
     getOrderHistory,
