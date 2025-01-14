@@ -283,18 +283,18 @@ const getProductForm = async (req, res) => {
 const getProductInput = (req) => {
     console.log(req.body);
     return {
-        name: req.body.name,
-        description: req.body.description,
-        category: req.body.category,
-        manufacturer: req.body.manufacturer,
-        status: req.body.status,
-        stock: parseInt(req.body.stock),
+        name: req.body.name || "",
+        description: req.body.description || "",
+        category: req.body.category || "",
+        manufacturer: req.body.manufacturer || "",
+        status: req.body.status || "Suspend",
+        stock: parseInt(req.body.stock) || 0,
         colors: req.body.colors.split(',') || [],
         sizes: req.body.sizes.split(',') || [],
-        label: req.body.label,
-        material: req.body.material,
-        originalPrice: parseFloat(req.body.originalPrice),
-        price: parseFloat(req.body.price),
+        label: req.body.label || "",
+        material: req.body.material || "",
+        originalPrice: parseFloat(req.body.originalPrice) || 0,
+        price: parseFloat(req.body.price) || 0,
     };
 };
 

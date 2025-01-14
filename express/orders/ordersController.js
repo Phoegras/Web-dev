@@ -18,6 +18,7 @@ const renderCheckoutPage = async (req, res) => {
         const userProfile = await ordersBusiness.getUserProfile(userId);
         const { subtotal, taxes, total } = calculateTotalPrice(cartItems.items);
         res.render('checkout', {
+            title: 'Checkout',
             userProfile,
             cartItems,
             subtotal,
@@ -44,7 +45,7 @@ const placeOrder = async (req, res) => {
         console.log('create Order successfully');
         await ordersBusiness.clearCart(userId);
         console.log('clean Order successfully');
-        res.render('checkout-success', { order });
+        res.render('checkout-success', { title: 'Processed order successfully', order });
     } catch (error) {
         res.status(500).send('Error placing order');
     }

@@ -29,6 +29,7 @@ const getCart = async (req, res, next) => {
             // Otherwise, render the cart page
             console.log('get cart with item render');
             res.render('cart', {
+                title: 'Cart',
                 cartItems,
                 subtotal,
                 taxes,
