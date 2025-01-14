@@ -126,6 +126,7 @@ const fetchProducts = async (page = 1) => {
 };
 
 const filterProducts = async (page = 1) => {
+  event.preventDefault();
   try {
     const category = document.getElementById("filter-category").value;
     const manufacturer = document.getElementById("filter-manufacturer").value;
@@ -199,3 +200,10 @@ window.addEventListener('popstate', async () => {
   // Re-fetch and render products and pagination based on the updated URL
   await fetchProducts(page);
 });
+
+let hidden = true;
+function toggleFilters() {
+  hidden = !hidden;
+  const filters = document.getElementById("filters");
+  hidden ? filters.classList.add("hidden") : filters.classList.remove("hidden");
+}

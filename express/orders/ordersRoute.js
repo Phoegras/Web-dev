@@ -5,6 +5,7 @@ const authMiddleware = require('../middlewares/authMiddlewares');
 
 router.use(authMiddleware.isAuthenticated);
 
+router.get('/api', orderController.getOrders);
 router.get('/checkout', orderController.renderCheckoutPage);
 router.post('/create_payment_url', orderController.placeOrder);
 router.get('/vnpay_return', orderController.getVnpayReturn);

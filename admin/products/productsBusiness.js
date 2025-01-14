@@ -9,6 +9,7 @@ async function getProducts(page, limit, filters) {
         where: filters,
         skip: (page - 1) * limit,
         take: limit,
+        orderBy: { createdAt: 'desc' },
     });
     return products;
 }
