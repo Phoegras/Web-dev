@@ -189,6 +189,7 @@ async function fetchProducts(page, limit) {
 
         paginationContainer.innerHTML = await renderPagination(data.pagination);
 
+        return params.toString();
     } catch (error) {
         console.error('Error loading products:', error);
     }
@@ -196,16 +197,9 @@ async function fetchProducts(page, limit) {
 
 async function loadProducts(page, limit) {
     // Fetch and render products based on the new page and limit
-    await fetchProducts(page, limit);
+    const urlParams = await fetchProducts(page, limit);
 
-    // Update the URL with the new page and limit
-    const urlParams = new URLSearchParams(window.location.search);
-    console.log('URL Params:', urlParams);
-    urlParams.set('page', page);
-    urlParams.set('limit', limit);
-    console.log('update Params:', urlParams);
-
-    window.history.pushState({}, '', `${window.location.pathname}?${urlParams}`);
+    history.pushState(null, '', `/products?${urlParams}`);
 
 }
 
