@@ -7,7 +7,8 @@ router.use(authMiddleware.isAuthenticated);
 
 router.get('/api', orderController.getOrders);
 router.get('/checkout', orderController.renderCheckoutPage);
-router.post('/place-order', orderController.placeOrder);
+router.post('/create_payment_url', orderController.placeOrder);
+router.get('/vnpay_return', orderController.getVnpayReturn);
 router.get('/history', orderController.getOrderHistory);
 router.get('/:id', orderController.getOrderById);
 
