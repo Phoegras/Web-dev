@@ -4,7 +4,7 @@ module.exports = {
     getAllManufacturers: async( req, res ) => {
         try {
             const manufacturers = await getManufacturers();
-            res.render('manufacturer-manager',{ success: true, manufacturers });
+            res.render('manufacturer-manager',{ success: true, manufacturers, admin: req.user });
         } catch (error) {
             res.json({ success: false, message: error.message });
             console.log(error);

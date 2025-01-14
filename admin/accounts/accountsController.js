@@ -38,6 +38,7 @@ const getUserAccounts = async (req, res) => {
                 totalPages: Math.ceil(total / limit),
                 total,
             },
+            admin: req.user,
         });
     } catch (error) {
         console.error(error);
@@ -141,6 +142,7 @@ const getAdminAccounts = async (req, res) => {
                 totalPages: Math.ceil(total / limit),
                 total,
             },
+            admin: req.user,
         });
     } catch (error) {
         console.error(error);
