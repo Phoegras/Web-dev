@@ -59,6 +59,23 @@ const createOrder = async (userId, recipient, phone, address) => {
     }
 };
 
+const updateOrderStatus = async (id, status) => {
+    try {
+        const updatedOrder = await prisma.order.update({
+            where: {
+                id: id,
+            },
+            data: {
+                status: status,
+            },
+        });
+        return updatedOrder;
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        throw error;
+    }
+};
+
 const calculateOrderTotal = (orderItems) => {
     if (!orderItems || orderItems.length === 0) {
         return 0;
@@ -128,4 +145,5 @@ module.exports = {
     clearCart,
     getOrdersByUserId,
     getOrderById,
+    updateOrderStatus,
 };
