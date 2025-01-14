@@ -19,6 +19,7 @@ const getOrders = async (req, res) => {
                 totalPages,
                 totalOrders,
             },
+            admin: req.user,
         });
     } catch (error) {
         console.error('Error rendering orders page:', error.message);
@@ -62,7 +63,8 @@ const getOrdersDetail = async (req, res) => {
     try {
       const order = await ordersBusiness.getOrderDetail(id);
         res.render('order-detail', {
-            order
+          order,
+          admin: req.user,
         }
       )
     } catch (error) {

@@ -40,6 +40,7 @@ const getProducts = async (req, res) => {
             categories,
             manufacturers,
             status,
+            admin: req.user,
         });
     } catch (error) {
         console.log('Error fetching products:', error);
@@ -108,7 +109,7 @@ const getProductById = async (req, res) => {
         const manufacturersList = await getManufacturers();
         const manufacturers = manufacturersList.map((manufacturer) => manufacturer.name);
 
-        res.render('product-form', { product, categories, manufacturers, colors, sizes, status, label });
+        res.render('product-form', { product, categories, manufacturers, colors, sizes, status, label, admin: req.user});
     } catch (error) {
         console.error('Error in getProductById:', error);
         res.status(500).send('Server Error');
@@ -182,7 +183,7 @@ const getProductForm = async (req, res) => {
     const categories = categoriesList.map((category) => category.name);
     const manufacturersList = await getManufacturers();
     const manufacturers = manufacturersList.map((manufacturer) => manufacturer.name);
-    res.render('product-form', { categories, manufacturers, colors, sizes, status, label });
+    res.render('product-form', { categories, manufacturers, colors, sizes, status, label, admin: req.user });
 };
 
 const getProductInput = (req) => {
