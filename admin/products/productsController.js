@@ -6,101 +6,6 @@ const status = ['On stock', 'Out of stock', 'Suspend'];
 const colors = ['Black', 'Gray', 'Blue', 'Lavender', 'Green', 'Orange'];
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '38', '39', '40', '41', '42', 'One size'];
 const label = ['Featured', 'New', 'Sale', 'Popular'];
-// Get all products
-// const getProducts = async (req, res) => {
-//     try {
-//         const page = parseInt(req.query.page) || 1;
-//         const limit = parseInt(req.query.limit) || 9;
-
-//         const sortOption = req.query.sort || 'latest';
-//         const sortCriteria = getSortCriteria(sortOption);
-
-//         const search = req.query.search || '';
-//         const category = req.query.category || '';
-//         const manufacturer = req.query.manufacturer || '';
-
-//         const { minPrice, maxPrice } = req.query;
-
-//         const min = parseFloat(minPrice) || 0;
-//         const max = parseFloat(maxPrice) || 1000;
-
-//         const products = await productsBusiness.getProducts(
-//             search,
-//             category,
-//             manufacturer,
-//             page,
-//             limit,
-//             sortCriteria,
-//             min, 
-//             max
-//         );
-
-//         const totalProducts = await productsBusiness.getTotalProducts(
-//             search,
-//             category,
-//             manufacturer
-//         );
-
-//         const totalPages = Math.ceil(totalProducts / limit);
-
-//         let categories = await productsBusiness.getDistinctCategories();
-//         categories = categories
-//             .map((category) => category.category)
-//             .filter((category) => category !== null);
-
-//         let manufacturers = await productsBusiness.getDistinctManufacturers();
-//         manufacturers = manufacturers
-//             .map((manufacturer) => manufacturer.manufacturer)
-//             .filter((manufacturer) => manufacturer !== null);
-
-//             // Check if this is an AJAX request
-//         if (req.headers['sec-fetch-dest'] == 'empty') {
-//             console.log('AJAX request detected');
-//             // Respond with partial views for content and pagination
-            
-//             res.json({ 
-//                 products,
-//                 totalProducts,
-//                 sortOption,
-//                 search,
-//                 category,
-//                 categories,
-//                 manufacturer,
-//                 manufacturers,
-//                 pagination: {
-//                     currentPage: page,
-//                     totalPages,
-//                     limit, 
-//                 },
-//                 minPrice:min,
-//                 maxPrice:max
-//         });
-//             return;
-//         }
-
-//         res.render('grid-two', {
-//             layout: 'layout',
-//             products,
-//             totalProducts,
-//             sortOption,
-//             search,
-//             category,
-//             categories,
-//             manufacturer,
-//             manufacturers,
-//             pagination: {
-//                 currentPage: page,
-//                 totalPages,
-//                 limit,
-//             },
-//             minPrice:min,
-//             maxPrice:max
-//         });
-//     } catch (error) {
-//         console.log('Error fetching products:', error);
-//         res.status(500).send('Error fetching products');
-//     }
-// };
 
 const getProducts = async (req, res) => {
     try {
@@ -283,16 +188,16 @@ const getProductForm = async (req, res) => {
 const getProductInput = (req) => {
     console.log(req.body);
     return {
-        name: req.body.name || "",
-        description: req.body.description || "",
-        category: req.body.category || "",
-        manufacturer: req.body.manufacturer || "",
-        status: req.body.status || "Suspend",
+        name: req.body.name,
+        description: req.body.description,
+        category: req.body.category ,
+        manufacturer: req.body.manufacturer,
+        status: req.body.status,
         stock: parseInt(req.body.stock) || 0,
-        colors: req.body.colors.split(',') || [],
-        sizes: req.body.sizes.split(',') || [],
-        label: req.body.label || "",
-        material: req.body.material || "",
+        colors: req.body.colors.split(','),
+        sizes: req.body.sizes.split(','),
+        label: req.body.label || '',
+        material: req.body.material,
         originalPrice: parseFloat(req.body.originalPrice) || 0,
         price: parseFloat(req.body.price) || 0,
     };
@@ -312,7 +217,8 @@ const addNewProduct = async (req, res) => {
         }
 
         // Add the images to the new product
-        newProduct.images = imageUrls;
+        if(imageUrls.length > 0)
+            newProduct.images = imageUrls;
 
         const product = await productsBusiness.addNewProduct(newProduct);
         console.log('Product added:', product);
