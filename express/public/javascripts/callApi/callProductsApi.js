@@ -151,7 +151,7 @@ async function renderPagination(pagination) {
     return `<ul class="inline-flex items-center -space-x-px">${buttons.join('')}</ul>`;
 }
 
-async function loadProducts(page, limit) {
+async function fetchProducts(page, limit) {
 
     const search = document.getElementById('searchname').value;
     const category = document.querySelector('input[name=category]:checked')?.value;
@@ -187,11 +187,24 @@ async function loadProducts(page, limit) {
 
         paginationContainer.innerHTML = await renderPagination(data.pagination);
 
-        // Update browser URL
-        history.pushState(null, '', `/products?${params.toString()}`);
     } catch (error) {
         console.error('Error loading products:', error);
     }
+}
+
+async function loadProducts(page, limit) {
+    // Fetch and render products based on the new page and limit
+    await fetchProducts(page, limit);
+
+    // Update the URL with the new page and limit
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log('URL Params:', urlParams);
+    urlParams.set('page', page);
+    urlParams.set('limit', limit);
+    console.log('update Params:', urlParams);
+
+    window.history.pushState({}, '', `${window.location.pathname}?${urlParams}`);
+
 }
 
 window.addEventListener('popstate', async () => {
@@ -200,7 +213,7 @@ window.addEventListener('popstate', async () => {
     const limit = parseInt(urlParams.get('limit')) || 9;
 
     // Re-fetch and render products and pagination based on the updated URL
-    await loadProducts(page, limit);
+    await fetchProducts(page, limit);
 });
 
 
