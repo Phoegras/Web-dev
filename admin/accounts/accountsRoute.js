@@ -8,9 +8,14 @@ const authMiddleware = require('../middlewares/authMiddlewares');
 // router.patch('/:type/:id/ban', authMiddleware.isAuthenticated, accountController.banAccount);
 // router.patch('/:type/:id/unban', authMiddleware.isAuthenticated, accountController.unbanAccount);
 
-router.patch('/:type/:id/unban', accountController.unbanAccount);
-router.patch('/:type/:id/ban', accountController.banAccount);
-router.get('/:type/api', accountController.getUserAccountsApi);
-router.get('/:type', accountController.getUserAccounts);
+router.get('/user/api', accountController.getUserAccountsApi);
+router.get('/user', accountController.getUserAccounts);
+router.patch('/user/ban/:id', accountController.banUserAccount);
+router.patch('/user/unban/:id', accountController.unbanUserAccount);
+
+router.get('/admin/api', accountController.getAdminAccountsApi);
+router.get('/admin', accountController.getAdminAccounts);
+router.patch('/admin/ban/:id', authMiddleware.isSuperAdmin, accountController.banAdminAccount);
+router.patch('/admin/unban/:id', authMiddleware.isSuperAdmin, accountController.unbanAdminAccount);
 
 module.exports = router;

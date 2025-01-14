@@ -73,7 +73,7 @@ const getProducts = async (req, res) => {
         }
 
         res.render('grid-two', {
-            title: 'Products',
+            title: 'Shop',
             layout: 'layout',
             products,
             totalProducts,

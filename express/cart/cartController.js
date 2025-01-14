@@ -1,3 +1,4 @@
+const { parse } = require('date-fns');
 const cartBusiness = require('./cartBusiness');
 
 const getCart = async (req, res, next) => {
@@ -29,7 +30,7 @@ const getCart = async (req, res, next) => {
             // Otherwise, render the cart page
             console.log('get cart with item render');
             res.render('cart', {
-                title: 'Cart',
+                title: 'Shopping Cart',
                 cartItems,
                 subtotal,
                 taxes,
@@ -54,7 +55,7 @@ const calculateTotalPrice = (cartItems) => {
                 0,
             ) * 100,
         ) / 100;
-    const taxes = Math.round(subtotal * vat * 100) / 100;
+    const taxes = parseFloat(process.env.SHIPPING_FEE);
     const total = Math.round((subtotal + taxes) * 100) / 100;
     return { subtotal, taxes, total };
 };

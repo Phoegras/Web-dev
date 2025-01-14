@@ -1,5 +1,5 @@
 <!-- Start Hero -->
-<section class="relative table w-full py-20 lg:py-24 bg-gray-50 dark:bg-slate-800">
+<section class="relative table w-full py-20 lg:py-24 bg-gray-100 dark:bg-slate-800">
     <div class="container relative">
         <div class="grid grid-cols-1 mt-14">
             <h3 class="text-3xl leading-normal font-semibold">My Account</h3>
@@ -19,23 +19,49 @@
 <!--end section-->
 <!-- End Hero -->
 
-<!-- Start -->
 <section class="relative md:py-24 py-16">
     <div class="container">
         <div class="grid lg:grid-cols-12 md:grid-cols-2 grid-cols-1 gap-[30px]">
+            <!-- User Info -->
             <div class="lg:col-span-3 md:col-span-5">
-                <div class="flex items-center">
-                    <img src="{{userProfile.avatar}}" class="size-16 rounded-full shadow dark:shadow-gray-800" alt="">
-                    <div class="ms-2">
-                        <p class="font-semibold text-slate-400">Hello, {{userProfile.name}}</p>
-                        <h5 class="text-lg font-semibold"></h5>
+                <div class="flex flex-col items-center">
+                    <!-- Avatar Section -->
+                    <div class="relative w-24 h-24">
+                        <!-- User Avatar -->
+                        <div class="relative w-24 h-24 rounded-full overflow-hidden shadow-lg dark:shadow-gray-800">
+                            <img id="avatarPreview" src="{{user.userProfile.avatar}}" 
+                                class="w-full h-full object-cover rounded-full" 
+                                alt="User Avatar">
+                        </div>
+                        
+                        <!-- Styled Button (Plus Icon) -->
+                        <form action="/users/update-avatar" method="POST" enctype="multipart/form-data" class="absolute bottom-0 right-0" id="avatarForm">
+                            <!-- Hidden Input -->
+                            <input type="file" id="avatar" name="avatar" accept="image/*" class="hidden" onchange="submitForm()">
+                            <button type="submit" class="btn btn-primary hidden">Upload Avatar</button> <!-- Ẩn nút -->
+                            <label for="avatar" 
+                                class="cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 border-2 border-white text-white shadow-lg hover:bg-blue-700 transition">
+                                <!-- Plus Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </label>
+                        </form>
+                    </div>
+
+                    <!-- User Name -->
+                    <div class="mt-4 text-center">
+                        <p class="font-semibold text-slate-400">Hello, {{user.userProfile.name}}</p>
                     </div>
                 </div>
             </div>
             <!--end col-->
 
-            <div class="lg:col-span-9 md:col-span-7">
-                <p class="text-slate-400 max-w-xl">Start working with Tailwind CSS that can provide everything you need to generate awareness, drive traffic, connect.</p>
+            <!-- Description -->
+            <div class="lg:col-span-9 md:col-span-7 flex items-center">
+                <p class="text-slate-400 max-w-xl">
+                    Start working with Tailwind CSS that can provide everything you need to generate awareness, drive traffic, connect.
+                </p>
             </div>
             <!--end col-->
 
@@ -48,9 +74,6 @@
                         <li role="presentation">
                             <button class="px-4 py-2 text-start text-base font-semibold rounded-md w-full mt-3 duration-500" id="order-tab" data-tabs-target="#order" type="button" role="tab" aria-controls="order" aria-selected="false"><i class="uil uil-list-ul text-[20px] me-2 align-middle"></i> Orders</button>
                         </li>
-                        {{!-- <li role="presentation">
-                            <button class="px-4 py-2 text-start text-base font-semibold rounded-md w-full mt-3 duration-500" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false"><i class="uil uil-arrow-circle-down text-[20px] me-2 align-middle"></i> Profile </button>
-                        </li> --}}
                         <li role="presentation">
                             <button class="px-4 py-2 text-start text-base font-semibold rounded-md w-full mt-3 duration-500" id="address-tab" data-tabs-target="#address" type="button" role="tab" aria-controls="address" aria-selected="false"><i class="uil uil-user text-[20px] me-2 align-middle"></i> Profile </button>
                         </li>
@@ -68,79 +91,63 @@
             <div class="lg:col-span-9 md:col-span-7">
                 <div id="myTabContent" class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md">
                     <div class="" id="dashboard" role="tabpanel" aria-labelledby="profile-tab">
-                        <p class="text-slate-400 font-semibold">Hello <span class="text-slate-900 dark:text-white">{{userProfile.name}}</span> (not <span class="text-slate-900 dark:text-white">{{userProfile.name}}</span>? <a href="/auth/logout?returnUrl={{req.originalUrl}}" class="text-red-600">Log out</a>)</p>
+                        <p class="text-slate-400 font-semibold">Hello <span class="text-slate-900 dark:text-white">{{user.userProfile.name}}</span> (not <span class="text-slate-900 dark:text-white">{{user.userProfile.name}}</span>? <a href="/auth/logout?returnUrl={{req.originalUrl}}" class="text-red-600">Log out</a>)</p>
 
                         <p class="text-slate-400 font-semibold mt-4">From your account dashboard you can view your <a href="javascript:void(0)" class="text-red-600">recent orders</a>, manage your <a href="javascript:void(0)" class="text-red-600">shipping and billing addresses</a>, and <a href="javascript:void(0)"
                                 class="text-red-600">edit your password and account details</a>.</p>
                     </div>
 
                     <div class="hidden" id="order" role="tabpanel" aria-labelledby="order-tab">
-                        <div id="order-container" class="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
+                        <div class="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
+                            {{#if orders.length}}
                             <table class="w-full text-start text-slate-500 dark:text-slate-400">
                                 <thead class="text-sm uppercase bg-slate-50 dark:bg-slate-800">
-                                    <tr class="text-start">
-                                        <th scope="col" class="px-2 py-3 text-start">Order no.</th>
-                                        <th scope="col" class="px-2 py-3 text-start">Date</th>
-                                        <th scope="col" class="px-2 py-3 text-start">Status</th>
-                                        <th scope="col" class="px-2 py-3 text-start">Total</th>
-                                        <th scope="col" class="px-2 py-3 text-start">Action</th>
+                                    <tr>
+                                        <th scope="col" class="px-2 py-3">Date</th>
+                                        <th scope="col" class="px-2 py-3">Status</th>
+                                        <th scope="col" class="px-2 py-3">Total</th>
+                                        <th scope="col" class="px-2 py-3">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="bg-white dark:bg-slate-900 text-start">
-                                        <th class="px-2 py-3 text-start" scope="row">7107</th>
-                                        <td class="px-2 py-3 text-start">1st November 2021</td>
-                                        <td class="px-2 py-3 text-start text-green-600">Delivered</td>
-                                        <td class="px-2 py-3 text-start">$ 320 <span class="text-slate-400">for 2items</span></td>
-                                        <td class="px-2 py-3 text-start"><a href="javascript:void(0)" class="text-indigo-600">View <i class="uil uil-arrow-right"></i></a></td>
+                                    {{#each orders}}
+                                    <tr class="bg-white dark:bg-slate-900">
+                                        <td class="px-2 py-3">
+                                            {{formatDate this.createdAt "dd/MM/yyyy HH:mm:ss"}}
+                                        </td>
+                                        <td class="px-2 py-3">
+                                            <span class="px-3 py-1 rounded-full text-xs font-semibold 
+                                            {{#if (eq this.status "Pending")}} bg-yellow-500 text-white{{/if}}
+                                            {{#if (eq this.status "Paid")}} bg-orange-700 text-white{{/if}}
+                                            {{#if (eq this.status "Shipped")}} bg-indigo-600 text-white{{/if}}
+                                            {{#if (eq this.status "Delivered")}} bg-green-600 text-white{{/if}}
+                                            {{#if (eq this.status "Cancelled")}} bg-red-500 text-white{{/if}}">
+                                                {{this.status}}
+                                            </span>
+                                        </td>
+                                        <td class="px-2 py-3">
+                                            $ {{this.totalAmount}} 
+                                            <span class="text-slate-400">for {{this.orderItem.length}} items</span>
+                                        </td>
+                                        <td class="px-2 py-3">
+                                            <a href="/orders/{{this.id}}" class="text-indigo-600 hover:underline">
+                                                View <i class="uil uil-arrow-right"></i>
+                                            </a>
+                                        </td>
                                     </tr>
-
-                                    <tr class="bg-white dark:bg-slate-900 text-start border-t border-gray-100 dark:border-gray-700">
-                                        <th class="px-2 py-3 text-start" scope="row">8007</th>
-                                        <td class="px-2 py-3 text-start">4th November 2021</td>
-                                        <td class="px-2 py-3 text-start text-slate-400">Processing</td>
-                                        <td class="px-2 py-3 text-start">$ 800 <span class="text-slate-400">for 1item</span></td>
-                                        <td class="px-2 py-3 text-start"><a href="javascript:void(0)" class="text-indigo-600">View <i class="uil uil-arrow-right"></i></a></td>
-                                    </tr>
-
-                                    <tr class="bg-white dark:bg-slate-900 text-start border-t border-gray-100 dark:border-gray-700">
-                                        <th class="px-2 py-3 text-start" scope="row">8008</th>
-                                        <td class="px-2 py-3 text-start">4th November 2021</td>
-                                        <td class="px-2 py-3 text-start text-red-600">Canceled</td>
-                                        <td class="px-2 py-3 text-start">$ 800 <span class="text-slate-400">for 1item</span></td>
-                                        <td class="px-2 py-3 text-start"><a href="javascript:void(0)" class="text-indigo-600">View <i class="uil uil-arrow-right"></i></a></td>
-                                    </tr>
+                                    {{/each}}
                                 </tbody>
                             </table>
+                            {{else}}
+                            <div class="p-6 text-center text-gray-500 dark:text-gray-400">
+                                <p>You have no order.</p>
+                            </div>
+                            {{/if}}
                         </div>
                     </div>
 
-                    {{!-- <div class="hidden" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
-                            <table class="w-full text-start text-slate-500 dark:text-slate-400">
-                                <thead class="text-sm uppercase bg-slate-50 dark:bg-slate-800">
-                                    <tr class="text-start">
-                                        <th scope="col" class="px-2 py-3 text-start min-w-[160px]"></th>
-                                        <th scope="col" class="px-2 py-3 text-start min-w-[360px]"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="bg-white dark:bg-slate-900 text-start">
-                                        <th class="px-2 py-3 text-start" scope="row">Name</th>
-                                        <td class="px-2 py-3 text-start">{{userProfile.name}}</td>
-                                    </tr>
-                                    <tr class="bg-white dark:bg-slate-900 text-start">
-                                        <th class="px-2 py-3 text-start" scope="row">Phone Number</th>
-                                        <td class="px-2 py-3 text-start">{{userProfile.phone}}</td>
-                                    </tr>
-                                    <tr class="bg-white dark:bg-slate-900 text-start">
-                                        <th class="px-2 py-3 text-start" scope="row">Birthdate</th>
-                                        <td class="px-2 py-3 text-start">{{userProfile.phone}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div> --}}
+<!-- End order table view -->
+
 
                     <div class="hidden" id="address" role="tabpanel" aria-labelledby="address-tab">
                         <h6 class="text-slate-400 mb-0">The following addresses will be used on the checkout page by default.</h6>
@@ -156,19 +163,19 @@
                                 
                                     <!-- Information view -->
                                     <div id="view-mode">
-                                        <p class="text-lg font-semibold mb-2">{{userProfile.name}}</p>
+                                        <p class="text-lg font-semibold mb-2">{{user.userProfile.name}}</p>
                                         <ul class="list-none">
                                             <li class="flex">
                                                 <i class="uil uil-map-marker text-lg me-2"></i>
-                                                <p class="text-slate-400">{{userProfile.address}}</p>
+                                                <p class="text-slate-400">{{user.userProfile.address}}</p>
                                             </li>
                                             <li class="flex mt-1">
                                                 <i class="uil uil-phone text-lg me-2"></i>
-                                                <p class="text-slate-400">{{userProfile.phone}}</p>
+                                                <p class="text-slate-400">{{user.userProfile.phone}}</p>
                                             </li>
                                             <li class="flex mt-1">
                                                 <i class="uil uil-calendar-alt text-lg me-2"></i>
-                                                <p class="text-slate-400">{{userProfile.dateOfBirth}}</p>
+                                                <p class="text-slate-400">{{user.userProfile.dateOfBirth}}</p>
                                             </li>
                                         </ul>
                                     </div>
@@ -177,137 +184,28 @@
                                     <div id="edit-mode" class="hidden">
                                         <div class="mb-4">
                                             <label for="name-input" class="block text-sm font-medium text-gray-700">Name</label>
-                                            <input id="name-input" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{userProfile.name}}" />
+                                            <input id="name-input" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{user.userProfile.name}}" />
                                         </div>  
                                         <div class="mb-4">
                                             <label for="address-input" class="block text-sm font-medium text-gray-700">Address</label>
-                                            <textarea id="address-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">{{userProfile.address}}</textarea>
+                                            <textarea id="address-input" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">{{user.userProfile.address}}</textarea>
                                         </div>
                                         <div class="mb-4">
                                             <label for="phone-input" class="block text-sm font-medium text-gray-700">Phone</label>
-                                            <input id="phone-input" type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{userProfile.phone}}" />
+                                            <input id="phone-input" type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{user.userProfile.phone}}" />
                                         </div>
                                         <div class="mb-4">
                                             <label for="dateofbirth-input" class="block text-sm font-medium text-gray-700">Date Of Birth</label>
-                                            <input id="dateofbirth-input" type="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{userProfile.dateOfBirth}}" />
+                                            <input id="dateofbirth-input" type="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" value="{{user.userProfile.dateOfBirth}}" />
                                         </div>
                                         <input type="submit" id="save-button" value="Save" class="bg-indigo-600 text-white py-2 px-4 rounded-md"\>
                                     </div>
                                 </div>
                             </div>
-
-                            {{!-- <div class="md:w-1/2 md:px-3 mt-[30] md:mt-0">
-                                <div class="flex items-center mb-4 justify-between">
-                                    <h5 class="text-xl font-semibold">Shipping Address:</h5>
-                                    <a href="#" class="text-indigo-600 text-lg"><i class="uil uil-edit align-middle"></i></a>
-                                </div>
-                                <div class="pt-4 border-t border-gray-100 dark:border-gray-700">
-                                    <p class="text-lg font-semibold mb-2">{{userProfile.name}}</p>
-
-                                    <ul class="list-none">
-                                        <li class="flex">
-                                            <i class="uil uil-map-marker text-lg me-2"></i>
-                                            <p class="text-slate-400">C/54 Northwest Freeway, Suite 558, <br> Houston, USA 485</p>
-                                        </li>
-
-                                        <li class="flex mt-1">
-                                            <i class="uil uil-phone text-lg me-2"></i>
-                                            <p class="text-slate-400">{{userProfile.phone}}</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
 
                     <div class="hidden" id="accountmanagement" role="tabpanel" aria-labelledby="accountmanagement-tab">
-                        {{!-- <h5 class="text-lg font-semibold mb-4">Personal Detail :</h5>
-                        <form>
-                            <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
-                                <div>
-                                    <label class="form-label font-medium">First Name : <span class="text-red-600">*</span></label>
-                                    <div class="form-icon relative mt-2">
-                                        <i data-feather="user" class="size-4 absolute top-3 start-4"></i>
-                                        <input type="text" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="First Name:"
-                                            id="firstname" name="name" required="">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="form-label font-medium">Last Name : <span class="text-red-600">*</span></label>
-                                    <div class="form-icon relative mt-2">
-                                        <i data-feather="user-check" class="size-4 absolute top-3 start-4"></i>
-                                        <input type="text" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Last Name:"
-                                            id="lastname" name="name" required="">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="form-label font-medium">Your Email : <span class="text-red-600">*</span></label>
-                                    <div class="form-icon relative mt-2">
-                                        <i data-feather="mail" class="size-4 absolute top-3 start-4"></i>
-                                        <input type="email" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                                            placeholder="Email" name="email" required="">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="form-label font-medium">Occupation : </label>
-                                    <div class="form-icon relative mt-2">
-                                        <i data-feather="bookmark" class="size-4 absolute top-3 start-4"></i>
-                                        <input name="name" id="occupation" type="text" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                                            placeholder="Occupation :">
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end grid-->
-
-                            <div class="grid grid-cols-1">
-                                <div class="mt-5">
-                                    <label class="form-label font-medium">Description : </label>
-                                    <div class="form-icon relative mt-2">
-                                        <i data-feather="message-circle" class="size-4 absolute top-3 start-4"></i>
-                                        <textarea name="comments" id="comments" class="form-input ps-11 w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                                            placeholder="Message :"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end row-->
-
-                            <input type="submit" id="submit" name="send" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5"
-                                value="Save Changes">
-                        </form>
-                        <!--end form-->
-
-                        <div class="grid lg:grid-cols-2 grid-cols-1 gap-5 mt-6">
-                            <div>
-                                <h5 class="text-lg font-semibold mb-4">Contact Info :</h5>
-
-                                <form>
-                                    <div class="grid grid-cols-1 gap-5">
-                                        <div>
-                                            <label class="form-label font-medium">Phone No. :</label>
-                                            <div class="form-icon relative mt-2">
-                                                <i data-feather="phone" class="size-4 absolute top-3 start-4"></i>
-                                                <input name="number" id="number" type="number" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                                                    placeholder="Phone :">
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label class="form-label font-medium">Website :</label>
-                                            <div class="form-icon relative mt-2">
-                                                <i data-feather="globe" class="size-4 absolute top-3 start-4"></i>
-                                                <input name="url" id="url" type="url" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                                                    placeholder="Url :">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end grid-->
-
-                                    <button class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5">Add</button>
-                                </form>
-                            </div>
-                            <!--end col--> --}}
-
-
                             <div class="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
                                 <table class="w-full text-start text-slate-500 dark:text-slate-400">
                                     <thead class="text-sm uppercase bg-slate-50 dark:bg-slate-800">
@@ -322,13 +220,19 @@
                                         </tr>
                                         <tr class="bg-white dark:bg-slate-900 text-start">
                                             <th class="px-2 py-3 text-start" scope="row">Password</th>
-                                            <td class="px-2 py-3 text-start">*******</td>
+                                            <td class="px-2 py-3 text-start">***********</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>                            
+                            </div>
 
-                            <div class="hidden">
+                            <div class="flex justify-center mt-4">
+                                <button id="change-password-btn" class="py-2 px-3 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md">
+                                    Change Password
+                                </button>
+                            </div>
+
+                            <div id="change-password-section" class="hidden mt-5">
                                 <h5 class="text-lg font-semibold mb-4">Change password :</h5>
                                 <form>
                                     <div class="grid grid-cols-1 gap-5">
@@ -336,35 +240,36 @@
                                             <label class="form-label font-medium">Old password :</label>
                                             <div class="form-icon relative mt-2">
                                                 <i data-feather="key" class="size-4 absolute top-3 start-4"></i>
-                                                <input type="password" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                                                <input type="password" id="old-password-input" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
                                                     placeholder="Old password" required="">
                                             </div>
                                         </div>
-
                                         <div>
                                             <label class="form-label font-medium">New password :</label>
                                             <div class="form-icon relative mt-2">
                                                 <i data-feather="key" class="size-4 absolute top-3 start-4"></i>
-                                                <input type="password" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                                                <input type="password" id="new-password-input" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
                                                     placeholder="New password" required="">
                                             </div>
                                         </div>
-
                                         <div>
                                             <label class="form-label font-medium">Re-type New password :</label>
                                             <div class="form-icon relative mt-2">
                                                 <i data-feather="key" class="size-4 absolute top-3 start-4"></i>
-                                                <input type="password" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                                                <input type="password" id="confirm-password-input" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
                                                     placeholder="Re-type New password" required="">
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end grid-->
 
-                                    <button class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5">Save password</button>
+                                    <div id="error-message" class="text-red-600 p-4 hidden" role="alert"></div>
+
+                                    <button id="save-password-btn" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5">
+                                        Save password
+                                    </button>
                                 </form>
                             </div>
-                            <!--end col-->
+
                         </div>
                         <!--end row-->
                     </div>
@@ -380,5 +285,5 @@
 <!--end section-->
 <!-- End -->
 
-<script src="/javascripts/account.js"></script>
-<script src="/javascripts/callApi/callOrderApi.js"></script>
+<script src="/javascripts/callApi/callAccountApi.js"></script>
+

@@ -2,29 +2,33 @@ const accountsBusiness = require('./accountsBusiness');
 
 const getUserAccounts = async (req, res) => {
     try {
-        const type = req.params;
-        const { name, email, sortKey, sortOrder, page = 1, limit = 10 } = req.query;
+        const role = 'user'
+        const { name, email, sort = 'email', order = 'asc', page = 1, limit = 10 } = req.query;
+
+        const sortKey = sort;
+        const sortOrder = order;
 
         const filter = {};
+
         if (email) filter.email = { contains: email, mode: 'insensitive' };
+
         if (name) {
-            if (type.type === 'user') {
-                filter.userProfile = { name: { contains: name, mode: 'insensitive' } };
-            } else if (type.type === 'admin') {
-                filter.adminProfile = { name: { contains: name, mode: 'insensitive' } };
-            }
+            filter.userProfile = {
+                name: { contains: name, mode: 'insensitive' },
+            };
         }
 
-        const sort = sortKey ? { key: sortKey, order: sortOrder || 'asc' } : null;
+        const orderBy = sortKey ? { key: sortKey, order: sortOrder || 'asc' } : null;
 
         const [accounts, total] = await Promise.all([
-            accountsBusiness.getAccounts(type.type, filter, sort, Number(page), Number(limit)),
-            accountsBusiness.countAccounts(type.type, filter),
+            accountsBusiness.getAccounts(role, filter, orderBy, Number(page), Number(limit)),
+            accountsBusiness.countAccounts(role, filter),
         ]);
 
-        view = type.type === 'user' ? 'account-user' : 'account-admin';
+        console.log('user');
+        
 
-        res.render(view, {
+        res.render('account-user', {
             accounts,
             filter: { name, email },
             sortKey,
@@ -42,7 +46,7 @@ const getUserAccounts = async (req, res) => {
 };
 
 const getUserAccountsApi = async (req, res) => {
-    const type = req.params;
+    const role = 'user'
     const { name, email, sort = 'email', order = 'asc', page = 1, limit = 10 } = req.query;
 
     const sortKey = sort;
@@ -53,22 +57,16 @@ const getUserAccountsApi = async (req, res) => {
     if (email) filter.email = { contains: email, mode: 'insensitive' };
 
     if (name) {
-        if (type.type === 'user') {
-            filter.userProfile = {
-                name: { contains: name, mode: 'insensitive' },
-            };
-        } else if (type.type === 'admin') {
-            filter.adminProfile = {
-                name: { contains: name, mode: 'insensitive' },
-            };
-        }
+        filter.userProfile = {
+            name: { contains: name, mode: 'insensitive' },
+        };
     }
 
     const orderBy = sortKey ? { key: sortKey, order: sortOrder || 'asc' } : null;
 
     const [accounts, total] = await Promise.all([
-        accountsBusiness.getAccounts(type.type, filter, orderBy, Number(page), Number(limit)),
-        accountsBusiness.countAccounts(type.type, filter),
+        accountsBusiness.getAccounts(role, filter, orderBy, Number(page), Number(limit)),
+        accountsBusiness.countAccounts(role, filter),
     ]);
 
     res.json({
@@ -81,19 +79,11 @@ const getUserAccountsApi = async (req, res) => {
     });
 };
 
-const banAccount = async (req, res) => {
-    const { type, id } = req.params;
-
-    const admin = await accountsBusiness.findAdminById(req.user.id);
-    console.log(admin.role)
-    console.log(type.type)
-    if (type.type === 'admin' && admin.role !== 'SUPER_ADMIN') {
-        console.log('hello');
-        res.status(500).json({ message: "You don't have permission to this activity!" });
-    }
-
+const banUserAccount = async (req, res) => {
+    const role = 'user';
+    const { id } = req.params;
     try {
-        accountsBusiness.banAccountById(type.type, id);
+        accountsBusiness.banAccountById(role, id);
         res.json({ message: `Account ${id} has been banned.` });
     } catch (error) {
         console.error(error);
@@ -101,11 +91,11 @@ const banAccount = async (req, res) => {
     }
 };
 
-const unbanAccount = async (req, res) => {
-    const { type, id } = req.params;
-
+const unbanUserAccount = async (req, res) => {
+    const role = 'user';
+    const { id } = req.params;
     try {
-        accountsBusiness.unbanAccountById(type.type, id);
+        accountsBusiness.unbanAccountById(role, id);
         res.json({ message: `Account ${id} has been unbanned.` });
     } catch (error) {
         console.error(error);
@@ -113,10 +103,123 @@ const unbanAccount = async (req, res) => {
     }
 };
 
+const getAdminAccounts = async (req, res) => {
+    try {
+        const role = 'admin'
+        const { name, email, sort = 'email', order = 'asc', page = 1, limit = 10 } = req.query;
+
+        const sortKey = sort;
+        const sortOrder = order;
+
+        const filter = {};
+
+        if (email) filter.email = { contains: email, mode: 'insensitive' };
+
+        if (name) {
+            filter.adminProfile = {
+                name: { contains: name, mode: 'insensitive' },
+            };
+        }
+
+        const orderBy = sortKey ? { key: sortKey, order: sortOrder || 'asc' } : null;
+
+        const [accounts, total] = await Promise.all([
+            accountsBusiness.getAccounts(role, filter, orderBy, Number(page), Number(limit)),
+            accountsBusiness.countAccounts(role, filter),
+        ]);
+
+        console.log('admin');
+        
+
+        res.render('account-admin', {
+            accounts,
+            filter: { name, email },
+            sortKey,
+            sortOrder,
+            pagination: {
+                currentPage: Number(page),
+                totalPages: Math.ceil(total / limit),
+                total,
+            },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+const getAdminAccountsApi = async (req, res) => {
+    const role = 'admin'
+    const { name, email, sort = 'email', order = 'asc', page = 1, limit = 10 } = req.query;
+
+    const sortKey = sort;
+    const sortOrder = order;
+
+    const filter = {};
+
+    if (email) filter.email = { contains: email, mode: 'insensitive' };
+
+    if (name) {
+        filter.adminProfile = {
+            name: { contains: name, mode: 'insensitive' },
+        };
+    }
+
+    const orderBy = sortKey ? { key: sortKey, order: sortOrder || 'asc' } : null;
+
+    const [accounts, total] = await Promise.all([
+        accountsBusiness.getAccounts(role, filter, orderBy, Number(page), Number(limit)),
+        accountsBusiness.countAccounts(role, filter),
+    ]);
+
+    res.json({
+        accounts,
+        pagination: {
+            currentPage: Number(page),
+            totalPages: Math.ceil(total / limit),
+            total,
+        },
+    });
+};
+
+const banAdminAccount = async (req, res) => {
+    const role = 'admin';
+    const { id } = req.params;
+    const admin = await accountsBusiness.findAdminById(id);
+    console.log(admin.email);
+    console.log(req.user.email);
+    if (admin.email === process.env.SUPER_ADMIN_EMAIL) {
+        return res.status(403).json({ message: `You don't have permission to this.` });
+    }
+    try {
+        console.log('hello');
+        accountsBusiness.banAccountById(role, id);
+        res.json({ message: `Account ${id} has been banned.` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to ban the account', error });
+    }
+};
+
+const unbanAdminAccount = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const role = 'admin';
+        accountsBusiness.unbanAccountById(role, id);
+        res.json({ message: `Account ${id} has been unbanned.` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to unban the account', error });
+    }
+};
 
 module.exports = {
     getUserAccounts,
     getUserAccountsApi,
-    banAccount,
-    unbanAccount,
+    banUserAccount,
+    unbanUserAccount,
+    getAdminAccounts,
+    getAdminAccountsApi,
+    banAdminAccount,
+    unbanAdminAccount,
 }

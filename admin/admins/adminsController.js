@@ -2,7 +2,7 @@ const adminBusiness = require('./adminsBusiness');
 const cloudinary = require('../config/cloudinary');
 
 // Show admin account information
-const showAccountInfo = async (req, res) => {
+const showCurrentAccountInfo = async (req, res) => {
     try {
         const admin = await adminBusiness.findAdminByEmail(req.user.email);
         res.render('profile', { admin });
@@ -59,8 +59,20 @@ const updateAvatar = async (req, res) => {
     }
 };
 
+// Show account information
+const showAccountDetailById = async (req, res) => {
+    const id = req.params;
+    try {
+        const account = await adminBusiness.findAdminById(id);
+        res.render('admin-detail', { account });
+    } catch (error) {
+        res.status(500).json({ message: 'Error getting account information' });
+    }
+};
+
 module.exports = {
-    showAccountInfo,
+    showCurrentAccountInfo,
     updateAdminProfile,
     updateAvatar,
+    showAccountDetailById,
 };

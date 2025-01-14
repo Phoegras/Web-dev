@@ -12,7 +12,10 @@ async function findAdminByEmail(email) {
 
 async function findAdminById(id) {
     const admin = await prisma.admins.findUnique({
-        where: { id },
+        where: id,
+        include: {
+            adminProfile: true,
+        }
     });
     return admin;
 }
