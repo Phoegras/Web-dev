@@ -45,7 +45,8 @@ const placeOrder = async (req, res) => {
         const order = await ordersBusiness.getOrderById(newOrder.id);
         res.render('checkout-success', {
             title: 'Checkout successfully',
-            order
+            order,
+            success: true,
         });
     } catch (error) {
         res.status(500).send('Error placing order');

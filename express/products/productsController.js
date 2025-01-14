@@ -1,5 +1,8 @@
 const productsBusiness = require('./productsBusiness');
 
+const {algoliasearch} = require('algoliasearch');
+const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.SEARCH_API_KEY);
+
 // Get all products
 const getProducts = async (req, res) => {
     try {
