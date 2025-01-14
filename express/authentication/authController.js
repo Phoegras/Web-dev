@@ -3,6 +3,7 @@ const passport = require('passport');
 const mailer = require('../utils/mailer');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
+const { title } = require('process');
 
 // Show register form
 const showRegisterForm = (req, res) => {
@@ -39,39 +40,19 @@ const register = async (req, res) => {
             });
         }
 
-        // Generate email verification token
-        const hashedEmail = await bcrypt.hash(
+        sendEmail(email);
+
+        // Create user
+        await authBusiness.createUser({
             email,
-            parseInt(process.env.BCRYPT_SALT_ROUND),
-        );
+            password,
+            name,
+        });
 
-        // Construct verification link
-        const verificationLink = `${process.env.APP_URL}/auth/verify?email=${email}&token=${hashedEmail}`;
-
-        // Send verification email
-        const { success, message, error } = await mailer.sendMail(
-            email,
-            'Verify Email',
-            `<a href="${verificationLink}">Click here to verify your email</a>`,
-        );
-
-        if (!success) {
-            return res.status(404).json({
-                message: message,
-            });
-        } else {
-            // Create user
-            await authBusiness.createUser({
-                email,
-                password,
-                name,
-            });
-
-            return res.status(201).json({
-                message:
-                    'Registration successful. Please check your email to verify your account.',
-            });
-        }
+        return res.status(201).json({
+            message:
+                'Registration successful. Please check your email to verify your account.',
+        });
     } catch (error) {
         console.error(error);
         return res
@@ -113,6 +94,7 @@ const showRegisterSuccess = (req, res) => {
         title: 'Register',
         noHeader: true,
         noFooter: true,
+        email: req.query.email,
     });
 };
 
@@ -146,10 +128,13 @@ const signIn = async (req, res, next) => {
             // Check if email is verified
             const userInDb = await authBusiness.findUserByEmail(user.email);
 
+            console.log(user.email);
+
             if (!userInDb.emailVerifiedAt) {
                 return res.status(403).json({
                     success: false,
                     message: 'Please verify your email before logging in.',
+                    email: user.email,
                 });
             }
 
@@ -186,6 +171,133 @@ const signIn = async (req, res, next) => {
         }
     })(req, res, next);
 };
+
+const resendVerification = async (req, res) => {
+    try {
+        email = req.query.email;
+        console.log(email);
+        sendEmail(email);
+        return res.render('mail-success', {
+            title: 'Resend verification',
+            noHeader: true,
+            noFooter: true,
+            email: String(email)
+        });
+    } catch (err) {
+        console.error('Error during send verification:', err);
+        return res.status(500).json({
+            success: false,
+            message: 'An error occurred. Please try again later.',
+        });
+    }
+}
+
+async function sendEmail(email) {
+    // Generate email verification token
+    const hashedEmail = await bcrypt.hash(
+        email,
+        parseInt(process.env.BCRYPT_SALT_ROUND),
+    );
+
+    // Construct verification link
+    const verificationLink = `${process.env.APP_URL}/auth/verify?email=${email}&token=${hashedEmail}`;
+
+    const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+            }
+            table {
+                border-spacing: 0;
+                width: 100%;
+            }
+            td {
+                padding: 0;
+            }
+            .email-container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            .email-header {
+                background-color: #4CAF50;
+                color: #ffffff;
+                padding: 20px;
+                text-align: center;
+                font-size: 24px;
+            }
+            .email-body {
+                padding: 20px;
+                color: #333333;
+                line-height: 1.6;
+            }
+            .email-body p {
+                margin: 0 0 16px;
+            }
+            .verify-btn {
+                display: inline-block;
+                background-color: #4CAF50;
+                color: #ffffff;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+            .verify-btn:hover {
+                background-color: #45a049;
+            }
+            .email-footer {
+                padding: 20px;
+                text-align: center;
+                font-size: 12px;
+                color: #999999;
+            }
+        </style>
+    </head>
+    <body>
+        <table role="presentation" class="email-container">
+            <tr>
+                <td class="email-header">
+                    Verify Your Email
+                </td>
+            </tr>
+            <tr>
+                <td class="email-body">
+                    <p>Hi there,</p>
+                    <p>Thank you for signing up! Please confirm your email address by clicking the button below:</p>
+                    <p style="text-align: center;">
+                        <a href="${verificationLink}" class="verify-btn">Verify Email</a>
+                    </p>
+                    <p>If you did not create this account, you can safely ignore this email.</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="email-footer">
+                    &copy; ${new Date().getFullYear()} Techwind. All rights reserved.
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>
+    `;
+
+    // Send verification email
+    await mailer.sendMail(
+        email,
+        'Verify Email',
+        htmlContent,
+    );
+}
+
 
 // Google sign in
 const googleSignIn = async (req, res) => {
@@ -333,6 +445,43 @@ const resetPassword = async (req, res) => {
     }
 };
 
+const changePassword = async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+
+    if (!oldPassword || !newPassword) {
+        return res.status(400).json({ message: 'Old password and new password are required.' });
+    }
+
+    // Validate password complexity
+    if (!validator.isStrongPassword(newPassword)) {
+        return res.status(400).json({
+            message:
+                'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.',
+        });
+    }
+
+    try {
+        const user = await authBusiness.findUserById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Old password is incorrect.' });
+        }
+
+        authBusiness.changePassword(req.user.id, newPassword);
+
+        res.status(200).json({ message: 'Password changed successfully.' });
+    } catch (error) {
+        console.error('Error changing password:', error);
+        res.status(500).json({ message: 'Server error. Please try again later.' });
+    }
+};
+
 // Sign out
 const logout = (req, res) => {
     const returnUrl = req.query.returnUrl || '/';
@@ -354,5 +503,7 @@ module.exports = {
     forgotPassword,
     showRePasswordForm,
     resetPassword,
+    changePassword,
+    resendVerification,
     logout,
 };

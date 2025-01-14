@@ -10,10 +10,12 @@ document
         const errorMessage = document.getElementById('error-message');
         const successMessage = document.getElementById('success-message');
         const loadingSpinner = document.getElementById('loadingSpinner');
+        const resendEmail = document.getElementById('resend-email');
 
         errorMessage.classList.add('hidden');
         successMessage.classList.add('hidden');
-        loadingSpinner.classList.remove('hidden');
+        loadingSpinner.classList.add('hidden');
+        resendEmail.classList.remove('hidden');
 
         try {
             const response = await fetch('/auth/sign-in', {
@@ -32,6 +34,14 @@ document
                 errorMessage.innerText =
                     result.message || 'Login failed. Please try again.';
                 errorMessage.classList.remove('hidden');
+                if (result.email) {
+                    resendEmail.innerHTML = 
+                        `Didn’t receive the email? <a 
+                                href="/auth/resend-verification?email=${result.email}" 
+                                class="text-indigo-600 hover:text-indigo-700 font-medium"
+                            >Resend verification email</a>.`
+                }
+                resendEmail.classList.remove('hidden');
             }
         } catch (error) {
             console.error('Error during sign-in:', error);

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('./usersController');
 const authMiddleware = require('../middlewares/authMiddlewares');
+const {upload} = require("../middlewares/multer");
 
 router.get(
     '/account',
@@ -14,5 +15,12 @@ router.put(
     authMiddleware.isAuthenticated,
     userController.updateUserProfile,
 );
+
+router.post(
+    '/update-avatar',
+    authMiddleware.isAuthenticated,
+    upload.single('avatar'),
+    userController.updateAvatar,
+)
 
 module.exports = router;

@@ -33,7 +33,7 @@ const createOrder = async (userId, recipient, phone, address) => {
         const totalAmount = cart.items.reduce(
             (sum, item) => sum + item.product.price * item.quantity,
             0,
-        );
+        ) + parseFloat(process.env.SHIPPING_FEE);
 
         const order = await prisma.order.create({
             data: {
@@ -96,9 +96,36 @@ const clearCart = async (userId) => {
     }
 };
 
+const getOrdersByUserId = async (userId) => {
+    const orders = await prisma.order.findMany({
+        where: { userId },
+        include: {
+            orderItem: true, 
+        },
+        orderBy: { createdAt: 'desc' }
+    })
+    return orders;
+}
+
+const getOrderById = async (id) => {
+    const order = await prisma.order.findUnique({
+        where: { id },
+        include: {
+            orderItem: {
+                include: {
+                    product: true,
+                }
+            }
+        },
+    })
+    return order;
+}
+
 module.exports = {
     getUserProfile,
     createOrder,
     calculateOrderTotal,
     clearCart,
+    getOrdersByUserId,
+    getOrderById,
 };

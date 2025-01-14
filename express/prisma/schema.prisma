@@ -22,7 +22,7 @@ model products {
   description   String
   features      String[]
   images        String[]
-  label         String
+  label         String?
   material      String?
   name          String
   originalPrice Int
@@ -65,7 +65,7 @@ model userProfile {
   phone       String?
   dateOfBirth DateTime?
   address     String?
-  avatar      String?
+  avatar      String?   @default("https://res.cloudinary.com/dylup3xat/image/upload/v1736678877/default_d4np0i.jpg")
   user        users     @relation(fields: [userId], references: [id])
   reviews     review[]
 }

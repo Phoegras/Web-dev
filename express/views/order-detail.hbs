@@ -1,0 +1,87 @@
+<!-- Start Hero -->
+<section class="relative table w-full py-20 lg:py-24 bg-gray-100 dark:bg-slate-800">
+    <div class="container relative">
+        <div class="grid grid-cols-1 mt-14">
+            <h3 class="text-3xl leading-normal font-semibold">Order Details</h3>
+        </div>
+        <!--end grid-->
+
+        <div class="relative mt-3">
+            <ul class="tracking-[0.5px] mb-0 inline-block">
+                <li class="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out hover:text-indigo-600">
+                    <a href="/">Techwind</a>
+                </li>
+                <li class="inline-block text-base text-slate-950 dark:text-white mx-0.5 ltr:rotate-0 rtl:rotate-180">
+                    <i class="uil uil-angle-right-b"></i>
+                </li>
+                <li class="inline-block uppercase text-[13px] font-bold text-indigo-600" aria-current="page">Order Details</li>
+            </ul>
+        </div>
+    </div>
+    <!--end container-->
+</section>
+<!--end section-->
+<!-- End Hero -->
+
+<section class="relative md:py-24 py-16">
+    <div class="container">
+        <div class="order-info bg-gray-100 dark:bg-slate-800 p-6 rounded-md shadow dark:shadow-gray-800">
+            <h3 class="text-2xl font-semibold mb-4">Order Details</h3>
+            <ul class="list-none space-y-2">
+                <li><strong>Recipient:</strong> {{order.recipient}}</li>
+                <li><strong>Phone:</strong> {{order.phone}}</li>
+                <li><strong>Address:</strong> {{order.address}}</li>
+                <li><strong>Status:</strong> 
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold 
+                    {{#if (eq order.status "Pending")}} bg-yellow-500 text-white{{/if}}
+                    {{#if (eq order.status "Paid")}} bg-orange-700 text-white{{/if}}
+                    {{#if (eq order.status "Shipped")}} bg-indigo-600 text-white{{/if}}
+                    {{#if (eq order.status "Delivered")}} bg-green-600 text-white{{/if}}
+                    {{#if (eq order.status "Cancelled")}} bg-red-500 text-white{{/if}}">
+                        {{order.status}}
+                    </span>
+                </li>
+                <li><strong>Created At:</strong> {{formatDate order.createdAt "dd/MM/yyyy HH:mm:ss"}}</li>
+                <li><strong>Total Amount:</strong> ${{order.totalAmount}} VND</li>
+            </ul>
+        </div>
+
+        <div class="mt-8">
+            <div class="relative overflow-x-auto shadow dark:shadow-gray-800 rounded-md">
+                {{#if order.orderItem.length}}
+                <table class="w-full text-start">
+                    <thead class="text-sm uppercase bg-slate-50 dark:bg-slate-800">
+                        <tr>
+                            <th scope="col" class="p-4 w-4 min-w-[100px]"></th>
+                            <th scope="col" class="text-start p-4 min-w-[200px]">Product</th>
+                            <th scope="col" class="p-4 w-24 min-w-[120px]">Price</th>
+                            <th scope="col" class="p-4 w-56 min-w-[200px]">Quantity</th>
+                            <th scope="col" class="p-4 w-24 min-w-[120px]">Size</th>
+                            <th scope="col" class="p-4 w-24 min-w-[120px]">Total($)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each order.orderItem}}
+                        <tr class="product-row bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-gray-800">
+                            <td class="p-4">
+                                <img src="{{this.product.images.[0]}}" class="rounded shadow dark:shadow-gray-800 w-20" alt="{{this.product.name}}">
+                            </td>
+                            <td class="p-4">
+                                <span class="block font-semibold">{{this.product.name}}</span>
+                            </td>
+                            <td class="p-4 text-center">${{this.product.price}}</td>
+                            <td class="p-4 text-center">{{this.quantity}}</td>
+                            <td class="p-4 text-center">{{this.size}}</td>
+                            <td class="p-4 text-end">${{mult this.product.price this.quantity}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{else}}
+                <div class="p-4 text-center">No items in the order</div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</section>
+
