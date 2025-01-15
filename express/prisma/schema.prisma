@@ -43,6 +43,7 @@ model users {
   email           String       @unique
   password        String?
   type            String       @default("LOCAL")
+  status          String       @default("ACTIVE")
   userProfile     userProfile?
   emailVerifiedAt DateTime?
   cart            cart?
