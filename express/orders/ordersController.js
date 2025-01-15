@@ -153,10 +153,12 @@ const getVnpayReturn = (req, res) => {
             transactionTime: vnp_Params['vnp_PayDate'], // Payment date and time
             amountPaid: (vnp_Params['vnp_Amount'] / 100).toFixed(2), // Convert amount to readable format
             bankCode: vnp_Params['vnp_BankCode'], // Bank code used
+            success: true,
         });
     } else {
         // Send failure response with code 97
         res.render('checkout-success', {
+            title: 'Checkout successfully',
             code: '97',
         });
     }
