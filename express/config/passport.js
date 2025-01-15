@@ -25,6 +25,12 @@ module.exports = (passport) => {
                             message: 'Incorrect password.',
                         });
                     }
+
+                    if (user.status === 'BANNED') {
+                        return done(null, false, {
+                            message: 'Your account has been banned.',
+                        });
+                    }
                     return done(null, user);
                 } catch (err) {
                     return done(err);
