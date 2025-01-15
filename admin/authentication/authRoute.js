@@ -3,6 +3,7 @@ const router = express.Router();
 const authController = require('./authController');
 const authMiddleware = require('../middlewares/authMiddlewares');
 
+router.get('/verify', authController.verify);
 // Sign in
 router.get('/sign-in', authController.showSignInForm);
 router.post('/sign-in', authController.signIn);
@@ -21,7 +22,6 @@ router.use(authMiddleware.isSuperAdmin);
 // Register
 router.get('/register', authController.showRegisterForm);
 router.post('/register', authController.register);
-router.get('/verify', authController.verify);
 router.get('/register-success', authController.showRegisterSuccess);
 
 module.exports = router;
