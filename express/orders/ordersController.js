@@ -90,15 +90,15 @@ const placeOrder = async (req, res) => {
     vnp_Params['vnp_SecureHash'] = signed;
     vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
 
-    // const userId = req.user.id;
-    // const { recipient, phone, address } = req.body;
-    // const order = await ordersBusiness.createOrder(
-    //     userId,
-    //     recipient,
-    //     phone,
-    //     address,
-    // );
-    // await ordersBusiness.clearCart(userId);
+    const userId = req.user.id;
+    const { recipient, phone, address } = req.body;
+    const order = await ordersBusiness.createOrder(
+        userId,
+        recipient,
+        phone,
+        address,
+    );
+    await ordersBusiness.clearCart(userId);
 
     res.redirect(vnpUrl)
 };
