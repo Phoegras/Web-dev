@@ -54,10 +54,7 @@ const updateAvatar = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
         const user = usersBusiness.findUserById(req.user.id);
-        res.render('account', {
-            title: 'Account',
-            user: req.user
-        })
+        res.redirect('/users/account');
     } catch (err) {
         console.error(err);
         res.status(500).json({
