@@ -28,7 +28,7 @@ module.exports = (passport) => {
 
                     if (user.status === 'BANNED') {
                         return done(null, false, {
-                            message: 'Your account has been banned.',
+                            message: 'Your account has been banned!',
                         });
                     }
                     return done(null, user);
