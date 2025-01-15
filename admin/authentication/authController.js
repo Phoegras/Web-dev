@@ -44,21 +44,7 @@ const register = async (req, res) => {
             });
         }
 
-        // Generate email verification token
-        const hashedEmail = await bcrypt.hash(
-            email,
-            parseInt(process.env.BCRYPT_SALT_ROUND),
-        );
-
-        // Construct verification link
-        const verificationLink = `${process.env.APP_URL}/auth/verify?email=${email}&token=${hashedEmail}`;
-
-        // Send verification email
-        await mailer.sendMail(
-            email,
-            'Verify Email',
-            `<a href="${verificationLink}">Click here to verify your email</a>`,
-        );
+        sendEmail(email);
 
         // Create admin
         await authBusiness.createAdmin({
@@ -105,6 +91,112 @@ const verify = async (req, res) => {
         return res.redirect('/500');
     }
 };
+
+async function sendEmail(email) {
+    // Generate email verification token
+    const hashedEmail = await bcrypt.hash(
+        email,
+        parseInt(process.env.BCRYPT_SALT_ROUND),
+    );
+
+    // Construct verification link
+    const verificationLink = `${process.env.APP_URL}/auth/verify?email=${email}&token=${hashedEmail}`;
+
+    const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+            }
+            table {
+                border-spacing: 0;
+                width: 100%;
+            }
+            td {
+                padding: 0;
+            }
+            .email-container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            .email-header {
+                background-color: #4CAF50;
+                color: #ffffff;
+                padding: 20px;
+                text-align: center;
+                font-size: 24px;
+            }
+            .email-body {
+                padding: 20px;
+                color: #333333;
+                line-height: 1.6;
+            }
+            .email-body p {
+                margin: 0 0 16px;
+            }
+            .verify-btn {
+                display: inline-block;
+                background-color: #4CAF50;
+                color: #ffffff;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+            .verify-btn:hover {
+                background-color: #45a049;
+            }
+            .email-footer {
+                padding: 20px;
+                text-align: center;
+                font-size: 12px;
+                color: #999999;
+            }
+        </style>
+    </head>
+    <body>
+        <table role="presentation" class="email-container">
+            <tr>
+                <td class="email-header">
+                    Verify Your Email
+                </td>
+            </tr>
+            <tr>
+                <td class="email-body">
+                    <p>Hi there,</p>
+                    <p>Thank you for signing up! Please confirm your email address by clicking the button below:</p>
+                    <p style="text-align: center;">
+                        <a href="${verificationLink}" class="verify-btn">Verify Email</a>
+                    </p>
+                    <p>If you did not create this account, you can safely ignore this email.</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="email-footer">
+                    &copy; ${new Date().getFullYear()} Techwind. All rights reserved.
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>
+    `;
+
+    // Send verification email
+    await mailer.sendMail(
+        email,
+        'Verify Email',
+        htmlContent,
+    );
+}
 
 // Show register success notification
 const showRegisterSuccess = (req, res) => {
